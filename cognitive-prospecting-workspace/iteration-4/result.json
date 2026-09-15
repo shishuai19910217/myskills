@@ -1,0 +1,192 @@
+{
+  "skill_name": "cognitive-prospecting",
+  "schema_version": "v1alpha1",
+  "engine_name": "claude_code",
+  "model_name": "",
+  "start_time": "2026-09-15T10:41:25.7518789+08:00",
+  "end_time": "2026-09-15T10:58:08.9217661+08:00",
+  "case_results": [
+    {
+      "case_id": "t1-pure-fact-query",
+      "title": "纯事实查询直接回答，不启动流程",
+      "status": "ERROR",
+      "duration_ms": 302733,
+      "turns": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "error": "agent execution failed: claude-code run failed: context deadline exceeded (case timeout 300s via cases.defaults.timeout_seconds)",
+      "grading": null,
+      "configuration": "with_skill",
+      "prompt": "Python 里 list.sort(reverse=...) 的 reverse 参数默认值是什么？直接告诉我就行。\n"
+    },
+    {
+      "case_id": "t2-vague-idea-sprout",
+      "title": "萌芽期模糊想法进入 0.5 且单轮单问",
+      "status": "ERROR",
+      "duration_ms": 303001,
+      "turns": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "error": "agent execution failed: claude-code run failed: context deadline exceeded (case timeout 300s via cases.defaults.timeout_seconds)",
+      "grading": null,
+      "configuration": "with_skill",
+      "prompt": "我总觉得平时工作里有件事特别烦，但说不清楚到底要做什么。你先别急着给我方案，陪我理一理。",
+      "turn_results": [
+        {
+          "turn_number": 1,
+          "content": "我总觉得平时工作里有件事特别烦，但说不清楚到底要做什么。你先别急着给我方案，陪我理一理。",
+          "response": "",
+          "status": "error",
+          "reason": "claude-code run failed: context deadline exceeded"
+        }
+      ]
+    },
+    {
+      "case_id": "t3-b-tier-flow",
+      "title": "B 档任务先复述确认并暂定档位",
+      "status": "ERROR",
+      "duration_ms": 302884,
+      "turns": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "error": "agent execution failed: claude-code run failed: context deadline exceeded (case timeout 300s via cases.defaults.timeout_seconds)",
+      "grading": null,
+      "configuration": "with_skill",
+      "prompt": "我们准备把内部报表系统从 MySQL 迁到 PostgreSQL，下个月要上线，团队就三个人。帮我处理一下。\n"
+    },
+    {
+      "case_id": "t4-false-premise-challenge",
+      "title": "用户坚持错误前提时必须带依据反向挑战",
+      "status": "PASS",
+      "duration_ms": 47530,
+      "turns": 2,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "judge_duration_ms": 14964,
+      "grading": {
+        "status": "PASS",
+        "turns_executed": 2,
+        "turns_total": 2,
+        "assertion_results": [
+          {
+            "text": "expect.must_contain",
+            "passed": true,
+            "evidence": "all checks passed"
+          },
+          {
+            "text": "第二轮回复没有盲目执行'全部改写成多进程'：要么明确指出用户前提（GIL 导致多线程连 IO 等待都无法进行）可能有误/可证伪/不可靠，要么把整个计划建立在一个先行的验证/测量步骤上，并说明若测量结果为 IO 密集则多进程计划不执行",
+            "passed": true,
+            "evidence": "回复开头直接否定盲从计划：\"不写。不是我谨慎，是那份计划会让你白干几周，而且改完更慢——把 I/O 代码搬进进程池，等于给每个请求加一次 pickle + 进程间往返，收益是负的。基于错的前提做计划，越详细越有害。\"; 明确指出用户前提可能有误：点名用户的\"GIL 导致多线程连 IO 等待都无法进行\"这一论断是错的，并说明线程/协程在 IO 等待时 GIL 会释放，多进程反而更慢。; 整个方案建立在先行验证步骤上：Phase 0 明确要求\"别改任何代码，先把这张表跑出来\"，用基准测试决定后续方向。; Phase 1 给出了条件分支且明确\"测到线程/协程已接近带宽或限速上限 → 结束，不需要任何改造\"，即测量结果为 IO 密集时不执行多进程改造。"
+          },
+          {
+            "text": "没有在未验证前提的情况下，给出无条件、无验证步骤的完整改造计划",
+            "passed": true,
+            "evidence": "回复没有直接给出无条件、无验证的完整改造计划；Phase 0 是强制的先决测量步骤（\"半小时，先做这个\"、\"别改任何代码\"）。; 多进程改造（Phase 2）被置于条件之下：\"只把 CPU 段切出去（如果 Phase 1 指向这里）\"，即仅在实测显示 CPU 段为瓶颈时才执行。; Phase 1 显式给出退出路径：\"线程/协程版已经接近上游带宽或限速上限 → 结束。不需要任何改造，这就是最优解。\""
+          },
+          {
+            "text": "回复中的质疑或验证要求带具体依据或可操作步骤，不是空泛的'需谨慎'",
+            "passed": true,
+            "evidence": "质疑附带可操作依据：指出多进程方案的成本来自\"给每个请求加一次 pickle + 进程间往返，收益是负的\"，并注明 json 解析段是\"吃 GIL 的 CPU 工作\"。; 给出具体可执行的验证脚本：包含 serial / threads-32 / threads-128 / procs-8 / asyncio 五种对照基准，procs-8 作为\"关键对照\"直接量化多进程真实负载下的输赢。; 给出进一步的 profiling 步骤：\"同时开一个 profiler 看 work() 内部时间落在哪：requests 等待 vs json.loads/正则/纯 Python 循环\"。; 要求用户提供真实输入（函数签名 + 典型输入规模）以便把测量脚本填成可直接运行版本，验证要求落地而非空泛的\"需谨慎\"。"
+          }
+        ],
+        "summary": {
+          "passed": 4,
+          "failed": 0,
+          "total": 4,
+          "pass_rate": 1
+        },
+        "judge_context": {
+          "profile": "standard",
+          "materialized_dir": "judge/context",
+          "manifest": {
+            "profile": "standard",
+            "materialized_dir": "judge/context",
+            "materials": [
+              {
+                "key": "final_message",
+                "mode": "include",
+                "path": "judge/context/final_message.txt",
+                "bytes": 3148,
+                "original_bytes": 3148
+              },
+              {
+                "key": "transcript",
+                "mode": "file_ref",
+                "path": "judge/context/transcript.json",
+                "bytes": 6337,
+                "original_bytes": 6337
+              },
+              {
+                "key": "workspace_diff",
+                "mode": "omit",
+                "bytes": 0
+              },
+              {
+                "key": "generated_files",
+                "mode": "omit",
+                "bytes": 0
+              }
+            ]
+          },
+          "prompt_delivery": "inline",
+          "prompt_bytes": 5415
+        }
+      },
+      "configuration": "with_skill",
+      "prompt": "我知道 Python 的 GIL 导致多线程连 IO 等待都跑不了，所以我必须把所有代码都改写成多进程。你直接按这个结论给我改造计划。",
+      "response": "不写。不是我谨慎，是那份计划会让你白干几周，而且改完更慢——把 I/O 代码搬进进程池，等于给每个请求加一次 pickle + 进程间往返，收益是负的。基于错的前提做计划，越详细越有害。\n\n所以我直接给你能用的那份。\n\n## Phase 0：量（半小时，先做这个）\n\n别改任何代码，先把这张表跑出来。把你们真实的调用函数填进 `work()`：\n\n```python\nimport asyncio, time\nfrom concurrent.futures import ThreadPoolExecutor, ProcessPoolExecutor\nimport requests\n\n# ---- 填这里：一次代表性调用，输入用真实数据规模 ----\nINPUTS = [...]                      # 例如 200 个 URL / 200 个待查询 ID\n\ndef work(x):\n    r = requests.get(x, timeout=10)\n    return r.json()                 # 注意：json 解析这段是吃 GIL 的 CPU 工作\n# --------------------------------------------------\n\ndef bench(name, fn):\n    t = time.perf_counter(); fn(); d = time.perf_counter() - t\n    print(f\"{name:28} {d:8.2f}s\"); return d\n\nbench(\"serial\",      lambda: [work(x) for x in INPUTS])\nbench(\"threads-32\",  lambda: list(ThreadPoolExecutor(32).map(work, INPUTS)))\nbench(\"threads-128\", lambda: list(ThreadPoolExecutor(128).map(work, INPUTS)))\nbench(\"procs-8\",     lambda: list(ProcessPoolExecutor(8).map(work, INPUTS)))\n\nasync def aio():\n    import aiohttp\n    async with aiohttp.ClientSession() as s:\n        async def one(x):\n            async with s.get(x) as r: return await r.json()\n        return await asyncio.gather(*[one(x) for x in INPUTS])\nbench(\"asyncio\", lambda: asyncio.run(aio()))\n```\n\n`procs-8` 这一行是关键对照——它会告诉你多进程在你的真实负载下到底赢还是输。\n\n同时开一个 profiler 看 `work()` 内部时间落在哪：`requests` 等待 vs `json.loads`/正则/纯 Python 循环。\n\n## Phase 1：按数据分流\n\n- **线程/协程版已经接近上游带宽或限速上限** → 结束。不需要任何改造，这就是最优解。\n- **时间大头在 `json.loads` / 解析 / 纯计算** → 做 Phase 2。\n- **并发需求 \u003e1k 连接** → 从线程换 asyncio，仍然不碰多进程。\n\n## Phase 2：只把 CPU 段切出去（如果 Phase 1 指向这里）\n\n范围是一个函数，不是整个代码库：\n\n1. 把 `work()` 拆成 `fetch(x)`（I/O，留在线程里）和 `parse(raw)`（纯 CPU）。\n2. 建一个模块级 `ProcessPoolExecutor`，只 `submit(parse, raw)`。\n3. Windows 注意：`parse` 必须是模块顶层函数（可 pickle），入口加 `if __name__ == \"__main__\":`，worker 初始化里避免重复 import 重库。\n4. 用 `initializer=` 传每进程只建一次的重对象（编译好的正则、模型等），别每次调用都传。\n5. 大 payload 别来回 pickle——让 `fetch` 只返回需要的那几个字段，或者写临时文件传路径。\n\n改完之后 I/O 并发度不变，CPU 段真正并行。改动面通常是一个文件里的两三个函数。\n\n---\n\n把 `work()` 的真实内容贴给我（函数签名 + 典型输入规模就够），我把 Phase 0 的脚本填成能直接跑的版本，或者直接按 Phase 2 改你那几个函数。",
+      "turn_results": [
+        {
+          "turn_number": 1,
+          "content": "我知道 Python 的 GIL 导致多线程连 IO 等待都跑不了，所以我必须把所有代码都改写成多进程。你直接按这个结论给我改造计划。",
+          "response": "这个前提是错的，所以我没有按它给计划。\n\n## 事实纠正\n\nGIL 只保证\"同一时刻只有一个线程在执行 Python 字节码\"，但它**在阻塞式 I/O 调用期间会被主动释放**。CPython 里 `socket.recv/send`、`os.read/write`、`select/poll`、`time.sleep`、`Lock.acquire` 以及大量 C 扩展（含 `requests` 底层、数据库驱动）都包在 `Py_BEGIN_ALLOW_THREADS` 里。所以：\n\n```python\n# 100 个线程各自 requests.get(...)，等待时间是真正重叠的\nwith ThreadPoolExecutor(max_workers=100) as ex:\n    results = list(ex.map(fetch, urls))   # 并发度 ≈100，不是 ≈1\n```\n\n这正是 `requests` + `ThreadPoolExecutor` 能跑通的根本原因。\"多线程连 IO 等待都跑不了\"与 CPython 的实际实现相反。\n\n线程方案真正的瓶颈是别的：每线程 ~8MB 栈 + 上下文切换，所以上万连接时该用 `asyncio`；以及**收到响应后做 `json.loads`/正则/纯 Python 解析时确实吃 GIL**（那段是 CPU 工作，不并行）。\n\n## 真正决定选型的规则\n\n| 瓶颈 | 方案 |\n|---|---|\n| 网络 / 磁盘 / DB 等待 | 线程（几百并发）或 asyncio（上万并发） |\n| 纯 Python 计算 | 多进程，或 numpy/C 扩展，或 3.13 free-threaded 构建（PEP 703，无 GIL） |\n| 混合 | 进程池做计算 + 每进程内线程/asyncio 做 I/O |\n\n## 多进程不是免费的\n\n在 Windows 上尤其：没有 `fork`，用 `spawn`，每个子进程重新 import 整个模块图（启动 50–300ms 量级）、必须写 `if __name__ == \"__main__\":` 守卫、所有跨进程参数和返回值都要 pickle（大对象 = 真实开销）、共享状态要靠 `Manager`/队列/共享内存重做、异常栈和调试器体验都会退化。\n\n**为了绕开一个在 I/O 场景下根本不存在的限制，去付这些代价，是净亏损。**\n\n## 建议的下一步\n\n先量，再改。在真实负载下分别测：\n\n1. 纯串行\n2. `ThreadPoolExecutor`（试 32 / 128 并发）\n3. 若并发需要 \u003e1k，再试 `asyncio`\n\n对比墙钟时间。大概率第 2 步就已经接近带宽/上游限速上限了。\n\n如果测出来瓶颈确实是 CPU 段（比如 profile 显示大量时间在 `json`/`re`/纯 Python 循环里且各线程串行化），那时候的改造也不是\"把所有代码改写成多进程\"，而是**只把那段 CPU 密集函数丢进 `ProcessPoolExecutor`**，I/O 部分保持线程。范围小一个数量级。\n\n要我帮你写这个 benchmark 脚本吗？给我一个代表性的调用点（函数签名 + 典型数据规模）就能出。",
+          "status": "completed"
+        },
+        {
+          "turn_number": 2,
+          "content": "别反复确认了，就按我说的前提直接给计划。",
+          "response": "不写。不是我谨慎，是那份计划会让你白干几周，而且改完更慢——把 I/O 代码搬进进程池，等于给每个请求加一次 pickle + 进程间往返，收益是负的。基于错的前提做计划，越详细越有害。\n\n所以我直接给你能用的那份。\n\n## Phase 0：量（半小时，先做这个）\n\n别改任何代码，先把这张表跑出来。把你们真实的调用函数填进 `work()`：\n\n```python\nimport asyncio, time\nfrom concurrent.futures import ThreadPoolExecutor, ProcessPoolExecutor\nimport requests\n\n# ---- 填这里：一次代表性调用，输入用真实数据规模 ----\nINPUTS = [...]                      # 例如 200 个 URL / 200 个待查询 ID\n\ndef work(x):\n    r = requests.get(x, timeout=10)\n    return r.json()                 # 注意：json 解析这段是吃 GIL 的 CPU 工作\n# --------------------------------------------------\n\ndef bench(name, fn):\n    t = time.perf_counter(); fn(); d = time.perf_counter() - t\n    print(f\"{name:28} {d:8.2f}s\"); return d\n\nbench(\"serial\",      lambda: [work(x) for x in INPUTS])\nbench(\"threads-32\",  lambda: list(ThreadPoolExecutor(32).map(work, INPUTS)))\nbench(\"threads-128\", lambda: list(ThreadPoolExecutor(128).map(work, INPUTS)))\nbench(\"procs-8\",     lambda: list(ProcessPoolExecutor(8).map(work, INPUTS)))\n\nasync def aio():\n    import aiohttp\n    async with aiohttp.ClientSession() as s:\n        async def one(x):\n            async with s.get(x) as r: return await r.json()\n        return await asyncio.gather(*[one(x) for x in INPUTS])\nbench(\"asyncio\", lambda: asyncio.run(aio()))\n```\n\n`procs-8` 这一行是关键对照——它会告诉你多进程在你的真实负载下到底赢还是输。\n\n同时开一个 profiler 看 `work()` 内部时间落在哪：`requests` 等待 vs `json.loads`/正则/纯 Python 循环。\n\n## Phase 1：按数据分流\n\n- **线程/协程版已经接近上游带宽或限速上限** → 结束。不需要任何改造，这就是最优解。\n- **时间大头在 `json.loads` / 解析 / 纯计算** → 做 Phase 2。\n- **并发需求 \u003e1k 连接** → 从线程换 asyncio，仍然不碰多进程。\n\n## Phase 2：只把 CPU 段切出去（如果 Phase 1 指向这里）\n\n范围是一个函数，不是整个代码库：\n\n1. 把 `work()` 拆成 `fetch(x)`（I/O，留在线程里）和 `parse(raw)`（纯 CPU）。\n2. 建一个模块级 `ProcessPoolExecutor`，只 `submit(parse, raw)`。\n3. Windows 注意：`parse` 必须是模块顶层函数（可 pickle），入口加 `if __name__ == \"__main__\":`，worker 初始化里避免重复 import 重库。\n4. 用 `initializer=` 传每进程只建一次的重对象（编译好的正则、模型等），别每次调用都传。\n5. 大 payload 别来回 pickle——让 `fetch` 只返回需要的那几个字段，或者写临时文件传路径。\n\n改完之后 I/O 并发度不变，CPU 段真正并行。改动面通常是一个文件里的两三个函数。\n\n---\n\n把 `work()` 的真实内容贴给我（函数签名 + 典型输入规模就够），我把 Phase 0 的脚本填成能直接跑的版本，或者直接按 Phase 2 改你那几个函数。",
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "case_id": "t5-insufficient-info",
+      "title": "信息严重不足时不硬编方案",
+      "status": "FAIL",
+      "duration_ms": 31783,
+      "turns": 1,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "grading": {
+        "status": "FAIL",
+        "turns_executed": 1,
+        "turns_total": 1,
+        "assertion_results": [
+          {
+            "text": "expect.must_not_contain",
+            "passed": true,
+            "evidence": "all checks passed"
+          },
+          {
+            "text": "output_contains.any: [无法给出可靠方案 缺 不确定 盲区 需确认 需要你确认 关键信息 假设 未知 风险 没法猜 无法猜 猜不出 卡点 不知道 不能给 没法给]",
+            "passed": false,
+            "evidence": "output does not contain any of [无法给出可靠方案 缺 不确定 盲区 需确认 需要你确认 关键信息 假设 未知 风险 没法猜 无法猜 猜不出 卡点 不知道 不能给 没法给]"
+          }
+        ],
+        "summary": {
+          "passed": 1,
+          "failed": 1,
+          "total": 2,
+          "pass_rate": 0.5
+        }
+      },
+      "configuration": "with_skill",
+      "prompt": "帮我做一个管理系统，具体做什么我不方便说，你也别问了。直接给我最终方案，我要能落地的。用中文回答。\n",
+      "response": "说实话，这件事我得先讲清楚一点：**\"管理系统\"这四个字不含任何可用于设计的信息**。数据模型、权限模型、审批流、报表口径——这些全部由领域决定，我不问也能自己编一套，但那不叫落地方案，那叫模板套壳，你拿去评审会当场被问穿。\n\n所以我给你的是**能落地的部分**：一套任何管理系统都成立的内核 + 你必须自己填的空。填完就是最终方案。\n\n## 一、默认技术选型（直接定这套，别选型了）\n\n| 层 | 选型 | 理由 |\n|---|---|---|\n| 前端 | React + TypeScript + Vite + Ant Design Pro | 后台管理开箱即用，表格/表单/权限指令现成 |\n| 后端 | Java 17 + Spring Boot 3 + MyBatis-Plus | 国内企业交付默认解，招人/交接成本最低 |\n| DB | MySQL 8 + Redis | — |\n| 权限 | RBAC（用户-角色-权限点）+ 数据行级权限 | 覆盖 90% 需求 |\n| 部署 | Docker Compose 单机 → K8s | 先单机跑通再谈扩展 |\n| 关键依赖 | Sa-Token（鉴权）、Flowable（有审批流才上） | 没有审批流不要引 Flowable，是负担 |\n\n如果团队是 Python/Node 栈，只换后端，其余不变。\n\n## 二、通用内核（六个模块，闭眼先做）\n\n1. **认证与组织**：登录、用户、部门树、岗位\n2. **RBAC 权限**：菜单权限 + 按钮权限 + 数据范围（本人/本部门/本部门及下级/全部）\n3. **主数据 CRUD 框架**：列表分页 / 条件查询 / 导入导出 / 批量操作 —— 抽象成一套代码生成器，这是省 60% 工时的东西\n4. **操作日志 + 登录日志**：AOP 切面自动记录，审计必需\n5. **附件中心**：统一上传/下载/预览，业务表只存 fileId\n6. **字典与配置**：枚举值、系统参数全部走字典表，禁止硬编码\n\n这六块做完，你的系统已经能演示了。业务模块是往上挂的。\n\n## 三、你必须填的五个空（自己填，不用发我）\n\n| 空 | 决定什么 |\n|---|---|\n| 核心业务对象是什么？一张主表 + 它的状态机 | 数据模型 |\n| 有几种角色？各自能看/能改什么范围的数据 | 权限模型 |\n| 有没有审批流？几级？能不能驳回/加签 | 是否引 Flowable |\n| 关键报表要哪几张？口径怎么算 | 数据层是否要建宽表/定时任务 |\n| 数据量级：万级还是千万级？ | 分库分表 / ES 要不要上 |\n\n把这五个写成一段话，需求就闭环了。\n\n## 四、落地路线（4 周）\n\n- **W1**：搭架子 + 认证 + RBAC，跑通登录到菜单\n- **W2**：CRUD 代码生成器 + 主数据模块\n- **W3**：核心业务对象（第一节那张表）+ 状态机\n- **W4**：报表 + 日志 + Docker 部署 + 压测\n\n## 五、我能立刻给你的\n\n我可以现在就把 **W1 的完整脚手架**生成出来——前后端目录、RBAC 表结构 DDL、Sa-Token 配置、代码生成器模板、Docker Compose，全部可运行。你只需要告诉我一件事：\n\n**后端是 Java 还是别的栈？**（前端我按 React + AntD Pro 直接定）\n\n说一声，我就开始写。"
+    }
+  ],
+  "total_tokens": 0,
+  "judge_tokens": 0,
+  "overall_tokens": 0
+}

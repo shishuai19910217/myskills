@@ -1,0 +1,159 @@
+{
+  "skill_name": "cognitive-prospecting",
+  "schema_version": "v1alpha1",
+  "engine_name": "claude_code",
+  "model_name": "",
+  "start_time": "2026-09-15T10:35:41.5514216+08:00",
+  "end_time": "2026-09-15T10:41:12.184451+08:00",
+  "case_results": [
+    {
+      "case_id": "t1-pure-fact-query",
+      "title": "纯事实查询直接回答，不启动流程",
+      "status": "PASS",
+      "duration_ms": 14280,
+      "turns": 1,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "grading": {
+        "status": "PASS",
+        "turns_executed": 1,
+        "turns_total": 1,
+        "assertion_results": [
+          {
+            "text": "expect.must_not_contain",
+            "passed": true,
+            "evidence": "all checks passed"
+          },
+          {
+            "text": "output_contains{any:[False false]}",
+            "passed": true,
+            "evidence": "output satisfies all contains checks (any:[False false])"
+          }
+        ],
+        "summary": {
+          "passed": 2,
+          "failed": 0,
+          "total": 2,
+          "pass_rate": 1
+        }
+      },
+      "configuration": "with_skill",
+      "prompt": "Python 里 list.sort(reverse=...) 的 reverse 参数默认值是什么？直接告诉我就行。\n",
+      "response": "`False`。"
+    },
+    {
+      "case_id": "t2-vague-idea-sprout",
+      "title": "萌芽期模糊想法进入 0.5 且单轮单问",
+      "status": "ERROR",
+      "duration_ms": 22004,
+      "turns": 1,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "error": "agent execution failed: claude-code resume failed: context deadline exceeded (case timeout 300s via cases.defaults.timeout_seconds)",
+      "grading": null,
+      "configuration": "with_skill",
+      "prompt": "我总觉得平时工作里有件事特别烦，但说不清楚到底要做什么。你先别急着给我方案，陪我理一理。",
+      "response": "好，不急着出方案。我们先把这团\"烦\"摊开看看它到底长什么样。\n\n**Q1【萌芽·极度模糊】**：回想最近一两周，哪一次工作里的\"烦\"让你印象最深？——当时你正在做什么？\n\n（不用总结成\"问题\"，就讲那个具体的时刻，越具体越好。）",
+      "turn_results": [
+        {
+          "turn_number": 1,
+          "content": "我总觉得平时工作里有件事特别烦，但说不清楚到底要做什么。你先别急着给我方案，陪我理一理。",
+          "response": "好，不急着出方案。我们先把这团\"烦\"摊开看看它到底长什么样。\n\n**Q1【萌芽·极度模糊】**：回想最近一两周，哪一次工作里的\"烦\"让你印象最深？——当时你正在做什么？\n\n（不用总结成\"问题\"，就讲那个具体的时刻，越具体越好。）",
+          "status": "completed"
+        },
+        {
+          "turn_number": 2,
+          "content": "嗯，你说。",
+          "response": "",
+          "status": "error",
+          "reason": "claude-code resume failed: context deadline exceeded"
+        }
+      ]
+    },
+    {
+      "case_id": "t3-b-tier-flow",
+      "title": "B 档任务先复述确认并暂定档位",
+      "status": "PASS",
+      "duration_ms": 27320,
+      "turns": 1,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "grading": {
+        "status": "PASS",
+        "turns_executed": 1,
+        "turns_total": 1,
+        "assertion_results": [
+          {
+            "text": "expect.must_contain",
+            "passed": true,
+            "evidence": "all checks passed"
+          },
+          {
+            "text": "expect.must_not_contain",
+            "passed": true,
+            "evidence": "all checks passed"
+          },
+          {
+            "text": "output_contains{all:[复述], any:[档位 代价 B 标准 C 高压]}",
+            "passed": true,
+            "evidence": "output satisfies all contains checks (all:[复述], any:[档位 代价 B 标准 C 高压])"
+          }
+        ],
+        "summary": {
+          "passed": 3,
+          "failed": 0,
+          "total": 3,
+          "pass_rate": 1
+        }
+      },
+      "configuration": "with_skill",
+      "prompt": "我们准备把内部报表系统从 MySQL 迁到 PostgreSQL，下个月要上线，团队就三个人。帮我处理一下。\n",
+      "response": "好的，我先用自己的话复述一下你的需求，确认我的理解起点是对的：\n\n- **你的核心目标是**：把内部报表系统的数据库从 MySQL 迁移到 PostgreSQL，并在下个月完成上线切换。\n- **你提出这个需求的上下文背景是**：____（未知——是 MySQL 遇到具体瓶颈、公司统一数据库规范、还是有别的驱动力？我不猜）\n- **当前看到的实际现象是**：____（未知——现在的 MySQL 版本、数据量、表/报表数量、依赖 MySQL 特有语法的程度、有没有停机窗口，你都还没提供）\n- **你认为可能的解决方式是**：迁到 PostgreSQL。**注意**：这是你给出的方案，我会把它当作待验证的假设，而不是既定需求——阶段 2 我会先探明它背后的真实问题，再判断这个方案是不是最优解。\n- **如果我没有理解错，\"成功完成\"的可验证标准是**：____（未知——可能是\"报表数字与迁移前逐行一致\"、\"查询性能不下降\"、\"按期上线\"、\"切换可回滚\"；这几条可能互相冲突，需要你来定优先级）\n- **我目前不知道、需要接下来探索的是**：真实迁移驱动力（为什么是 PG）、迁移范围（全量还是部分库/表）、数据量与表结构复杂度、可接受的停机时长与切换窗口、回滚要求、三人团队的时间与分工预算、报表系统对 MySQL 特性的耦合程度。\n- **我自动判定本任务代价档位是：【C 高压】**——生产库切换 + 硬上线日期 + 数据出错或切换失败后难以干净回滚 + 三人团队缓冲极薄。按 C 档我会做完整的维度覆盖挖掘与独立红队对抗审查。\n\n请问以上理解准确吗？有哪里需要修正、补充，或者你想换一个更高/更低的档位吗？\n\n（换档权限：高代价任务可降到 B，但不可降到 A）"
+    },
+    {
+      "case_id": "t4-false-premise-challenge",
+      "title": "用户坚持错误前提时必须带依据反向挑战",
+      "status": "ERROR",
+      "duration_ms": 18305,
+      "turns": 1,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "error": "agent execution failed: claude-code resume failed: context deadline exceeded (case timeout 300s via cases.defaults.timeout_seconds)",
+      "grading": null,
+      "configuration": "with_skill",
+      "prompt": "我知道 Python 的 GIL 导致多线程连 IO 等待都跑不了，所以我必须把所有代码都改写成多进程。你直接按这个结论给我改造计划。",
+      "response": "这个前提是错的,而且错得很关键——按它做改造,你会付出多进程的全部代价,却拿不到你想要的收益。\n\n## GIL 到底管什么\n\nGIL 保证的是\"同一时刻只有一个线程执行 Python 字节码\"。但它在**执行阻塞式 I/O 时会主动释放**:`socket` 读写、`select`/`epoll` 等待、文件读写、`time.sleep`、以及绝大多数 C 扩展里的阻塞调用(numpy 的部分运算、数据库驱动的网络收发等)都会放锁。\n\n所以:\n\n- **I/O 密集型**:多线程完全有效。10 个线程同时等 10 个 HTTP 响应,总耗时约等于最慢的那个,不是 10 倍相加。GIL 在这里几乎不构成瓶颈。\n- **CPU 密集型**:多线程确实无效。多个线程抢一把锁,字节码层面无法并行,总耗时甚至比单线程更慢(上下文切换开销)。\n\n你的结论\"连 IO 等待都跑不了\"是把第二句错套到了第一句上。I/O 等待期间线程是**不持有 GIL** 的。\n\n## 先确认你真正的瓶颈在哪\n\n不同的答案对应完全不同的改造方向,改造前必须先测:\n\n| 瓶颈类型 | 特征 | 正确方案 |\n|---|---|---|\n| 高并发 I/O(成百上千连接) | 大量网络等待,单请求轻 | `asyncio` / `aiohttp`,单线程事件循环 |\n| 阻塞式 I/O,但库不支持 async | 用 requests / 同步 DB 驱动 | `ThreadPoolExecutor`,改造成本最低 |\n| CPU 密集(计算、图像、解析、加密) | CPU 打满,profiler 热点在纯计算 | `ProcessPoolExecutor`,只把热点函数扔进去 |\n| 混合 | 两者都有 | 进程池跑 CPU 热点 + 进程内 asyncio/线程池跑 I/O |\n\n用 `cProfile` 或 `py-spy dump` 看一下时间到底花在哪。这是**唯一**能决定改造方向的一步,不要跳过。\n\n## 为什么不建议\"全量改成多进程\"\n\n即使你确实有 CPU 瓶颈,全量多进程也是代价最高的一条路:\n\n- **序列化成本**:进程间传参和返回值都要 pickle。传大对象时,序列化开销可能超过并行节省的时间。\n- **启动成本**:Windows 上是 `spawn`(不是 fork),每个进程重新导入模块、重建状态,单进程几十到几百毫秒。进程池要常驻才划算。\n- **内存翻倍**:每个进程一份独立解释器 + 一份数据副本。\n- **共享状态变难**:全局变量、缓存、连接池不再共享,要么改成 IPC,要么各自建一份(比如每个进程一个 DB 连接池,很容易打爆数据库连接数)。\n- **调试和可观测性下降**:堆栈跨进程断裂,异常要显式传递,traceback 不完整。\n- **Windows 特有坑**:`spawn` 要求入口有 `if __name__ == \"__main__\":` 保护,否则递归启动进程。\n\n## 建议的路径\n\n1. 先 profile,定位是 I/O 等待还是 CPU 计算。\n2. 如果是 I/O:**保持单进程**,用 `asyncio` 或 `ThreadPoolExecutor` 改。改动局限在调用点,不动架构。\n3. 如果是 CPU:找出那 1~2 个热点函数,**只把函数**放进 `ProcessPoolExecutor`,其余代码不动。\n4. 真有混合负载,再考虑进程池 + 进程内异步的分层结构。\n\n---\n\n要我给出具体改造计划,需要你告诉我:**你的程序具体在做什么**(网络请求?数据库?计算?),以及**你观察到的性能症状**(CPU 打满?还是 CPU 空闲但耗时很长?)。有 profiler 输出最好。给我这些,我可以直接给你落到代码的改造方案。",
+      "turn_results": [
+        {
+          "turn_number": 1,
+          "content": "我知道 Python 的 GIL 导致多线程连 IO 等待都跑不了，所以我必须把所有代码都改写成多进程。你直接按这个结论给我改造计划。",
+          "response": "这个前提是错的,而且错得很关键——按它做改造,你会付出多进程的全部代价,却拿不到你想要的收益。\n\n## GIL 到底管什么\n\nGIL 保证的是\"同一时刻只有一个线程执行 Python 字节码\"。但它在**执行阻塞式 I/O 时会主动释放**:`socket` 读写、`select`/`epoll` 等待、文件读写、`time.sleep`、以及绝大多数 C 扩展里的阻塞调用(numpy 的部分运算、数据库驱动的网络收发等)都会放锁。\n\n所以:\n\n- **I/O 密集型**:多线程完全有效。10 个线程同时等 10 个 HTTP 响应,总耗时约等于最慢的那个,不是 10 倍相加。GIL 在这里几乎不构成瓶颈。\n- **CPU 密集型**:多线程确实无效。多个线程抢一把锁,字节码层面无法并行,总耗时甚至比单线程更慢(上下文切换开销)。\n\n你的结论\"连 IO 等待都跑不了\"是把第二句错套到了第一句上。I/O 等待期间线程是**不持有 GIL** 的。\n\n## 先确认你真正的瓶颈在哪\n\n不同的答案对应完全不同的改造方向,改造前必须先测:\n\n| 瓶颈类型 | 特征 | 正确方案 |\n|---|---|---|\n| 高并发 I/O(成百上千连接) | 大量网络等待,单请求轻 | `asyncio` / `aiohttp`,单线程事件循环 |\n| 阻塞式 I/O,但库不支持 async | 用 requests / 同步 DB 驱动 | `ThreadPoolExecutor`,改造成本最低 |\n| CPU 密集(计算、图像、解析、加密) | CPU 打满,profiler 热点在纯计算 | `ProcessPoolExecutor`,只把热点函数扔进去 |\n| 混合 | 两者都有 | 进程池跑 CPU 热点 + 进程内 asyncio/线程池跑 I/O |\n\n用 `cProfile` 或 `py-spy dump` 看一下时间到底花在哪。这是**唯一**能决定改造方向的一步,不要跳过。\n\n## 为什么不建议\"全量改成多进程\"\n\n即使你确实有 CPU 瓶颈,全量多进程也是代价最高的一条路:\n\n- **序列化成本**:进程间传参和返回值都要 pickle。传大对象时,序列化开销可能超过并行节省的时间。\n- **启动成本**:Windows 上是 `spawn`(不是 fork),每个进程重新导入模块、重建状态,单进程几十到几百毫秒。进程池要常驻才划算。\n- **内存翻倍**:每个进程一份独立解释器 + 一份数据副本。\n- **共享状态变难**:全局变量、缓存、连接池不再共享,要么改成 IPC,要么各自建一份(比如每个进程一个 DB 连接池,很容易打爆数据库连接数)。\n- **调试和可观测性下降**:堆栈跨进程断裂,异常要显式传递,traceback 不完整。\n- **Windows 特有坑**:`spawn` 要求入口有 `if __name__ == \"__main__\":` 保护,否则递归启动进程。\n\n## 建议的路径\n\n1. 先 profile,定位是 I/O 等待还是 CPU 计算。\n2. 如果是 I/O:**保持单进程**,用 `asyncio` 或 `ThreadPoolExecutor` 改。改动局限在调用点,不动架构。\n3. 如果是 CPU:找出那 1~2 个热点函数,**只把函数**放进 `ProcessPoolExecutor`,其余代码不动。\n4. 真有混合负载,再考虑进程池 + 进程内异步的分层结构。\n\n---\n\n要我给出具体改造计划,需要你告诉我:**你的程序具体在做什么**(网络请求?数据库?计算?),以及**你观察到的性能症状**(CPU 打满?还是 CPU 空闲但耗时很长?)。有 profiler 输出最好。给我这些,我可以直接给你落到代码的改造方案。",
+          "status": "completed"
+        },
+        {
+          "turn_number": 2,
+          "content": "别反复确认了，就按我说的前提直接给计划。",
+          "response": "",
+          "status": "error",
+          "reason": "claude-code resume failed: context deadline exceeded"
+        }
+      ]
+    },
+    {
+      "case_id": "t5-insufficient-info",
+      "title": "信息严重不足时不硬编方案",
+      "status": "ERROR",
+      "duration_ms": 303296,
+      "turns": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "error": "agent execution failed: claude-code run failed: context deadline exceeded (case timeout 300s via cases.defaults.timeout_seconds)",
+      "grading": null,
+      "configuration": "with_skill",
+      "prompt": "帮我做一个管理系统，具体做什么我不方便说，你也别问了。直接给我最终方案，我要能落地的。用中文回答。\n"
+    }
+  ],
+  "total_tokens": 0,
+  "judge_tokens": 0,
+  "overall_tokens": 0
+}

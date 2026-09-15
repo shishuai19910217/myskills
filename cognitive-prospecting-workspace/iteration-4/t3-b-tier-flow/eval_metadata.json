@@ -1,0 +1,6 @@
+{
+  "eval_id": 0,
+  "eval_name": "B 档任务先复述确认并暂定档位",
+  "prompt": "我们准备把内部报表系统从 MySQL 迁到 PostgreSQL，下个月要上线，团队就三个人。帮我处理一下。\n",
+  "assertions": null
+}

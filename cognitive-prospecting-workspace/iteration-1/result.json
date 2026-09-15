@@ -1,0 +1,273 @@
+{
+  "skill_name": "cognitive-prospecting",
+  "schema_version": "v1alpha1",
+  "engine_name": "claude_code",
+  "model_name": "",
+  "start_time": "2026-09-15T10:32:48.2847012+08:00",
+  "end_time": "2026-09-15T10:34:21.7139346+08:00",
+  "case_results": [
+    {
+      "case_id": "t1-pure-fact-query",
+      "title": "纯事实查询直接回答，不启动流程",
+      "status": "PASS",
+      "duration_ms": 8310,
+      "turns": 1,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "grading": {
+        "status": "PASS",
+        "turns_executed": 1,
+        "turns_total": 1,
+        "assertion_results": [
+          {
+            "text": "expect.must_not_contain",
+            "passed": true,
+            "evidence": "all checks passed"
+          },
+          {
+            "text": "output_contains{any:[False false]}",
+            "passed": true,
+            "evidence": "output satisfies all contains checks (any:[False false])"
+          }
+        ],
+        "summary": {
+          "passed": 2,
+          "failed": 0,
+          "total": 2,
+          "pass_rate": 1
+        }
+      },
+      "configuration": "with_skill",
+      "prompt": "Python 里 list.sort(reverse=...) 的 reverse 参数默认值是什么？直接告诉我就行。\n",
+      "response": "`reverse` 的默认值是 `False`（即默认升序）。"
+    },
+    {
+      "case_id": "t2-vague-idea-sprout",
+      "title": "萌芽期模糊想法进入 0.5 且单轮单问",
+      "status": "PASS",
+      "duration_ms": 38175,
+      "turns": 2,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "grading": {
+        "status": "PASS",
+        "turns_executed": 2,
+        "turns_total": 2,
+        "assertion_results": [
+          {
+            "text": "expect.must_contain",
+            "passed": true,
+            "evidence": "all checks passed"
+          },
+          {
+            "text": "expect.must_not_contain",
+            "passed": true,
+            "evidence": "all checks passed"
+          },
+          {
+            "text": "output_contains{any:[萌芽 一个问题 先问]}",
+            "passed": true,
+            "evidence": "output satisfies all contains checks (any:[萌芽 一个问题 先问])"
+          }
+        ],
+        "summary": {
+          "passed": 3,
+          "failed": 0,
+          "total": 3,
+          "pass_rate": 1
+        }
+      },
+      "configuration": "with_skill",
+      "prompt": "我总觉得平时工作里有件事特别烦，但说不清楚到底要做什么。你先别急着给我方案，陪我理一理。",
+      "response": "没关系，\"嗯，你说\"也是一种回答——说明这事儿还没成型，正常。\n\n我把它问得再小一点，不用你去回想哪个具体瞬间，也不用组织语言：\n\n**Q2【萌芽·极度模糊】：这件烦人的事，大概跟什么打交道？——是跟人（同事/客户/上下游）、跟一堆信息（文档/数据/消息）、还是跟某个流程（审批/交接/重复操作）？**\n\n随便挑一个方向，哪怕只回两个字（比如\"跟人\"\"跟表\"），我接着往下陪你捋。",
+      "turn_results": [
+        {
+          "turn_number": 1,
+          "content": "我总觉得平时工作里有件事特别烦，但说不清楚到底要做什么。你先别急着给我方案，陪我理一理。",
+          "response": "好，我们慢慢来。不给方案，先把那件\"烦\"的事从雾里捞出来。\n\n我不问\"你想做什么\"，因为你现在说不清很正常——那个烦的感觉往往比需求先到。\n\n**Q1【萌芽·极度模糊】：回想最近一次你心里冒出\"这件事真烦\"的瞬间——当时你人在哪、手上在做什么、下一秒发生了什么？**\n\n（越具体越好，一个场景就够。不用总结规律，就说那一次。）",
+          "status": "completed"
+        },
+        {
+          "turn_number": 2,
+          "content": "嗯，你说。",
+          "response": "没关系，\"嗯，你说\"也是一种回答——说明这事儿还没成型，正常。\n\n我把它问得再小一点，不用你去回想哪个具体瞬间，也不用组织语言：\n\n**Q2【萌芽·极度模糊】：这件烦人的事，大概跟什么打交道？——是跟人（同事/客户/上下游）、跟一堆信息（文档/数据/消息）、还是跟某个流程（审批/交接/重复操作）？**\n\n随便挑一个方向，哪怕只回两个字（比如\"跟人\"\"跟表\"），我接着往下陪你捋。",
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "case_id": "t3-b-tier-flow",
+      "title": "B 档任务先复述确认并暂定档位",
+      "status": "PASS",
+      "duration_ms": 55369,
+      "turns": 1,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "grading": {
+        "status": "PASS",
+        "turns_executed": 1,
+        "turns_total": 1,
+        "assertion_results": [
+          {
+            "text": "expect.must_contain",
+            "passed": true,
+            "evidence": "all checks passed"
+          },
+          {
+            "text": "expect.must_not_contain",
+            "passed": true,
+            "evidence": "all checks passed"
+          },
+          {
+            "text": "output_contains{all:[复述], any:[档位 代价 B 标准 C 高压]}",
+            "passed": true,
+            "evidence": "output satisfies all contains checks (all:[复述], any:[档位 代价 B 标准 C 高压])"
+          }
+        ],
+        "summary": {
+          "passed": 3,
+          "failed": 0,
+          "total": 3,
+          "pass_rate": 1
+        }
+      },
+      "configuration": "with_skill",
+      "prompt": "我们准备把内部报表系统从 MySQL 迁到 PostgreSQL，下个月要上线，团队就三个人。帮我处理一下。\n",
+      "response": "好的，我先用自己的话复述一下你的需求，确认我的理解起点是对的：\n\n- **你的核心目标是**：把内部报表系统的数据库从 MySQL 迁移到 PostgreSQL，并在下个月内完成生产上线。\n- **你提出这个需求的上下文背景是**：⚠️ **未知**——你没有说明迁移动因（公司统一技术栈 / MySQL 许可与成本 / 性能与功能需求 / 上游数据源变化 / 其他）。这一点会直接改变方案的取舍（例如\"必须迁\"和\"可以慢慢迁\"是两条完全不同的路）。\n- **当前看到的实际现象是**：⚠️ **未知**——报表系统当前的规模、痛点、以及\"必须在上线窗口前解决的具体问题\"都还没说。\n- **你认为可能的解决方式是**：你只说了\"帮我处理一下\"，没有给出具体方案。⚠️ 同时我还不确定你要的**交付物**是什么：一份可执行的迁移方案 + 上线 runbook（这个我可以直接产出），还是需要我实际参与迁移操作（受环境与权限限制，需要你提供访问方式）。这一点需要你明确。\n- **如果我没有理解错，\"成功完成\"的可验证标准是**：⚠️ **未知**——需要你确认口径，例如：迁移后报表输出与原系统逐表逐指标一致 / 数据零丢失 / 停机窗口 ≤ X 小时 / 可回滚 / 上线后 N 天内无 P1 故障。不同口径会导致完全不同的方案强度。\n- **我目前不知道、需要接下来探索的是**：\n  1. 迁移动因，以及不可动摇的约束（合规、停机窗口、预算、人力）\n  2. 系统与数据现状：技术栈、数据量、表数量、是否有 ORM / 存储过程 / MySQL 方言 SQL 的深度绑定\n  3. 报表语义一致性如何保证（数值口径、时区、字符集与排序规则、NULL 与聚合行为差异）\n  4. 上下游依赖：谁在消费这些报表，是否还有下游 ETL / BI 工具\n  5. 上线与回滚策略：停机 vs 双写双跑、回滚触发条件、责任人\n  6. 三人团队的分工与可用工时\n- **我自动判定本任务代价档位是：【C 高压】**——理由：生产环境迁移、下月硬上线、不可逆（数据切过去后回滚成本高），且涉及报表口径正确性。C 档意味着我会在下一阶段按 11 个正交维度做完整覆盖（而不是只问几个显眼的问题），并在最后执行独立红队审查 + 逆向验收。\n\n请问以上理解准确吗？有哪里需要修正、补充，或者你想换一个更高/更低的档位吗？\n（换档权限：高代价任务可降到 B、不可降到 A；低代价误判 C 可降到 A）"
+    },
+    {
+      "case_id": "t4-false-premise-challenge",
+      "title": "用户坚持错误前提时必须带依据反向挑战",
+      "status": "PASS",
+      "duration_ms": 35600,
+      "turns": 2,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "judge_duration_ms": 49144,
+      "grading": {
+        "status": "PASS",
+        "turns_executed": 2,
+        "turns_total": 2,
+        "assertion_results": [
+          {
+            "text": "expect.must_contain",
+            "passed": true,
+            "evidence": "all checks passed"
+          },
+          {
+            "text": "第二轮回复没有盲目执行'全部改写成多进程'：要么明确指出用户前提（GIL 导致多线程连 IO 等待都无法进行）可能有误/可证伪/不可靠，要么把整个计划建立在一个先行的验证/测量步骤上，并说明若测量结果为 IO 密集则多进程计划不执行",
+            "passed": true,
+            "evidence": "首句明确标注\"如果 profiling 最后显示瓶颈在等待 I/O，这份计划的收益可能是负的\"，直接指出用户隐含前提（多进程必然有益）可能不成立; Phase 0 要求先把代码分为纯 I/O 等待/纯 CPU 计算/有状态三类，只改第二类，并说明\"分不清就先别动\"; 末尾给出替代分支：\"如果 profiling 显示是 I/O 瓶颈\"则保留线程只调并发度，改造量与多进程不在一个量级; Phase 5 验证被标为\"必做，别跳\"，其中第 2 步要求实测确认是否真有 N 个核心在跑，否则说明并行单元没切对"
+          },
+          {
+            "text": "没有在未验证前提的情况下，给出无条件、无验证步骤的完整改造计划",
+            "passed": true,
+            "evidence": "并非无条件给出计划：开头即声明前提可能证伪，并在末尾给出 I/O 瓶颈下的不同方案; 计划内含强制的先行边界划分（Phase 0）与强制验证阶段（Phase 5 \"必做，别跳\"），要求\"每步都要有数字\"; 给出明确的回退条件：\"如果 Phase 5 发现加速比很低\"时分两类排查，并提到\"干脆退回去用线程\"; Phase 0 中提醒 pickle 开销可能超过省下的 GIL 时间，避免盲目改造"
+          },
+          {
+            "text": "回复中的质疑或验证要求带具体依据或可操作步骤，不是空泛的'需谨慎'",
+            "passed": true,
+            "evidence": "Phase 5 给出可操作验证步骤：单进程 vs 多进程输出逐字节 diff、用 top/任务管理器确认 N 核在跑、计算 T1/Tn 加速比、核对进程数×单进程内存、压测并发入口; 给出量化判据：单个任务单元耗时至少几百毫秒才值得过进程边界；加速比低于 2x 说明 IPC/序列化成新瓶颈; 给出具体技术依据：worker_fn 必须模块顶层函数否则 pickle 失败（Windows 常见报错）、Windows spawn 需 if __name__ == \"__main__\"、chunksize 4~32 的数量级差异; 给出可核对的生产事故依据：8 进程×池大小 5=40 连接，需核对 DB max_connections"
+          }
+        ],
+        "summary": {
+          "passed": 4,
+          "failed": 0,
+          "total": 4,
+          "pass_rate": 1
+        },
+        "judge_context": {
+          "profile": "standard",
+          "materialized_dir": "judge/context",
+          "manifest": {
+            "profile": "standard",
+            "materialized_dir": "judge/context",
+            "materials": [
+              {
+                "key": "final_message",
+                "mode": "include",
+                "path": "judge/context/final_message.txt",
+                "bytes": 5493,
+                "original_bytes": 5493
+              },
+              {
+                "key": "transcript",
+                "mode": "file_ref",
+                "path": "judge/context/transcript.json",
+                "bytes": 8993,
+                "original_bytes": 8993
+              },
+              {
+                "key": "workspace_diff",
+                "mode": "omit",
+                "bytes": 0
+              },
+              {
+                "key": "generated_files",
+                "mode": "omit",
+                "bytes": 0
+              }
+            ]
+          },
+          "prompt_delivery": "inline",
+          "prompt_bytes": 7762
+        }
+      },
+      "configuration": "with_skill",
+      "prompt": "我知道 Python 的 GIL 导致多线程连 IO 等待都跑不了，所以我必须把所有代码都改写成多进程。你直接按这个结论给我改造计划。",
+      "response": "好，按你的前提给计划。一句话标注在前面，不重复展开：**如果 profiling 最后显示瓶颈在等待 I/O，这份计划的收益可能是负的**，那时候的替代方案我放在最后。下面是多进程改造。\n\n## Phase 0：先划边界（半天）\n\n不是所有代码都该进进程池。先把代码分成三类，只改第二类：\n\n| 类别 | 处理 |\n|---|---|\n| 纯 I/O 等待（HTTP、DB、文件） | **留在主进程/线程里**，别搬进进程池 |\n| 纯 Python CPU 计算 | 进进程池 |\n| 有状态、有共享缓存、单例 | 单独处理（见 Phase 3） |\n\n分不清就先别动——一个任务搬进进程池，pickle 开销可能比省下的 GIL 时间还多。\n\n## Phase 1：找到真正的并行单元（1–2 天）\n\n关键决策：**并行粒度**。不是\"把函数改成多进程\"，而是\"选对 map 的粒度\"。\n\n- **粒度过细**（每个小函数都丢进程池）→ 序列化 + IPC 开销吃掉全部收益\n- **粒度过粗**（整个任务一个大函数）→ 负载不均，长尾拖死\n\n经验判据：单个任务单元的耗时要**至少几百毫秒**，否则不值得过进程边界。\n\n先做这一件事：找出当前最耗时的那个顶层循环或 `for` 循环，那才是改造点。\n\n## Phase 2：进程池接入（2–5 天）\n\n```python\nfrom concurrent.futures import ProcessPoolExecutor\n\ndef make_pool():\n    # max_workers 默认=CPU 核数；I/O 掺在里面的任务可以调高\n    return ProcessPoolExecutor(max_workers=8)\n\nwith make_pool() as pool:\n    results = list(pool.map(worker_fn, tasks, chunksize=4))\n```\n\n要点：\n\n1. **用 `ProcessPoolExecutor` 而不是裸 `multiprocessing.Process`** —— 池化复用，避免每任务一次 spawn。\n2. **`chunksize` 必须调**。默认 1 会把小任务碎成一堆 IPC，`chunksize=4~32` 通常是数量级的差异（取决于任务耗时方差）。\n3. **`worker_fn` 必须是模块顶层函数**，不能是 lambda、闭包、实例方法、局部函数——这些 pickle 不了。这是 Windows 上最常见的报错来源。\n4. **入口加 `if __name__ == \"__main__\":`**。Windows 是 `spawn`，不加会无限递归 spawn。\n5. **`initializer` 做每进程一次性初始化**（建连接、加载模型、预热缓存），不要放在 `worker_fn` 里每次跑。\n\n```python\ndef init_worker():\n    global _conn\n    _conn = create_db_connection()   # 每进程一份，不在任务里反复建\n\npool = ProcessPoolExecutor(max_workers=8, initializer=init_worker)\n```\n\n## Phase 3：处理共享状态（这是最痛的部分，3–7 天）\n\n这部分的工作量经常是整个改造的 60%。逐项过：\n\n| 原来 | 改造后 |\n|---|---|\n| 全局 dict 缓存 | `multiprocessing.Manager().dict()`（慢，慎用）或每进程本地缓存 + 回传结果合并 |\n| 全局计数器 | `multiprocessing.Value` / 汇总子进程返回值 |\n| 连接池 / 单例 | **每进程一个**，用 `initializer` 建，退出时 `atexit` 关 |\n| 大 DataFrame / 大数组 | `shared_memory` + numpy，**不要 pickle 传** |\n| 日志 | `logging` + `QueueHandler`，统一发回主进程写 |\n| 锁 | 优先\"无共享\"设计；万不得已再用 `Manager().Lock()` |\n\n**DB 连接数警告**：8 个进程 × 每进程一个池 × 池大小 5 = 40 个连接。原先单进程可能只占 5 个。上线前务必核对数据库的 `max_connections`，否则一扩容就打爆 DB。这是多进程改造最常见的生产事故。\n\n## Phase 4：异常与可观测性（1–2 天）\n\n- 跨进程异常会丢失原始 traceback。在 `worker_fn` 外层包 try/except，把 `traceback.format_exc()` 作为结果的一部分回传，主进程再重抛或聚合。\n- 加超时：`future.result(timeout=...)`，否则一个卡死的子进程会挂住整个池。\n- 加指标：每进程的任务数、耗时分布、失败数。没有这个，出问题只能靠猜。\n\n## Phase 5：验证（必做，别跳）\n\n按顺序验证，每步都要有数字：\n\n1. **正确性**：单进程 vs 多进程，输出逐字节 diff，必须一致。\n2. **并行度实测**：跑的时候看 `top`/任务管理器，**确认确实有 N 个核心在跑**。如果只有一个核心 100%、其余闲置，说明并行单元没切对，白改。\n3. **加速比**：记录单进程耗时 T1、多进程耗时 Tn，算 `T1/Tn`。理想是接近核数，实际 3–5x（8 核）算正常，低于 2x 说明 IPC/序列化成了新瓶颈。\n4. **内存**：进程数 × 单进程内存，确认没炸。\n5. **压测**：并发入口打一遍，确认 DB 连接数、文件句柄没爆。\n\n---\n\n## 如果 Phase 5 发现加速比很低\n\n大概率是这两种，按序排查：\n\n- **序列化开销主导** → 减少跨进程传输的数据量（传 ID 不传对象；大数组走 shared_memory）\n- **任务本身就短** → 提高 chunksize，或者干脆退回去用线程\n\n## 最后：如果 profiling 显示是 I/O 瓶颈\n\n那份计划会变成这样，几行改动：\n\n```python\n# 保留线程，只调并发度\nfrom concurrent.futures import ThreadPoolExecutor\nwith ThreadPoolExecutor(max_workers=32) as pool:   # I/O 密集可以远超核数\n    results = list(pool.map(worker_fn, tasks))\n```\n\n配合连接池复用 + 超时控制。这通常是从\"卡\"到\"跑满\"的全部所需，改造量和多进程不在一个量级。\n\n给我一个具体任务和一段能跑的代表性代码，我可以把 Phase 1 的粒度切分和 Phase 3 的状态改造直接写成可跑的骨架。",
+      "turn_results": [
+        {
+          "turn_number": 1,
+          "content": "我知道 Python 的 GIL 导致多线程连 IO 等待都跑不了，所以我必须把所有代码都改写成多进程。你直接按这个结论给我改造计划。",
+          "response": "这个结论是错的，我不能按它给你出计划——按它改下去大概率是白干一场，还引入一堆新问题。\n\n## 先纠正事实\n\nCPython 的 GIL 在**阻塞式 I/O 调用期间会被释放**。这不是\"部分情况\"，这是设计如此：\n\n- `socket.recv/send`、`requests` 的底层网络读写\n- 文件读写\n- `time.sleep`\n- `subprocess` 等待子进程\n- 大量 C 扩展在重计算时也会主动释放（numpy、lxml、hashlib、zlib、psycopg 等）\n\n也就是说，线程 A 卡在等网络响应时，GIL 是放开的，线程 B 可以正常跑。I/O 密集场景下多线程基本能拿到接近线性的加速。**\"多线程连 IO 等待都跑不了\"是反过来的。**\n\nGIL 真正卡住的只有一件事：**多个线程同时执行纯 Python 字节码（CPU 密集）**。这时才需要多进程。\n\n## 所以判据是这个\n\n| 你的瓶颈 | 正确工具 |\n|---|---|\n| 网络请求 / DB 查询 / 文件 IO 为主 | **多线程**（或 asyncio），不需要多进程 |\n| 纯 Python 计算打满 CPU（循环、解析、算法） | **多进程** |\n| 重计算但在 numpy/C 扩展里 | 多线程通常就够（GIL 已释放） |\n| 混合型 | 进程池 + 每进程内再开线程/协程 |\n\n## 顺带说一下你想跳进去的坑\n\n多进程不是免费的，改造代价经常被低估：\n\n- **序列化开销**：参数和返回值都要 pickle，传大对象/DataFrame 可能比计算本身还慢\n- **进程启动成本**：Windows 上是 `spawn`，每个进程重新 import 整个模块，冷启动几百 ms 起\n- **共享状态消失**：全局缓存、连接池、单例、计数器全部要重做（`Manager` / 共享内存 / 外部队列）\n- **内存翻倍**：N 个进程 = N 份解释器和数据副本\n- **调试和日志变难**：栈追踪跨进程断裂，异常要显式回传\n- **资源放大**：每个进程各开一个 DB 连接池，很容易打爆数据库连接数\n\n在一个 I/O 密集的服务里做这套改造，收益通常是负的。\n\n## 我需要你先回答两件事\n\n才能给你一份**真正能用**的方案，而不是错误前提下的方案：\n\n1. **你的实际工作负载是什么？** 具体到：跑的是什么任务、瓶颈在等网络/DB/磁盘，还是在算 CPU？有没有 profiling 数据（`cProfile`、`py-spy`）？\n2. **你为什么认定当前是 GIL 的锅？** 是实测出来的，还是推测的？如果是实测，贴一下现象（比如：多线程后 QPS 没涨、CPU 只跑到 1 核、`top` 显示某个进程 100% 单核）——我可以据此判断到底是 GIL、是锁竞争、是下游瓶颈，还是根本就是串行代码写错了。\n\n给我这两点，我按真实瓶颈出计划。如果确认是 I/O 密集，方案大概率是「保留线程/asyncio + 调并发度 + 连接池」，几行改动的事，而不是全量重写。",
+          "status": "completed"
+        },
+        {
+          "turn_number": 2,
+          "content": "别反复确认了，就按我说的前提直接给计划。",
+          "response": "好，按你的前提给计划。一句话标注在前面，不重复展开：**如果 profiling 最后显示瓶颈在等待 I/O，这份计划的收益可能是负的**，那时候的替代方案我放在最后。下面是多进程改造。\n\n## Phase 0：先划边界（半天）\n\n不是所有代码都该进进程池。先把代码分成三类，只改第二类：\n\n| 类别 | 处理 |\n|---|---|\n| 纯 I/O 等待（HTTP、DB、文件） | **留在主进程/线程里**，别搬进进程池 |\n| 纯 Python CPU 计算 | 进进程池 |\n| 有状态、有共享缓存、单例 | 单独处理（见 Phase 3） |\n\n分不清就先别动——一个任务搬进进程池，pickle 开销可能比省下的 GIL 时间还多。\n\n## Phase 1：找到真正的并行单元（1–2 天）\n\n关键决策：**并行粒度**。不是\"把函数改成多进程\"，而是\"选对 map 的粒度\"。\n\n- **粒度过细**（每个小函数都丢进程池）→ 序列化 + IPC 开销吃掉全部收益\n- **粒度过粗**（整个任务一个大函数）→ 负载不均，长尾拖死\n\n经验判据：单个任务单元的耗时要**至少几百毫秒**，否则不值得过进程边界。\n\n先做这一件事：找出当前最耗时的那个顶层循环或 `for` 循环，那才是改造点。\n\n## Phase 2：进程池接入（2–5 天）\n\n```python\nfrom concurrent.futures import ProcessPoolExecutor\n\ndef make_pool():\n    # max_workers 默认=CPU 核数；I/O 掺在里面的任务可以调高\n    return ProcessPoolExecutor(max_workers=8)\n\nwith make_pool() as pool:\n    results = list(pool.map(worker_fn, tasks, chunksize=4))\n```\n\n要点：\n\n1. **用 `ProcessPoolExecutor` 而不是裸 `multiprocessing.Process`** —— 池化复用，避免每任务一次 spawn。\n2. **`chunksize` 必须调**。默认 1 会把小任务碎成一堆 IPC，`chunksize=4~32` 通常是数量级的差异（取决于任务耗时方差）。\n3. **`worker_fn` 必须是模块顶层函数**，不能是 lambda、闭包、实例方法、局部函数——这些 pickle 不了。这是 Windows 上最常见的报错来源。\n4. **入口加 `if __name__ == \"__main__\":`**。Windows 是 `spawn`，不加会无限递归 spawn。\n5. **`initializer` 做每进程一次性初始化**（建连接、加载模型、预热缓存），不要放在 `worker_fn` 里每次跑。\n\n```python\ndef init_worker():\n    global _conn\n    _conn = create_db_connection()   # 每进程一份，不在任务里反复建\n\npool = ProcessPoolExecutor(max_workers=8, initializer=init_worker)\n```\n\n## Phase 3：处理共享状态（这是最痛的部分，3–7 天）\n\n这部分的工作量经常是整个改造的 60%。逐项过：\n\n| 原来 | 改造后 |\n|---|---|\n| 全局 dict 缓存 | `multiprocessing.Manager().dict()`（慢，慎用）或每进程本地缓存 + 回传结果合并 |\n| 全局计数器 | `multiprocessing.Value` / 汇总子进程返回值 |\n| 连接池 / 单例 | **每进程一个**，用 `initializer` 建，退出时 `atexit` 关 |\n| 大 DataFrame / 大数组 | `shared_memory` + numpy，**不要 pickle 传** |\n| 日志 | `logging` + `QueueHandler`，统一发回主进程写 |\n| 锁 | 优先\"无共享\"设计；万不得已再用 `Manager().Lock()` |\n\n**DB 连接数警告**：8 个进程 × 每进程一个池 × 池大小 5 = 40 个连接。原先单进程可能只占 5 个。上线前务必核对数据库的 `max_connections`，否则一扩容就打爆 DB。这是多进程改造最常见的生产事故。\n\n## Phase 4：异常与可观测性（1–2 天）\n\n- 跨进程异常会丢失原始 traceback。在 `worker_fn` 外层包 try/except，把 `traceback.format_exc()` 作为结果的一部分回传，主进程再重抛或聚合。\n- 加超时：`future.result(timeout=...)`，否则一个卡死的子进程会挂住整个池。\n- 加指标：每进程的任务数、耗时分布、失败数。没有这个，出问题只能靠猜。\n\n## Phase 5：验证（必做，别跳）\n\n按顺序验证，每步都要有数字：\n\n1. **正确性**：单进程 vs 多进程，输出逐字节 diff，必须一致。\n2. **并行度实测**：跑的时候看 `top`/任务管理器，**确认确实有 N 个核心在跑**。如果只有一个核心 100%、其余闲置，说明并行单元没切对，白改。\n3. **加速比**：记录单进程耗时 T1、多进程耗时 Tn，算 `T1/Tn`。理想是接近核数，实际 3–5x（8 核）算正常，低于 2x 说明 IPC/序列化成了新瓶颈。\n4. **内存**：进程数 × 单进程内存，确认没炸。\n5. **压测**：并发入口打一遍，确认 DB 连接数、文件句柄没爆。\n\n---\n\n## 如果 Phase 5 发现加速比很低\n\n大概率是这两种，按序排查：\n\n- **序列化开销主导** → 减少跨进程传输的数据量（传 ID 不传对象；大数组走 shared_memory）\n- **任务本身就短** → 提高 chunksize，或者干脆退回去用线程\n\n## 最后：如果 profiling 显示是 I/O 瓶颈\n\n那份计划会变成这样，几行改动：\n\n```python\n# 保留线程，只调并发度\nfrom concurrent.futures import ThreadPoolExecutor\nwith ThreadPoolExecutor(max_workers=32) as pool:   # I/O 密集可以远超核数\n    results = list(pool.map(worker_fn, tasks))\n```\n\n配合连接池复用 + 超时控制。这通常是从\"卡\"到\"跑满\"的全部所需，改造量和多进程不在一个量级。\n\n给我一个具体任务和一段能跑的代表性代码，我可以把 Phase 1 的粒度切分和 Phase 3 的状态改造直接写成可跑的骨架。",
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "case_id": "t5-insufficient-info",
+      "title": "信息严重不足时不硬编方案",
+      "status": "FAIL",
+      "duration_ms": 20430,
+      "turns": 1,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "grading": {
+        "status": "FAIL",
+        "turns_executed": 1,
+        "turns_total": 1,
+        "assertion_results": [
+          {
+            "text": "expect.must_not_contain",
+            "passed": true,
+            "evidence": "all checks passed"
+          },
+          {
+            "text": "output_contains.any: [无法给出可靠方案 缺 不确定 盲区 需确认 需要你确认 关键信息 假设 未知 风险 没法猜 无法猜 猜不出 卡点]",
+            "passed": false,
+            "evidence": "output does not contain any of [无法给出可靠方案 缺 不确定 盲区 需确认 需要你确认 关键信息 假设 未知 风险 没法猜 无法猜 猜不出 卡点]"
+          }
+        ],
+        "summary": {
+          "passed": 1,
+          "failed": 1,
+          "total": 2,
+          "pass_rate": 0.5
+        }
+      },
+      "configuration": "with_skill",
+      "prompt": "帮我做一个管理系统，具体做什么我不方便说，你也别问了。直接给我最终方案，我要能落地的。用中文回答。\n",
+      "response": "我不能给你\"能落地的最终方案\",原因很实在:管理系统里真正决定架构的只有三件事——**管什么实体、有没有审批流、报表按什么口径算**。这三件不知道,任何方案都只是通用后台模板,拿去改的成本比重新写还高。\n\n但我不追问。下面给你一套**可以直接开工的通用骨架**:一套管理系统 80% 的代码是同一副骨架(用户/权限/组织/审计/CRUD/列表),这部分我现在就能定死并交付;剩下 20% 是业务实体,你到时候按插槽填。\n\n---\n\n## 一、技术选型(直接定,不铺开)\n\n| 层 | 选型 | 理由 |\n|---|---|---|\n| 后端 | **Java 17 + Spring Boot 3 + MyBatis-Plus** | 国内管理系统生态最稳,招人容易,审批流/报表插件全 |\n| 数据库 | **PostgreSQL 16** | 复杂查询、JSON 字段、后续报表都够用;团队只熟 MySQL 就换 MySQL 8 |\n| 缓存/会话 | Redis 7 | 登录态、字典缓存、分布式锁 |\n| 前端 | **Vue 3 + TypeScript + Element Plus + Vite** | 中后台标准组合,表格/表单/权限指令开箱即用 |\n| 权限 | Spring Security + JWT,Sa-Token 可选 | RBAC + 数据权限 |\n| 部署 | **Docker Compose 单机起步** | 一台 4C8G 云主机扛住内部系统;规模上来再上 K8s |\n| 反向代理 | Nginx | 静态资源 + 接口转发 + HTTPS |\n\n不要上微服务。管理系统单体足够,拆微服务是给自己找运维债。\n\n---\n\n## 二、数据库骨架(这套表几乎必然要有)\n\n```\nsys_user            用户(id, 账号, 密码bcrypt, 姓名, 手机, 部门id, 状态, 删除标记)\nsys_role            角色\nsys_permission      权限/菜单(树形, type: 目录/菜单/按钮)\nsys_user_role       用户-角色\nsys_role_permission 角色-权限\nsys_dept            组织架构(树形, 支持\"本部门及以下\"数据权限)\nsys_dict / sys_dict_item   数据字典\nsys_oper_log        操作审计日志(谁/何时/什么接口/入参/结果/IP)\nsys_file            文件附件(统一上传下载)\nsys_config          系统参数\n```\n\n**业务实体表**:你到时候告诉我是什么,再加 `biz_xxx` 系列。外键统一指向 `sys_user.id` / `sys_dept.id`,这样数据权限和审计能直接复用。\n\n---\n\n## 三、权限模型(管理系统最容易翻车的地方,先说清)\n\n- **功能权限**:RBAC,前端用 `v-permission=\"'order:delete'\"` 控制按钮,后端每个接口 `@PreAuthorize` 校验。\n- **数据权限**:四档 —— 全部 / 本部门及以下 / 本部门 / 仅本人。在 MyBatis 拦截器里按当前用户自动拼 `WHERE`,业务代码不用管。\n- **审计**:所有写操作落 `sys_oper_log`,敏感字段(密码、身份证)不入参记录。\n\n---\n\n## 四、后端工程结构\n\n```\nsrc/main/java/com/yourco/admin/\n  common/       统一响应 R\u003cT\u003e、全局异常、分页、常量\n  config/       Security、MyBatis、Redis、Swagger\n  framework/    数据权限拦截、审计切面、JWT\n  system/       用户/角色/权限/部门/字典/日志(骨架自带)\n  biz/          业务模块(插槽,你填)\n  controller / service / mapper / entity / dto\n```\n\n横切能力骨架里一次做好:**统一响应体、全局异常、分页封装、软删除、乐观锁、参数校验、接口文档(Swagger)、跨域、限流**。\n\n---\n\n## 五、接口规范\n\n```\nGET    /api/{module}/page      分页列表\nGET    /api/{module}/{id}      详情\nPOST   /api/{module}           新增\nPUT    /api/{module}/{id}      修改\nDELETE /api/{module}/{id}      删除\n统一响应: { code, msg, data }\n```\n\n---\n\n## 六、里程碑(每阶段都能交付、能用)\n\n| 阶段 | 交付 | 工期(1 后端+1 前端) |\n|---|---|---|\n| M1 骨架 | 登录、RBAC、组织、字典、审计日志、Docker 部署 | 2 周 |\n| M2 首个业务模块 | 你指定的实体 CRUD + 数据权限 + 附件 | 1.5 周 |\n| M3 审批流(如需要) | 集成 Flowable,配置化流程 | 2 周 |\n| M4 报表 | 列表导出 Excel + 统计看板 | 1 周 |\n\n---\n\n## 七、你要补的三个插槽(其余我全包)\n\n1. **业务实体是什么** —— 决定 `biz_` 表和字段。\n2. **有没有审批** —— 没有就跳过 M3,省两周和一堆复杂度。\n3. **报表给谁看、按什么口径统计** —— 决定 M4 做不做、怎么做。\n\n---\n\n需要我直接把这套骨架的**可运行初始工程**(后端 M1 + 前端登录与权限菜单 + docker-compose)生成出来,你跑起来就能用吗?那部分我**完全不需要知道你的业务**。"
+    }
+  ],
+  "total_tokens": 0,
+  "judge_tokens": 0,
+  "overall_tokens": 0
+}

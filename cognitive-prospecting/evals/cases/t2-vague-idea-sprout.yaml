@@ -1,0 +1,33 @@
+# 用例 ID，与文件名一致。
+id: t2-vague-idea-sprout
+title: 萌芽期模糊想法进入 0.5 且单轮单问
+description: |
+  用户只有模糊感觉且明确"先别给方案"：应进入萌芽期成形，以单个问题开场，不输出方案模板。
+  两轮设计：首轮可能只触发 Skill 工具调用（引擎伪影），第二轮强制产生面向用户的文本。
+  注：问题数量（是否单轮单问）由人工复核，rule_based 只做关键词门槛。
+
+input:
+  turns:
+    - role: user
+      content: "我总觉得平时工作里有件事特别烦，但说不清楚到底要做什么。你先别急着给我方案，陪我理一理。"
+    - role: user
+      content: "嗯，你说。"
+
+# 零成本门槛：至少提出一个问题；不得出现方案模板话术。
+expect:
+  must_contain:
+    - "？"
+  must_not_contain:
+    - "A1诉求重述"
+    - "B1真实诉求"
+    - "推荐方案"
+
+judge:
+  type: rule_based
+  # 输出应带萌芽标记或明确的单问开场。
+  success:
+    - output_contains:
+        any: ["萌芽", "一个问题", "先问"]
+  failure:
+    - output_contains:
+        any: ["B5落地步骤", "以下是你的方案"]

@@ -1,0 +1,9 @@
+{
+  "eval_id": 0,
+  "eval_name": "纯事实查询直接回答，不启动流程",
+  "prompt": "Python 里 list.sort(reverse=...) 的 reverse 参数默认值是什么？直接告诉我就行。\n",
+  "assertions": [
+    "expect.must_not_contain",
+    "output_contains{any:[False false]}"
+  ]
+}

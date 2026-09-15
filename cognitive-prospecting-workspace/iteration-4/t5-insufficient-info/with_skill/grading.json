@@ -1,0 +1,20 @@
+{
+  "expectations": [
+    {
+      "text": "expect.must_not_contain",
+      "passed": true,
+      "evidence": "all checks passed"
+    },
+    {
+      "text": "output_contains.any: [无法给出可靠方案 缺 不确定 盲区 需确认 需要你确认 关键信息 假设 未知 风险 没法猜 无法猜 猜不出 卡点 不知道 不能给 没法给]",
+      "passed": false,
+      "evidence": "output does not contain any of [无法给出可靠方案 缺 不确定 盲区 需确认 需要你确认 关键信息 假设 未知 风险 没法猜 无法猜 猜不出 卡点 不知道 不能给 没法给]"
+    }
+  ],
+  "summary": {
+    "passed": 1,
+    "failed": 1,
+    "total": 2,
+    "pass_rate": 0.5
+  }
+}

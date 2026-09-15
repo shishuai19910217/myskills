@@ -1,0 +1,5 @@
+<｜｜DSML｜｜ calls>
+<｜｜DSML｜｜ invoke name="Read">
+<｜｜DSML｜｜ parameter name="file_path" string="true">C:\Users\ADMINI~1\AppData\Local\Temp\skill-up-802361630\.skill-up\judge\context\transcript.json</｜｜DSML｜｜ parameter>
+</｜｜DSML｜｜ invoke>
+</｜｜DSML｜｜ calls>

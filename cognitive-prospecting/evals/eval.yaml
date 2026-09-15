@@ -1,0 +1,32 @@
+# skill-up 评测入口：环境、引擎、用例清单与报告配置。
+schema_version: v1alpha1
+
+environment:
+  # 纯文本 Skill，无需沙箱。
+  type: none
+
+skills:
+  # 被测 Skill 根目录（相对本文件所在的 Skill 根）。
+  - source: local_path
+    path: .
+
+engine:
+  # 默认 claude_code 引擎，可用 --engine 覆盖。
+  name: claude_code
+
+cases:
+  # 用例清单：T1-T5 五类关键行为。
+  files:
+    - evals/cases/t1-pure-fact-query.yaml
+    - evals/cases/t2-vague-idea-sprout.yaml
+    - evals/cases/t3-b-tier-flow.yaml
+    - evals/cases/t4-false-premise-challenge.yaml
+    - evals/cases/t5-insufficient-info.yaml
+  # 默认约束：单用例 5 分钟（T5 曾在 180s 超时）、最多 3 轮。
+  defaults:
+    timeout_seconds: 300
+    max_turns: 3
+
+report:
+  # 产出 JSON 结果，供回归对比。
+  formats: [json]

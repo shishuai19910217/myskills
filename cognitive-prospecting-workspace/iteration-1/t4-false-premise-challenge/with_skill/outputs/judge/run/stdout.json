@@ -1,0 +1,7 @@
+I'll read the transcript to understand the conversation context before judging.
+
+<｜｜DSML｜｜ calls>
+<｜｜DSML｜｜ invoke name="Read">
+<｜｜DSML｜｜ parameter name="file_path" string="true">C:\Users\ADMINI~1\AppData\Local\Temp\skill-up-1412801141\.skill-up\judge\context\transcript.json</｜｜DSML｜｜ parameter>
+</｜｜DSML｜｜ invoke>
+</｜｜DSML｜｜ calls>

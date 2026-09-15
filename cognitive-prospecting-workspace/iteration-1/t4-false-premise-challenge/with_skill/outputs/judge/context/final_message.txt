@@ -1,0 +1,108 @@
+好，按你的前提给计划。一句话标注在前面，不重复展开：**如果 profiling 最后显示瓶颈在等待 I/O，这份计划的收益可能是负的**，那时候的替代方案我放在最后。下面是多进程改造。
+
+## Phase 0：先划边界（半天）
+
+不是所有代码都该进进程池。先把代码分成三类，只改第二类：
+
+| 类别 | 处理 |
+|---|---|
+| 纯 I/O 等待（HTTP、DB、文件） | **留在主进程/线程里**，别搬进进程池 |
+| 纯 Python CPU 计算 | 进进程池 |
+| 有状态、有共享缓存、单例 | 单独处理（见 Phase 3） |
+
+分不清就先别动——一个任务搬进进程池，pickle 开销可能比省下的 GIL 时间还多。
+
+## Phase 1：找到真正的并行单元（1–2 天）
+
+关键决策：**并行粒度**。不是"把函数改成多进程"，而是"选对 map 的粒度"。
+
+- **粒度过细**（每个小函数都丢进程池）→ 序列化 + IPC 开销吃掉全部收益
+- **粒度过粗**（整个任务一个大函数）→ 负载不均，长尾拖死
+
+经验判据：单个任务单元的耗时要**至少几百毫秒**，否则不值得过进程边界。
+
+先做这一件事：找出当前最耗时的那个顶层循环或 `for` 循环，那才是改造点。
+
+## Phase 2：进程池接入（2–5 天）
+
+```python
+from concurrent.futures import ProcessPoolExecutor
+
+def make_pool():
+    # max_workers 默认=CPU 核数；I/O 掺在里面的任务可以调高
+    return ProcessPoolExecutor(max_workers=8)
+
+with make_pool() as pool:
+    results = list(pool.map(worker_fn, tasks, chunksize=4))
+```
+
+要点：
+
+1. **用 `ProcessPoolExecutor` 而不是裸 `multiprocessing.Process`** —— 池化复用，避免每任务一次 spawn。
+2. **`chunksize` 必须调**。默认 1 会把小任务碎成一堆 IPC，`chunksize=4~32` 通常是数量级的差异（取决于任务耗时方差）。
+3. **`worker_fn` 必须是模块顶层函数**，不能是 lambda、闭包、实例方法、局部函数——这些 pickle 不了。这是 Windows 上最常见的报错来源。
+4. **入口加 `if __name__ == "__main__":`**。Windows 是 `spawn`，不加会无限递归 spawn。
+5. **`initializer` 做每进程一次性初始化**（建连接、加载模型、预热缓存），不要放在 `worker_fn` 里每次跑。
+
+```python
+def init_worker():
+    global _conn
+    _conn = create_db_connection()   # 每进程一份，不在任务里反复建
+
+pool = ProcessPoolExecutor(max_workers=8, initializer=init_worker)
+```
+
+## Phase 3：处理共享状态（这是最痛的部分，3–7 天）
+
+这部分的工作量经常是整个改造的 60%。逐项过：
+
+| 原来 | 改造后 |
+|---|---|
+| 全局 dict 缓存 | `multiprocessing.Manager().dict()`（慢，慎用）或每进程本地缓存 + 回传结果合并 |
+| 全局计数器 | `multiprocessing.Value` / 汇总子进程返回值 |
+| 连接池 / 单例 | **每进程一个**，用 `initializer` 建，退出时 `atexit` 关 |
+| 大 DataFrame / 大数组 | `shared_memory` + numpy，**不要 pickle 传** |
+| 日志 | `logging` + `QueueHandler`，统一发回主进程写 |
+| 锁 | 优先"无共享"设计；万不得已再用 `Manager().Lock()` |
+
+**DB 连接数警告**：8 个进程 × 每进程一个池 × 池大小 5 = 40 个连接。原先单进程可能只占 5 个。上线前务必核对数据库的 `max_connections`，否则一扩容就打爆 DB。这是多进程改造最常见的生产事故。
+
+## Phase 4：异常与可观测性（1–2 天）
+
+- 跨进程异常会丢失原始 traceback。在 `worker_fn` 外层包 try/except，把 `traceback.format_exc()` 作为结果的一部分回传，主进程再重抛或聚合。
+- 加超时：`future.result(timeout=...)`，否则一个卡死的子进程会挂住整个池。
+- 加指标：每进程的任务数、耗时分布、失败数。没有这个，出问题只能靠猜。
+
+## Phase 5：验证（必做，别跳）
+
+按顺序验证，每步都要有数字：
+
+1. **正确性**：单进程 vs 多进程，输出逐字节 diff，必须一致。
+2. **并行度实测**：跑的时候看 `top`/任务管理器，**确认确实有 N 个核心在跑**。如果只有一个核心 100%、其余闲置，说明并行单元没切对，白改。
+3. **加速比**：记录单进程耗时 T1、多进程耗时 Tn，算 `T1/Tn`。理想是接近核数，实际 3–5x（8 核）算正常，低于 2x 说明 IPC/序列化成了新瓶颈。
+4. **内存**：进程数 × 单进程内存，确认没炸。
+5. **压测**：并发入口打一遍，确认 DB 连接数、文件句柄没爆。
+
+---
+
+## 如果 Phase 5 发现加速比很低
+
+大概率是这两种，按序排查：
+
+- **序列化开销主导** → 减少跨进程传输的数据量（传 ID 不传对象；大数组走 shared_memory）
+- **任务本身就短** → 提高 chunksize，或者干脆退回去用线程
+
+## 最后：如果 profiling 显示是 I/O 瓶颈
+
+那份计划会变成这样，几行改动：
+
+```python
+# 保留线程，只调并发度
+from concurrent.futures import ThreadPoolExecutor
+with ThreadPoolExecutor(max_workers=32) as pool:   # I/O 密集可以远超核数
+    results = list(pool.map(worker_fn, tasks))
+```
+
+配合连接池复用 + 超时控制。这通常是从"卡"到"跑满"的全部所需，改造量和多进程不在一个量级。
+
+给我一个具体任务和一段能跑的代表性代码，我可以把 Phase 1 的粒度切分和 Phase 3 的状态改造直接写成可跑的骨架。

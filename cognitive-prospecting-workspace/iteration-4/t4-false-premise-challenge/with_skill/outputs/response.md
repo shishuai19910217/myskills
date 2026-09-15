@@ -1,0 +1,64 @@
+不写。不是我谨慎，是那份计划会让你白干几周，而且改完更慢——把 I/O 代码搬进进程池，等于给每个请求加一次 pickle + 进程间往返，收益是负的。基于错的前提做计划，越详细越有害。
+
+所以我直接给你能用的那份。
+
+## Phase 0：量（半小时，先做这个）
+
+别改任何代码，先把这张表跑出来。把你们真实的调用函数填进 `work()`：
+
+```python
+import asyncio, time
+from concurrent.futures import ThreadPoolExecutor, ProcessPoolExecutor
+import requests
+
+# ---- 填这里：一次代表性调用，输入用真实数据规模 ----
+INPUTS = [...]                      # 例如 200 个 URL / 200 个待查询 ID
+
+def work(x):
+    r = requests.get(x, timeout=10)
+    return r.json()                 # 注意：json 解析这段是吃 GIL 的 CPU 工作
+# --------------------------------------------------
+
+def bench(name, fn):
+    t = time.perf_counter(); fn(); d = time.perf_counter() - t
+    print(f"{name:28} {d:8.2f}s"); return d
+
+bench("serial",      lambda: [work(x) for x in INPUTS])
+bench("threads-32",  lambda: list(ThreadPoolExecutor(32).map(work, INPUTS)))
+bench("threads-128", lambda: list(ThreadPoolExecutor(128).map(work, INPUTS)))
+bench("procs-8",     lambda: list(ProcessPoolExecutor(8).map(work, INPUTS)))
+
+async def aio():
+    import aiohttp
+    async with aiohttp.ClientSession() as s:
+        async def one(x):
+            async with s.get(x) as r: return await r.json()
+        return await asyncio.gather(*[one(x) for x in INPUTS])
+bench("asyncio", lambda: asyncio.run(aio()))
+```
+
+`procs-8` 这一行是关键对照——它会告诉你多进程在你的真实负载下到底赢还是输。
+
+同时开一个 profiler 看 `work()` 内部时间落在哪：`requests` 等待 vs `json.loads`/正则/纯 Python 循环。
+
+## Phase 1：按数据分流
+
+- **线程/协程版已经接近上游带宽或限速上限** → 结束。不需要任何改造，这就是最优解。
+- **时间大头在 `json.loads` / 解析 / 纯计算** → 做 Phase 2。
+- **并发需求 >1k 连接** → 从线程换 asyncio，仍然不碰多进程。
+
+## Phase 2：只把 CPU 段切出去（如果 Phase 1 指向这里）
+
+范围是一个函数，不是整个代码库：
+
+1. 把 `work()` 拆成 `fetch(x)`（I/O，留在线程里）和 `parse(raw)`（纯 CPU）。
+2. 建一个模块级 `ProcessPoolExecutor`，只 `submit(parse, raw)`。
+3. Windows 注意：`parse` 必须是模块顶层函数（可 pickle），入口加 `if __name__ == "__main__":`，worker 初始化里避免重复 import 重库。
+4. 用 `initializer=` 传每进程只建一次的重对象（编译好的正则、模型等），别每次调用都传。
+5. 大 payload 别来回 pickle——让 `fetch` 只返回需要的那几个字段，或者写临时文件传路径。
+
+改完之后 I/O 并发度不变，CPU 段真正并行。改动面通常是一个文件里的两三个函数。
+
+---
+
+把 `work()` 的真实内容贴给我（函数签名 + 典型输入规模就够），我把 Phase 0 的脚本填成能直接跑的版本，或者直接按 Phase 2 改你那几个函数。

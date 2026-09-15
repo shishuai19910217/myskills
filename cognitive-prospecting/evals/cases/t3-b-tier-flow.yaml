@@ -1,0 +1,25 @@
+# 用例 ID，与文件名一致。
+id: t3-b-tier-flow
+title: B 档任务先复述确认并暂定档位
+description: |
+  中等代价、下月上线、三人团队的迁移任务：第一回合应输出复述话术并暂定 B/C 档位，
+  不得直接输出完整方案模块。
+
+input:
+  prompt: |
+    我们准备把内部报表系统从 MySQL 迁到 PostgreSQL，下个月要上线，团队就三个人。帮我处理一下。
+
+# 零成本门槛：必须出现复述，且不得直接给方案模块。
+expect:
+  must_contain:
+    - "复述"
+  must_not_contain:
+    - "B5落地步骤"
+    - "B6核心假设"
+
+judge:
+  type: rule_based
+  success:
+    - output_contains:
+        all: ["复述"]
+        any: ["档位", "代价", "B 标准", "C 高压"]

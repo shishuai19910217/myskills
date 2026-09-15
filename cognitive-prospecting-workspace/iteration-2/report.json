@@ -1,0 +1,48 @@
+{
+  "skill_name": "cognitive-prospecting",
+  "schema_version": "v1alpha1",
+  "engine_name": "claude_code",
+  "model_name": "",
+  "start_time": "2026-09-15T10:35:00.0628844+08:00",
+  "end_time": "2026-09-15T10:35:33.3898678+08:00",
+  "case_results": [
+    {
+      "case_id": "t5-insufficient-info",
+      "title": "信息严重不足时不硬编方案",
+      "status": "PASS",
+      "duration_ms": 33319,
+      "turns": 1,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "grading": {
+        "status": "PASS",
+        "turns_executed": 1,
+        "turns_total": 1,
+        "assertion_results": [
+          {
+            "text": "expect.must_not_contain",
+            "passed": true,
+            "evidence": "all checks passed"
+          },
+          {
+            "text": "output_contains{any:[无法给出可靠方案 缺 不确定 盲区 需确认 需要你确认 关键信息 假设 未知 风险 没法猜 无法猜 猜不出 卡点 不知道 不能给 没法给]}",
+            "passed": true,
+            "evidence": "output satisfies all contains checks (any:[无法给出可靠方案 缺 不确定 盲区 需确认 需要你确认 关键信息 假设 未知 风险 没法猜 无法猜 猜不出 卡点 不知道 不能给 没法给])"
+          }
+        ],
+        "summary": {
+          "passed": 2,
+          "failed": 0,
+          "total": 2,
+          "pass_rate": 1
+        }
+      },
+      "configuration": "with_skill",
+      "prompt": "帮我做一个管理系统，具体做什么我不方便说，你也别问了。直接给我最终方案，我要能落地的。用中文回答。\n",
+      "response": "先说一句实在的：不知道系统管的是什么，\"最终方案\"就只能给到所有管理系统共有的那 80% 骨架（认证、权限、组织、审计、通用增删改查），剩下 20% 的业务模型必须由你填。下面是能直接开工的骨架方案，业务部分我留了一个明确的插槽。\n\n---\n\n## 一、技术栈（默认选型，可直接落地）\n\n| 层 | 选型 | 理由 |\n|---|---|---|\n| 后端 | Spring Boot 3 + MyBatis-Plus | 国内管理系统生态最成熟，招人容易 |\n| 前端 | React 18 + Ant Design Pro | 管理系统事实标准，表格/表单/权限菜单开箱即用 |\n| 数据库 | PostgreSQL 15 | 比 MySQL 更适合复杂查询，JSONB 便于扩展字段 |\n| 缓存 | Redis 7 | 会话、字典、权限缓存 |\n| 鉴权 | JWT + Spring Security | 无状态，易横向扩展 |\n| 部署 | Docker Compose（起步）→ K8s | 单机可跑，后期平滑升级 |\n| 备选 | NestJS + TypeORM / FastAPI + SQLAlchemy | 若团队是 Node/Python 栈，架构不变 |\n\n## 二、分层架构\n\n```\n前端 (AntD Pro)\n   ↓ HTTP/JSON\n网关层  ── 鉴权过滤、限流、日志切面\n   ↓\n应用层  ── Controller / Service（业务编排）\n   ↓\n领域层  ── 领域模型 + 业务规则   ← 【你的业务插这里】\n   ↓\n基础设施 ── Mapper / Redis / MQ / 文件存储\n```\n\n## 三、通用核心模块（这 8 个任何管理系统都要）\n\n1. **认证** — 登录/登出、JWT 刷新、密码策略、验证码\n2. **RBAC 权限** — 用户 ↔ 角色 ↔ 权限（菜单/按钮/接口三级）\n3. **组织架构** — 部门树、岗位、数据权限（本人/本部门/全部）\n4. **数据字典** — 枚举统一管理，前端下拉直接引用\n5. **审计日志** — 登录日志 + 操作日志（谁、何时、改了什么）\n6. **文件服务** — 上传/下载，本地 or 对象存储（MinIO/OSS）\n7. **定时任务** — 内置调度（Quartz/XXL-Job）\n8. **消息通知** — 站内信 + 邮件/短信通道抽象\n\n## 四、核心数据模型（通用基座）\n\n```sql\nsys_user        (id, username, password, dept_id, status, ...)\nsys_role        (id, role_key, role_name, data_scope, ...)\nsys_user_role   (user_id, role_id)\nsys_menu        (id, parent_id, menu_type, perms, path, component)  -- 菜单+按钮+接口权限\nsys_role_menu   (role_id, menu_id)\nsys_dept        (id, parent_id, dept_name, ancestors)               -- 树形，ancestors 做快速子树查询\nsys_dict_type / sys_dict_data\nsys_login_log / sys_oper_log\nsys_file        (id, name, url, size, biz_type, biz_id)\n```\n\n所有业务表统一带审计字段：`create_by, create_time, update_by, update_time, del_flag`。\n\n## 五、目录结构\n\n```\nbackend/\n  common/      # 通用返回体、异常、工具、拦截器\n  framework/   # Security、Redis、日志切面、数据权限\n  system/      # 上面 8 个通用模块\n  business/    # ← 你的业务模块（每个业务一个子包）\nfrontend/\n  src/pages/system/     # 通用模块页面\n  src/pages/business/   # ← 你的业务页面\n```\n\n## 六、业务插槽（你唯一需要补的部分）\n\n按这个模板新增一个业务模块，其余全部复用：\n\n```\nbusiness/\u003c你的模块\u003e/\n  controller/  XxxController.java     # 继承通用 BaseController\n  service/     XxxService.java\n  mapper/      XxxMapper.java         # 继承 BaseMapper，CRUD 免写\n  domain/      Xxx.java               # 实体，加你的业务字段\n  resources/mapper/XxxMapper.xml\n```\n\n前端复制一份 `system` 页面模板，改字段和接口地址即可。**通用 CRUD 代码生成器**（若依/RuoYi 那套思路）可根据表结构一键生成这块，能把你的业务开发量再砍一半。\n\n## 七、落地里程碑\n\n| 阶段 | 内容 | 工期 |\n|---|---|---|\n| M1 | 跑通登录 + RBAC + 一个业务模块全链路 | 1 周 |\n| M2 | 补齐组织/字典/日志/文件 | 1 周 |\n| M3 | 业务模块批量开发（代码生成器加速） | 按模块数 |\n| M4 | 联调、压测、Docker 化部署 | 1 周 |\n\n---\n\n**下一步我可以直接产出代码**：把后端 M1 骨架（Security + RBAC + 一个示例业务模块）和前端 AntD Pro 页面生成出来给你。你只要告诉我**从零新建还是接现有代码库**、**团队主语言**这两个纯技术选择就行——不用透露业务是什么。\n\n或者，如果你愿意只给一个信息量最小但足够定方向的提示（例如\"这是个内部审批类系统\" vs \"这是个对外交易的平台\"），我就能把上面第四、六节的模型和扩展点做得更贴合，而不只是通用骨架。This response is AI-generated, for reference only."
+    }
+  ],
+  "total_tokens": 0,
+  "judge_tokens": 0,
+  "overall_tokens": 0
+}

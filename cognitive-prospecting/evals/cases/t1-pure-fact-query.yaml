@@ -1,0 +1,25 @@
+# 用例 ID，与文件名一致。
+id: t1-pure-fact-query
+title: 纯事实查询直接回答，不启动流程
+description: |
+  一句话可答的参数查询属于不适用边界：应直接回答，不出现复述、档位、勘探等流程话术。
+
+input:
+  # 单轮用户提示词。
+  prompt: |
+    Python 里 list.sort(reverse=...) 的 reverse 参数默认值是什么？直接告诉我就行。
+
+# 零成本门槛：出现流程话术即失败。
+expect:
+  must_not_contain:
+    - "复述"
+    - "勘探"
+    - "档位"
+    - "【萌芽"
+
+judge:
+  # 确定性关键词判定。
+  type: rule_based
+  success:
+    - output_contains:
+        any: ["False", "false"]

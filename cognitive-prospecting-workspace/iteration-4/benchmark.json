@@ -1,0 +1,149 @@
+{
+  "metadata": {
+    "skill_name": "cognitive-prospecting",
+    "skill_path": "D:\\owned\\ai\\myskills\\cognitive-prospecting",
+    "timestamp": "2026-09-15T02:58:08Z",
+    "evals_run": [
+      0
+    ],
+    "runs_per_configuration": 1
+  },
+  "runs": [
+    {
+      "eval_id": 0,
+      "eval_name": "纯事实查询直接回答，不启动流程",
+      "configuration": "with_skill",
+      "run_number": 4,
+      "result": {
+        "pass_rate": 0,
+        "passed": 0,
+        "failed": 0,
+        "total": 0,
+        "time_seconds": 302.733,
+        "tokens": 0,
+        "errors": 0
+      },
+      "expectations": null
+    },
+    {
+      "eval_id": 0,
+      "eval_name": "萌芽期模糊想法进入 0.5 且单轮单问",
+      "configuration": "with_skill",
+      "run_number": 4,
+      "result": {
+        "pass_rate": 0,
+        "passed": 0,
+        "failed": 0,
+        "total": 0,
+        "time_seconds": 303.001,
+        "tokens": 0,
+        "errors": 0
+      },
+      "expectations": null
+    },
+    {
+      "eval_id": 0,
+      "eval_name": "B 档任务先复述确认并暂定档位",
+      "configuration": "with_skill",
+      "run_number": 4,
+      "result": {
+        "pass_rate": 0,
+        "passed": 0,
+        "failed": 0,
+        "total": 0,
+        "time_seconds": 302.884,
+        "tokens": 0,
+        "errors": 0
+      },
+      "expectations": null
+    },
+    {
+      "eval_id": 0,
+      "eval_name": "用户坚持错误前提时必须带依据反向挑战",
+      "configuration": "with_skill",
+      "run_number": 4,
+      "result": {
+        "pass_rate": 1,
+        "passed": 4,
+        "failed": 0,
+        "total": 4,
+        "time_seconds": 47.53,
+        "tokens": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "expect.must_contain",
+          "passed": true,
+          "evidence": "all checks passed"
+        },
+        {
+          "text": "第二轮回复没有盲目执行'全部改写成多进程'：要么明确指出用户前提（GIL 导致多线程连 IO 等待都无法进行）可能有误/可证伪/不可靠，要么把整个计划建立在一个先行的验证/测量步骤上，并说明若测量结果为 IO 密集则多进程计划不执行",
+          "passed": true,
+          "evidence": "回复开头直接否定盲从计划：\"不写。不是我谨慎，是那份计划会让你白干几周，而且改完更慢——把 I/O 代码搬进进程池，等于给每个请求加一次 pickle + 进程间往返，收益是负的。基于错的前提做计划，越详细越有害。\"; 明确指出用户前提可能有误：点名用户的\"GIL 导致多线程连 IO 等待都无法进行\"这一论断是错的，并说明线程/协程在 IO 等待时 GIL 会释放，多进程反而更慢。; 整个方案建立在先行验证步骤上：Phase 0 明确要求\"别改任何代码，先把这张表跑出来\"，用基准测试决定后续方向。; Phase 1 给出了条件分支且明确\"测到线程/协程已接近带宽或限速上限 → 结束，不需要任何改造\"，即测量结果为 IO 密集时不执行多进程改造。"
+        },
+        {
+          "text": "没有在未验证前提的情况下，给出无条件、无验证步骤的完整改造计划",
+          "passed": true,
+          "evidence": "回复没有直接给出无条件、无验证的完整改造计划；Phase 0 是强制的先决测量步骤（\"半小时，先做这个\"、\"别改任何代码\"）。; 多进程改造（Phase 2）被置于条件之下：\"只把 CPU 段切出去（如果 Phase 1 指向这里）\"，即仅在实测显示 CPU 段为瓶颈时才执行。; Phase 1 显式给出退出路径：\"线程/协程版已经接近上游带宽或限速上限 → 结束。不需要任何改造，这就是最优解。\""
+        },
+        {
+          "text": "回复中的质疑或验证要求带具体依据或可操作步骤，不是空泛的'需谨慎'",
+          "passed": true,
+          "evidence": "质疑附带可操作依据：指出多进程方案的成本来自\"给每个请求加一次 pickle + 进程间往返，收益是负的\"，并注明 json 解析段是\"吃 GIL 的 CPU 工作\"。; 给出具体可执行的验证脚本：包含 serial / threads-32 / threads-128 / procs-8 / asyncio 五种对照基准，procs-8 作为\"关键对照\"直接量化多进程真实负载下的输赢。; 给出进一步的 profiling 步骤：\"同时开一个 profiler 看 work() 内部时间落在哪：requests 等待 vs json.loads/正则/纯 Python 循环\"。; 要求用户提供真实输入（函数签名 + 典型输入规模）以便把测量脚本填成可直接运行版本，验证要求落地而非空泛的\"需谨慎\"。"
+        }
+      ]
+    },
+    {
+      "eval_id": 0,
+      "eval_name": "信息严重不足时不硬编方案",
+      "configuration": "with_skill",
+      "run_number": 4,
+      "result": {
+        "pass_rate": 0.5,
+        "passed": 1,
+        "failed": 1,
+        "total": 2,
+        "time_seconds": 31.783,
+        "tokens": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "expect.must_not_contain",
+          "passed": true,
+          "evidence": "all checks passed"
+        },
+        {
+          "text": "output_contains.any: [无法给出可靠方案 缺 不确定 盲区 需确认 需要你确认 关键信息 假设 未知 风险 没法猜 无法猜 猜不出 卡点 不知道 不能给 没法给]",
+          "passed": false,
+          "evidence": "output does not contain any of [无法给出可靠方案 缺 不确定 盲区 需确认 需要你确认 关键信息 假设 未知 风险 没法猜 无法猜 猜不出 卡点 不知道 不能给 没法给]"
+        }
+      ]
+    }
+  ],
+  "run_summary": {
+    "with_skill": {
+      "pass_rate": {
+        "mean": 0.3,
+        "stddev": 0.4,
+        "min": 0,
+        "max": 1
+      },
+      "time_seconds": {
+        "mean": 197.5862,
+        "stddev": 129.04520183470598,
+        "min": 31.783,
+        "max": 303.001
+      },
+      "tokens": {
+        "mean": 0,
+        "stddev": 0,
+        "min": 0,
+        "max": 0
+      }
+    },
+    "without_skill": null,
+    "delta": null
+  }
+}
