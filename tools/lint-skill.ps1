@@ -51,6 +51,7 @@ function Get-AppendixToken([string]$Heading) {
 }
 
 function Get-ResourceToken([string]$Heading) {
+  $Heading = $Heading -replace '^§[\d.]+\s*', ''
   if ($Heading -notmatch '工具箱|SSOT|资源池|模型池') { return $null }
   $m = [regex]::Match($Heading, '（([^）]+)）')
   if ($m.Success) {

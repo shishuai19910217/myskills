@@ -1,7 +1,7 @@
 {
   "cognitive-prospecting": {
     "descriptionMarkers": ["触发", "不适用"],
-    "requiredHeadings": ["阶段0", "阶段1", "阶段2", "阶段3", "阶段4", "两层引擎", "六类认知边界", "附录A", "附录B", "术语表"],
+    "requiredHeadings": ["阶段0", "阶段1", "阶段2", "阶段3", "阶段4", "维度表", "通用骨架维度", "附录A", "附录B", "术语表"],
     "forbiddenPatterns": ["确证度"],
     "uniquePatterns": ["\\*\\*置信度\\*\\*（\\*\\*定性为主\\*\\*）"]
   }

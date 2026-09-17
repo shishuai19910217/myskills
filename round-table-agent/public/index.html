@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>多模型圆桌勘探 Agent</title>
+<style>
+  :root { --bg:#0f1115; --panel:#171a21; --line:#262b36; --txt:#e6e9ef; --dim:#8b93a5; --acc:#4f8cff; --ok:#3fbf7f; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:"Segoe UI", "Microsoft YaHei", sans-serif; background:var(--bg); color:var(--txt); }
+  header { display:flex; gap:12px; align-items:center; padding:10px 16px; background:var(--panel); border-bottom:1px solid var(--line); position:sticky; top:0; z-index:5; }
+  header h1 { font-size:16px; margin:0; font-weight:600; }
+  header .meta { font-size:12px; color:var(--dim); }
+  main { max-width:1000px; margin:0 auto; padding:16px; }
+  textarea { width:100%; min-height:90px; background:#0c0e12; color:var(--txt); border:1px solid var(--line); border-radius:8px; padding:10px; font-size:14px; resize:vertical; }
+  .row { display:flex; gap:8px; margin-top:8px; align-items:center; flex-wrap:wrap; }
+  button { background:#232936; color:var(--txt); border:1px solid var(--line); border-radius:6px; padding:6px 14px; cursor:pointer; font-size:13px; }
+  button:hover { border-color:var(--acc); }
+  button.primary { background:var(--acc); color:#fff; border-color:var(--acc); }
+  button.danger { color:#ff7b7b; border-color:#5a3a3a; }
+  button:disabled { opacity:.4; cursor:not-allowed; }
+  #transcript { margin-top:16px; background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:14px; min-height:200px; font-size:14px; line-height:1.7; }
+  .ev { margin:6px 0; padding:6px 10px; border-left:3px solid var(--line); border-radius:4px; }
+  .ev.opening { border-color:var(--acc); }
+  .ev.question { border-color:#b07bf0; }
+  .ev.reply { border-color:#8b93a5; margin-left:18px; }
+  .ev.boundary { border-color:var(--ok); }
+  .ev.round, .ev.converged { color:var(--dim); font-size:13px; }
+  .ev.list, .ev.final { border-color:#f0c674; background:#1c1a12; white-space:pre-wrap; }
+  .ev.error { border-color:#ff7b7b; color:#ff9b9b; }
+  .tag { font-size:11px; padding:1px 7px; border-radius:9px; background:#262b36; margin-right:6px; color:var(--dim); }
+  .tag.q { color:#b07bf0; } .tag.r { color:#e6e9ef; } .tag.b { color:var(--ok); } .tag.u { color:#f0c674; }
+  .pill { display:inline-block; font-size:12px; padding:2px 10px; border-radius:10px; background:#232936; border:1px solid var(--line); }
+  .pill.on { background:#1c3a2c; border-color:var(--ok); color:var(--ok); }
+  #boundaryList { display:none; margin-top:16px; background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:14px; }
+  #boundaryList pre { white-space:pre-wrap; font-size:13px; line-height:1.6; }
+  #controls { margin-top:14px; display:none; }
+  .hint { font-size:12px; color:var(--dim); margin-top:6px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>多模型圆桌勘探 Agent</h1>
+  <span class="meta" id="meta">未开始</span>
+  <span style="flex:1"></span>
+  <button id="listToggle" disabled>只看清单</button>
+  <button id="finalizeBtn" class="primary" disabled>出最终方案</button>
+</header>
+
+<main>
+  <textarea id="input" placeholder="输入一个边界不清晰的问题，例如：小说AI味表现哪些方面"></textarea>
+  <div class="row">
+    <button id="startBtn" class="primary">开始圆桌会议</button>
+    <span class="hint">多模型分角色勘探 → 产出边界约束清单 → 可补充循环 → 最终方案</span>
+  </div>
+
+  <div id="controls">
+    <textarea id="interject" placeholder="上帝视角插话：可直接说 边界:xxx 新增一条边界，或 补充:xxx 让统筹者重启盘问（同议题），或输 停止"></textarea>
+    <div class="row">
+      <button id="sendTurn">插话/补充</button>
+      <button id="stopBtn" class="danger">停止勘探</button>
+    </div>
+  </div>
+
+  <div id="transcript"></div>
+  <div id="boundaryList"><pre id="listContent"></pre></div>
+</main>
+
+<script>
+const $ = (id) => document.getElementById(id);
+let meetingId = null;
+let es = null;
+let listOnly = false;
+
+function append(text) {
+  const el = document.createElement("div");
+  el.className = "ev";
+  el.innerHTML = text;
+  $("transcript").appendChild(el);
+  $("transcript").scrollTop = $("transcript").scrollHeight;
+}
+
+function esc(s) { return String(s ?? "").replace(/[&<>]/g, (c) => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;" }[c])); }
+
+function render(event) {
+  const e = event;
+  switch (e.type) {
+    case "opening":
+      $("meta").textContent = `议题：${e.topic}｜产出目标：${e.objective}`;
+      append(`<div class="ev opening"><b>【开题】</b>${esc(e.topic)}<br><span class="tag u">产出目标</span>${esc(e.objective)}<br><span class="tag">范围</span>${esc(e.scope)}</div>`);
+      break;
+    case "question":
+      append(`<div class="ev question"><span class="tag q">盘问</span><b>第${e.round}轮 · ${esc(e.seat)}</b>：${esc(e.question)}</div>`);
+      break;
+    case "reply":
+      append(`<div class="ev reply"><span class="tag r">发言</span>${esc(e.seat)}：${esc(e.content)}</div>`);
+      break;
+    case "boundary":
+      append(`<div class="ev boundary"><span class="tag b">边界</span>[${esc(e.item.type)}] ${esc(e.item.description)}</div>`);
+      break;
+    case "round":
+      append(`<div class="ev round">〔第${e.round}轮结束，新增 ${e.newCount} 条〕</div>`);
+      break;
+    case "converged":
+      append(`<div class="ev converged">⏸ 收敛（${e.reason === "auto" ? "自动" : "用户停止"}，${e.rounds} 轮）—— 勘探结束，可补充或出方案</div>`);
+      $("controls").style.display = "block";
+      $("finalizeBtn").disabled = false;
+      break;
+    case "user_message":
+      append(`<div class="ev"><span class="tag u">你</span>${esc(e.content)}（${e.kind === "supplement" ? "补充，已并入议题" : "已作为新边界" }）</div>`);
+      break;
+    case "list":
+      refreshList(e.list);
+      if (!listOnly) renderListEvent(e.list);
+      break;
+    case "final":
+      append(`<div class="ev final"><b>【最终解决方案】</b>\n${esc(e.solution)}</div>`);
+      break;
+    case "error":
+      append(`<div class="ev error">⚠ ${esc(e.message)}</div>`);
+      break;
+    case "connected":
+      break;
+  }
+}
+
+function renderListEvent(list) {
+  const lines = [
+    `<b>【边界约束清单】</b>`,
+    `议题：${esc(list.topic)}｜产出目标：${esc(list.objective)}`,
+    `轮数 ${list.rounds}｜收敛 ${list.convergence}｜分歧裁决 ${list.disputesResolved} 处｜token≈${list.tokenEstimate}`,
+    ...list.items.map((b) => {
+      const mark = b.status.kind === "有分歧" ? `【${esc(b.status.verdict ?? "有分歧")}】` : "";
+      return `- ${b.id} [${b.type}]${mark} ${esc(b.description)}（${esc(b.proposer)}，${b.confidence}）`;
+    }),
+  ].join("\n");
+  append(`<div class="ev list">${lines}</div>`);
+}
+
+function refreshList(list) {
+  const lines = [
+    `# 边界约束清单`,
+    ``,
+    `议题：${list.topic}`,
+    `产出目标：${list.objective}`,
+    `勘探范围：${list.scope}`,
+    ``,
+    `轮数：${list.rounds} ｜ 收敛：${list.convergence} ｜ 分歧裁决：${list.disputesResolved} 处 ｜ token 估算：${list.tokenEstimate}`,
+    ``,
+    ...list.items.map((b) => `- ${b.id} [${b.type}] ${b.description}（${b.proposer}，可信度:${b.confidence}${b.status.kind === "有分歧" ? ` ｜ 裁决:${b.status.verdict ?? ""}` : ""}）`),
+  ];
+  $("listContent").textContent = lines.join("\n");
+}
+
+$("startBtn").onclick = async () => {
+  const content = $("input").value.trim();
+  if (!content) return;
+  $("transcript").innerHTML = "";
+  $("startBtn").disabled = true;
+  const res = await fetch("/api/meetings", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ content }),
+  });
+  const data = await res.json();
+  meetingId = data.meetingId;
+  $("controls").style.display = "block";
+  $("listToggle").disabled = false;
+  $("meta").textContent = "圆桌进行中…";
+  es = new EventSource(`/api/meetings/${meetingId}/events`);
+  es.onmessage = (ev) => { try { render(JSON.parse(ev.data)); } catch {} };
+};
+
+$("sendTurn").onclick = async () => {
+  const content = $("interject").value.trim();
+  if (!content || !meetingId) return;
+  await fetch(`/api/meetings/${meetingId}/turn`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ content }),
+  });
+  $("interject").value = "";
+};
+
+$("stopBtn").onclick = async () => {
+  if (!meetingId) return;
+  await fetch(`/api/meetings/${meetingId}/turn`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ content: "stop", kind: "stop" }),
+  });
+};
+
+$("finalizeBtn").onclick = async () => {
+  if (!meetingId) return;
+  await fetch(`/api/meetings/${meetingId}/finalize`, { method: "POST" });
+};
+
+$("listToggle").onclick = () => {
+  listOnly = !listOnly;
+  $("transcript").style.display = listOnly ? "none" : "block";
+  $("boundaryList").style.display = listOnly ? "block" : "none";
+  $("listToggle").textContent = listOnly ? "看实时会议" : "只看清单";
+};
+</script>
+</body>
+</html>

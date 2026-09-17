@@ -1,0 +1,22 @@
+{
+  "providers": [
+    { "id": "omni", "baseURL": "http://localhost:20128/v1", "model": "free", "authKeyName": "omni" },
+    { "id": "deepseek", "baseURL": "https://api.deepseek.com/v1", "model": "deepseek-chat", "authKeyName": "deepseek" },
+    { "id": "ai2", "baseURL": "http://127.0.0.1:3000/openai-codex-oauth/v1", "model": "gpt-5.6-luna", "authKeyName": "ai2", "disabled": true }
+  ],
+  "defaultSeats": [
+    { "role": "coordinator", "provider": "deepseek" },
+    { "role": "forward", "provider": "omni" },
+    { "role": "reverse", "provider": "deepseek" },
+    { "role": "counter", "provider": "omni" },
+    { "role": "assumption", "provider": "deepseek" },
+    { "role": "blindspot", "provider": "omni" }
+  ],
+  "runtime": {
+    "maxRounds": 4,
+    "convergenceN": 2,
+    "convergenceThreshold": 1,
+    "temperature": 0.4,
+    "maxTokens": 2048
+  }
+}
