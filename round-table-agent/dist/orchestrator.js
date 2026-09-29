@@ -1,375 +1,1091 @@
+import { getRuntime, getSeatConfigs } from "./config.js";
 import { chat, chatStream } from "./llm.js";
-import { loadSeats, loadConfig } from "./config.js";
-import { COORDINATOR_SYSTEM, SEAT_LABELS, SEAT_BOUNDARY_TYPE, seatSystemPrompt, seatUserPrompt, coordinatorOpenUser, coordinatorQuestionUser, coordinatorAdjudicateUser, coordinatorConvergeUser, coordinatorFinalUser, } from "./prompts.js";
-import { BOUNDARY_TYPES } from "./types.js";
-export class Orchestrator {
-    seats;
-    emitFn;
-    stream;
-    maxRounds;
-    convergenceN;
-    convergenceThreshold;
-    temperature;
-    maxTokens;
-    pool = [];
-    coordHistory = [];
-    round = 0;
-    topic = "";
-    objective = "";
-    scope = "";
-    meetingId = "";
-    seq = 0;
-    constructor(opts = {}) {
-        const cfg = loadConfig();
-        const seats = loadSeats(opts.seats);
-        this.seats = seats
-            .filter((s) => s.role !== "coordinator")
-            .map((s) => ({ role: s.role, label: SEAT_LABELS[s.role], provider: s.provider }));
-        const coord = seats.find((s) => s.role === "coordinator");
-        this.coordinatorProvider = coord?.provider ?? cfg.providers[0]?.id ?? "omni";
-        this.emitFn = opts.emit ?? (() => { });
-        this.stream = opts.stream ?? false;
-        this.maxRounds = opts.maxRounds ?? cfg.runtime.maxRounds;
-        this.convergenceN = opts.convergenceN ?? cfg.runtime.convergenceN;
-        this.convergenceThreshold = opts.convergenceThreshold ?? cfg.runtime.convergenceThreshold;
-        this.temperature = opts.temperature ?? cfg.runtime.temperature;
-        this.maxTokens = opts.maxTokens ?? cfg.runtime.maxTokens;
+import { coordinatorSystemPrompt, coordinatorOpeningUser, coordinatorQuestionUser, coordinatorConvergeUser, coordinatorAdjudicateUser, coordinatorSupplementUser, coordinatorFinalUser, coordinatorClassifyUserTurnUser, seatSystemPrompt, } from "./prompts.js";
+import { persistSnapshot } from "./snapshot.js";
+import { readFileSync, readdirSync, statSync } from "node:fs";
+import { join } from "node:path";
+/** 括号平衡的 JSON 提取：从首个 { 或 [ 开始扫描，处理字符串与转义，返回首个平衡片段 */
+export function extractJson(raw) {
+    const startObj = raw.indexOf("{");
+    const startArr = raw.indexOf("[");
+    let start = -1;
+    let openCh = "{";
+    if (startObj === -1 && startArr === -1)
+        return null;
+    if (startArr === -1 || (startObj !== -1 && startObj < startArr)) {
+        start = startObj;
+        openCh = "{";
     }
-    coordinatorProvider;
-    emit(e) {
-        this.emitFn(e);
+    else {
+        start = startArr;
+        openCh = "[";
     }
-    nextId() {
-        this.seq += 1;
-        return `B${String(this.seq).padStart(3, "0")}`;
-    }
-    tokenEstimate() {
-        // 粗估：中文约 1 字≈1 token 偏保守，用于成本指示
-        let chars = this.topic.length + this.scope.length + this.coordHistory.join("").length;
-        for (const b of this.pool)
-            chars += b.description.length;
-        return Math.round(chars / 1.5);
-    }
-    // ---- 底层调用 ----
-    async ask(providerId, system, user) {
-        const messages = [
-            { role: "system", content: system },
-            { role: "user", content: user },
-        ];
-        if (this.stream) {
-            let full = "";
-            await chatStream(providerId, messages, (d) => {
-                full += d;
-            }, { temperature: this.temperature, maxTokens: this.maxTokens });
-            return full;
+    const closeCh = openCh === "{" ? "}" : "]";
+    let depth = 0;
+    let inStr = false;
+    for (let i = start; i < raw.length; i++) {
+        const ch = raw[i];
+        if (inStr) {
+            if (ch === "\\")
+                i++;
+            else if (ch === '"')
+                inStr = false;
+            continue;
         }
-        return chat(providerId, messages, { temperature: this.temperature, maxTokens: this.maxTokens });
-    }
-    // ---- JSON 解析 ----
-    extractJson(text) {
-        // 剥离 Markdown 代码块围栏
-        const cleaned = text.replace(/```(?:json)?/g, "").trim();
-        // 找第一个 "{" 到最后一个 "}" 的平衡区间
-        const start = cleaned.indexOf("{");
-        const end = cleaned.lastIndexOf("}");
-        if (start < 0 || end <= start)
-            throw new Error("未找到 JSON 对象");
-        return JSON.parse(cleaned.slice(start, end + 1));
-    }
-    extractJsonArray(text) {
-        const cleaned = text.replace(/```(?:json)?/g, "").trim();
-        const start = cleaned.indexOf("[");
-        const end = cleaned.lastIndexOf("]");
-        if (start < 0 || end <= start)
-            throw new Error("未找到 JSON 数组");
-        return JSON.parse(cleaned.slice(start, end + 1));
-    }
-    // ---- 去重 ----
-    normalizeKey(type, description) {
-        return `${type}|${description.replace(/[，。、；：？！,.?!\s]/g, "").toLowerCase()}`;
-    }
-    isDuplicate(candidate) {
-        return this.pool.some((b) => b.dedupKey === candidate.dedupKey);
-    }
-    // ---- R0 开题 ----
-    async open(input) {
-        const raw = await this.ask(this.coordinatorProvider, COORDINATOR_SYSTEM, coordinatorOpenUser(input.content));
-        this.coordHistory.push(raw);
-        const json = this.extractJson(raw);
-        return {
-            topic: json.topic ?? "（议题未复述成功）",
-            objective: json.objective ?? "（产出目标未识别）",
-            scope: json.scope ?? "（范围未圈定）",
-        };
-    }
-    // ---- 统筹者盘问问题 ----
-    async askQuestion(seat) {
-        const boundaryType = SEAT_BOUNDARY_TYPE[seat.role];
-        const raw = await this.ask(this.coordinatorProvider, COORDINATOR_SYSTEM, coordinatorQuestionUser({
-            topic: this.topic,
-            objective: this.objective,
-            scope: this.scope,
-            seatLabel: seat.label,
-            boundaryType,
-            pool: this.pool,
-            round: this.round,
-        }));
-        this.coordHistory.push(raw);
-        return raw.replace(/^["'`]+|["'`]+$/g, "").trim();
-    }
-    // ---- 席位回答 ----
-    async seatAnswer(seat, question) {
-        const boundaryType = SEAT_BOUNDARY_TYPE[seat.role];
-        const system = seatSystemPrompt({ label: seat.label, boundaryType, topic: this.topic });
-        const user = seatUserPrompt({
-            topic: this.topic,
-            scope: this.scope,
-            objective: this.objective,
-            pool: this.pool,
-            round: this.round,
-            question,
-            boundaryType,
-        });
-        let lastError = "";
-        for (let attempt = 0; attempt < 2; attempt++) {
-            const raw = await this.ask(seat.provider, system, user);
-            this.emit({ type: "reply", round: this.round, seat: seat.label, content: raw });
-            try {
-                const json = this.extractJson(raw);
-                if (json.boundary === null || json.boundary === undefined)
-                    return { boundary: null };
-                const b = json.boundary;
-                if (typeof b.description !== "string" || b.description.trim().length === 0) {
-                    lastError = "空描述";
-                    continue;
+        if (ch === '"')
+            inStr = true;
+        else if (ch === openCh)
+            depth++;
+        else if (ch === closeCh) {
+            depth--;
+            if (depth === 0) {
+                try {
+                    return JSON.parse(raw.slice(start, i + 1));
                 }
-                const item = {
-                    id: this.nextId(),
-                    type: boundaryType,
-                    description: b.description.trim(),
-                    proposer: seat.label,
-                    source: `模型:${seat.provider}`,
-                    confidence: (b.confidence ?? "中"),
-                    status: { kind: "一致" },
-                    counterExamples: Array.isArray(b.counterExamples) ? b.counterExamples.map(String) : [],
-                    dedupKey: this.normalizeKey(boundaryType, b.description.trim()),
-                };
-                return { boundary: item };
-            }
-            catch (e) {
-                lastError = e instanceof Error ? e.message : String(e);
-            }
-        }
-        throw new Error(`席位 ${seat.label} 回答解析失败（${lastError}）`);
-    }
-    // ---- R2/R4 裁决 ----
-    async adjudicate() {
-        if (this.pool.length === 0)
-            return;
-        const raw = await this.ask(this.coordinatorProvider, COORDINATOR_SYSTEM, coordinatorAdjudicateUser({ topic: this.topic, items: this.pool }));
-        this.coordHistory.push(raw);
-        let verdicts = [];
-        try {
-            verdicts = this.extractJsonArray(raw);
-        }
-        catch {
-            return; // 裁决解析失败则全部保留
-        }
-        const byId = new Map(verdicts.map((v) => [v.id, v]));
-        let disputes = 0;
-        for (const item of this.pool) {
-            const v = byId.get(item.id);
-            if (!v)
-                continue;
-            if (v.verdict === "否决") {
-                item.status = { kind: "有分歧", verdict: "否决", rejectedReason: v.reason ?? "统筹者否决" };
-                disputes++;
-            }
-            else if (v.verdict === "合并" && v.mergeInto) {
-                item.status = { kind: "有分歧", verdict: `合并至${v.mergeInto}`, rejectedReason: v.reason ?? "与既有条目重叠" };
-                disputes++;
-            }
-        }
-        this.disputesResolved = disputes;
-    }
-    disputesResolved = 0;
-    // ---- R3 收敛判定 ----
-    recentNewCounts = [];
-    async checkConvergence() {
-        const recent = this.recentNewCounts.slice(-this.convergenceN);
-        if (recent.length >= this.convergenceN && recent.every((n) => n <= this.convergenceThreshold)) {
-            return { converged: true, reason: `连续 ${this.convergenceN} 轮新增边界 ≤${this.convergenceThreshold}` };
-        }
-        const raw = await this.ask(this.coordinatorProvider, COORDINATOR_SYSTEM, coordinatorConvergeUser({
-            topic: this.topic,
-            pool: this.pool,
-            recentRounds: this.recentNewCounts.map((n, i) => ({ round: i + 1, newCount: n })),
-        }));
-        this.coordHistory.push(raw);
-        try {
-            const json = this.extractJson(raw);
-            return { converged: !!json.converged, reason: json.reason ?? "" };
-        }
-        catch {
-            return { converged: false, reason: "收敛判定解析失败，继续勘探" };
-        }
-    }
-    // ---- 一轮盘问 ----
-    async runRound() {
-        this.round += 1;
-        const newItems = [];
-        for (const seat of this.seats) {
-            const question = await this.askQuestion(seat);
-            this.emit({ type: "question", round: this.round, seat: seat.label, question });
-            let answer;
-            try {
-                answer = await this.seatAnswer(seat, question);
-            }
-            catch (e) {
-                this.emit({ type: "error", message: e instanceof Error ? e.message : String(e), seat: seat.label });
-                continue;
-            }
-            if (answer.boundary && !this.isDuplicate(answer.boundary)) {
-                this.pool.push(answer.boundary);
-                newItems.push(answer.boundary);
-                this.emit({ type: "boundary", round: this.round, item: answer.boundary });
-            }
-        }
-        this.recentNewCounts.push(newItems.length);
-        this.emit({ type: "round", round: this.round, newCount: newItems.length });
-        return { newCount: newItems.length, newItems };
-    }
-    // ---- 主流程：勘探（R0 → R1×N → R3 → R4） ----
-    async runExploration(input, hooks = {}) {
-        this.meetingId = input.id ?? `meeting-${Date.now()}`;
-        const open = await this.open(input);
-        this.topic = open.topic;
-        this.objective = open.objective;
-        this.scope = open.scope;
-        this.emit({ type: "opening", topic: this.topic, scope: this.scope, objective: this.objective });
-        let stopped = false;
-        for (let r = 1; r <= this.maxRounds; r++) {
-            if (hooks.beforeRound) {
-                const turns = await hooks.beforeRound(r);
-                for (const turn of turns) {
-                    if (turn.kind === "stop") {
-                        stopped = true;
-                        await hooks.onStop?.();
-                        break;
-                    }
-                    if (turn.kind === "new_boundary" && turn.item) {
-                        await this.addUserBoundary({
-                            type: turn.item.type,
-                            description: turn.item.description,
-                            confidence: turn.item.confidence,
-                        });
-                    }
-                    if (turn.kind === "supplement" && turn.supplement) {
-                        this.scope += `\n[用户补充] ${turn.supplement}`;
-                        this.emit({ type: "user_message", content: turn.supplement, kind: "supplement" });
-                    }
+                catch {
+                    return null;
                 }
-                if (stopped)
+            }
+        }
+    }
+    return null;
+}
+function normalizeConfidence(v) {
+    if (v === "high" || v === "高")
+        return "high";
+    if (v === "low" || v === "低")
+        return "low";
+    if (v === "medium" || v === "中")
+        return "medium";
+    return "medium";
+}
+const GOAL_TYPES = ["enumerate", "judge", "design", "diagnose", "other"];
+function normalizeGoalType(v) {
+    return typeof v === "string" && GOAL_TYPES.includes(v) ? v : "other";
+}
+/**
+ * 流式明文化：扫描累计文本中指定字符串字段「已生成部分」解码后的明文
+ * （允许字符串尚未闭合，典型场景为 maxTokens 截断的残损 JSON）。
+ */
+export function scanStringFieldPrefix(raw, field) {
+    const objStart = raw.indexOf("{");
+    if (objStart === -1)
+        return "";
+    const m = new RegExp(`\\{\\s*"${field}"\\s*:\\s*"`, "y");
+    m.lastIndex = objStart;
+    if (!m.test(raw))
+        return "";
+    let out = "";
+    for (let i = m.lastIndex; i < raw.length; i++) {
+        const ch = raw[i];
+        if (ch === '"')
+            return out; // 字段闭合：完整明文
+        if (ch === "\\") {
+            const next = raw[i + 1];
+            if (next === undefined)
+                break; // 转义符刚生成，等后续字符
+            const map = { n: "\n", t: "\t", r: "\r", '"': '"', "\\": "\\", "/": "/" };
+            if (next === "u") {
+                const hex = raw.slice(i + 2, i + 6);
+                if (/^[0-9a-fA-F]{4}$/.test(hex)) {
+                    out += JSON.parse(`"\\u${hex}"`);
+                    i += 5;
+                }
+                else
                     break;
             }
-            await this.runRound();
-            const conv = await this.checkConvergence();
-            if (conv.converged) {
-                this.emit({ type: "converged", reason: "auto", rounds: this.round });
-                break;
+            else {
+                out += map[next] ?? next;
+                i += 1;
             }
         }
-        const convergence = stopped ? "user_stop" : "auto";
-        if (stopped)
-            this.emit({ type: "converged", reason: "user_stop", rounds: this.round });
-        // R4 裁决 + 出清单
-        await this.adjudicate();
-        const list = {
-            meetingId: this.meetingId,
-            topic: this.topic,
-            objective: this.objective,
-            scope: this.scope,
-            items: [...this.pool].sort((a, b) => BOUNDARY_TYPES.indexOf(a.type) - BOUNDARY_TYPES.indexOf(b.type)),
-            rounds: this.round,
-            convergence,
-            disputesResolved: this.disputesResolved,
-            tokenEstimate: this.tokenEstimate(),
-        };
-        this.emit({ type: "list", list });
-        return list;
-    }
-    // ---- R5 补充优化（同议题，非新议题） ----
-    async regenerateList(prev) {
-        await this.adjudicate();
-        return {
-            ...prev,
-            scope: this.scope,
-            items: [...this.pool].sort((a, b) => BOUNDARY_TYPES.indexOf(a.type) - BOUNDARY_TYPES.indexOf(b.type)),
-            rounds: this.round,
-            disputesResolved: this.disputesResolved,
-            tokenEstimate: this.tokenEstimate(),
-        };
-    }
-    async addUserBoundary(partial) {
-        const item = {
-            id: this.nextId(),
-            type: partial.type,
-            description: partial.description,
-            proposer: "用户插话",
-            source: "用户插话",
-            confidence: partial.confidence ?? "中",
-            status: { kind: "一致" },
-            counterExamples: [],
-            dedupKey: this.normalizeKey(partial.type, partial.description),
-        };
-        if (!this.isDuplicate(item)) {
-            this.pool.push(item);
-            this.emit({ type: "boundary", round: this.round, item });
+        else {
+            out += ch;
         }
+    }
+    return out;
+}
+/** 流式渲染专用：抠 description 字段明文 */
+export function scanDescriptionPrefix(raw) {
+    return scanStringFieldPrefix(raw, "description");
+}
+/** 把截断在句尾的文本裁到最后一个完整分句（逗号/顿号/分号处），避免挽救出半句话 */
+function trimToLastClause(s) {
+    const m = /^[\s\S]*[，、；,;]/.exec(s.trim());
+    return (m ? m[0].slice(0, -1) : s).trim();
+}
+const CJK_RE = /[一-鿿]/g;
+/** 统计汉字数量，用于识别「英文思考链」式输出 */
+function cjkCount(s) {
+    return (s.match(CJK_RE) ?? []).length;
+}
+/** 从一段文本中取出首个长度足够的完整中文句子（到中文句号/问号/引号为止） */
+function firstChineseSentence(s, minLen = 10) {
+    const m = /[一-鿿][\s\S]{8,}?[。！？…”」』]/.exec(s);
+    const sentence = m?.[0]?.trim();
+    return sentence && sentence.length >= minLen ? sentence : "";
+}
+/**
+ * 弱模型常先输出大段英文思考链、最后用 `Description: "..."`（或「描述：」）给出答案。
+ * 取最后一个标注之后的内容，优先引号内，否则取首个完整中文句子。
+ */
+function salvageLabeledDescription(raw) {
+    const labels = [...raw.matchAll(/description|描述|边界描述/gi)];
+    for (let k = labels.length - 1; k >= 0; k--) {
+        const tail = raw.slice(labels[k].index + labels[k][0].length);
+        const m = /^\s*[：:]\s*["“']?\s*([\s\S]*)$/.exec(tail);
+        if (!m)
+            continue;
+        // 直接在标注后的整段文本上找首个完整中文句子（结尾标点不会与描述内部的开引号 “ 冲突）
+        const sentence = firstChineseSentence(m[1], 10);
+        if (sentence)
+            return sentence;
+        const rest = m[1].trim();
+        if (cjkCount(rest) >= 10)
+            return rest.replace(/\s+/g, " ").slice(0, 500);
+    }
+    return "";
+}
+/**
+ * 引号污染容忍解析：
+ * 模型常在 description 正文里直接写未转义的 ASCII 双引号（如 （如"三天后""再遇"）），
+ * 导致 JSON.parse 失败，前缀扫描又会在第一个内部引号处截断成残句。
+ * 锚定字段边界——description 的结束引号必然是「后面紧跟 ,"confidence"」的那个引号——
+ * 从而把完整正文取出，并将正文内部残留的 ASCII 引号归一为中文引号。
+ */
+function tolerantSeatJson(raw) {
+    const m = /"description"\s*:\s*"([\s\S]*?)"\s*,\s*"confidence"\s*:\s*"(high|medium|low|高|中|低)"/i.exec(raw);
+    if (!m)
+        return null;
+    const desc = m[1].replace(/\s+/g, " ").trim();
+    if (desc.length < 8 || cjkCount(desc) < 6)
+        return null;
+    // 正文内部残留的 ASCII 引号按出现顺序配对替换为中文开/闭引号
+    let openQuote = true;
+    const normalized = desc.replace(/"/g, () => {
+        const q = openQuote ? "“" : "”";
+        openQuote = !openQuote;
+        return q;
+    });
+    return { description: normalized.slice(0, 500), confidence: normalizeConfidence(m[2]) };
+}
+/**
+ * 解析席位作答，优先级：
+ * ① 协议 JSON；② 引号污染容忍解析（正文含未转义引号但字段完整）；
+ * ③ 截断导致引号未闭合的 description 明文片段；
+ * ④ 标注答案（Description:/描述：，常见于夹带英文思考链的输出）；
+ * ⑤ 以中文为主的纯文本正文（英文思考链占比过高则拒绝）。
+ */
+function parseSeatReply(raw) {
+    const parsed = extractJson(raw);
+    if (parsed && typeof parsed.description === "string" && parsed.description.trim()) {
+        return {
+            description: parsed.description.trim().slice(0, 500),
+            confidence: normalizeConfidence(parsed.confidence),
+            salvaged: false,
+        };
+    }
+    // 引号污染：字段都在，仅正文内部引号未转义
+    const tolerant = tolerantSeatJson(raw);
+    if (tolerant) {
+        return { description: tolerant.description, confidence: tolerant.confidence, salvaged: true, repaired: true };
+    }
+    // 残损 JSON（多为 maxTokens 截断）：挽救 description 已生成部分
+    const prefix = scanDescriptionPrefix(raw).trim();
+    if (prefix.length >= 10 && cjkCount(prefix) >= 6) {
+        return { description: prefix.slice(0, 500), confidence: "medium", salvaged: true };
+    }
+    // 标注答案（思考链末尾的 Description: "..."）
+    const labeled = salvageLabeledDescription(raw);
+    if (labeled) {
+        return { description: labeled.slice(0, 500), confidence: "medium", salvaged: true };
+    }
+    // 纯文本：去掉代码块围栏；要求以中文为主，避免把英文思考链收入清单
+    const prose = raw.replace(/```(?:json)?/gi, "").trim();
+    if (prose.length >= 10 && !prose.startsWith("{")) {
+        const cjk = cjkCount(prose);
+        if (cjk >= 10 && cjk / prose.length >= 0.3) {
+            return { description: prose.slice(0, 500), confidence: "medium", salvaged: true };
+        }
+    }
+    return null;
+}
+/** 统筹者未按 JSON 输出问题时的挽救：
+ *  ① 最后一个带问号的中文问句；
+ *  ② 「问题：/请问/请(提出|补充|指出|说明)…」引导的陈述式指令句（弱模型常漏问号）。 */
+function salvageQuestion(raw) {
+    const matches = [...raw.matchAll(/[一-鿿][^。！？\n\r]{6,200}[？?]/g)];
+    const q = matches[matches.length - 1]?.[0]?.trim();
+    if (q && q.length >= 12)
+        return q;
+    // 陈述式挽救：取「问题：」「请问」「请补充/请指出/请说明/请提出」之后的内容
+    const labeled = [...raw.matchAll(/(?:问题\s*[：:]|请问|请(?:提出|补充|指出|说明|给出))\s*([一-鿿][^\n\r。！？*"{}]{8,180})/g)];
+    const tail = labeled[labeled.length - 1]?.[1]?.trim();
+    if (tail && tail.length >= 12)
+        return tail;
+    return "";
+}
+export class Orchestrator {
+    meetings = new Map();
+    streams = new Set();
+    stream;
+    // 运行期状态
+    state = { phase: "idle", round: 0, updatedAt: "" };
+    startedAt;
+    finishedAt;
+    finalizedAt;
+    errorAt;
+    stopRequested = false;
+    runController = null;
+    tokensUsed = 0;
+    /** 自上次裁决后边界池是否有变更（新增/合并/用户追加） */
+    adjudicateDirty = true;
+    constructor(opts) {
+        this.stream = opts?.stream ?? false;
+    }
+    /** 从磁盘快照恢复最近一次的会议（服务重启后调用） */
+    restoreLatestSnapshot(meetingsDir) {
+        try {
+            const files = readdirSync(meetingsDir)
+                .filter((f) => f.endsWith("-snapshot.json"))
+                .map((f) => {
+                const path = join(meetingsDir, f);
+                const stat = statSync(path);
+                return { name: f, path, mtime: stat.mtimeMs };
+            })
+                .sort((a, b) => b.mtime - a.mtime); // 最新的在前
+            if (files.length === 0)
+                return null;
+            const latest = files[0];
+            const raw = readFileSync(latest.path, "utf-8");
+            const snap = JSON.parse(raw);
+            // 恢复 MeetingRecord
+            const meeting = {
+                meetingId: snap.meetingId,
+                question: snap.question,
+                topic: snap.topic,
+                objective: snap.objective,
+                scope: snap.scope,
+                goalType: snap.goalType ?? "other",
+                // 愈合：丢弃空方案的 final 事件（旧版本空返回也会落事件，回放会显示空的「最终解决方案」块）
+                events: (snap.events ?? []).filter((e) => e.type !== "final" || !!e.solution?.trim()),
+                items: snap.items ?? [],
+                coordHistory: [], // 快照里没有，置空
+                newPerRound: [], // 快照里没有，置空
+                convergence: snap.convergence,
+                rounds: snap.rounds,
+                tokenEstimate: snap.tokenEstimate ?? 0,
+                finalSolution: snap.finalSolution,
+                pendingTurns: [],
+                seats: getSeatConfigs(),
+                config: getRuntime(),
+            };
+            this.meetings.set(snap.meetingId, meeting);
+            // 恢复 phase 状态；中间态归一：旧版本会在裁决阶段落盘（phase=adjudicating），
+            // 但 convergence 已非空说明勘探实际已结束，恢复时归一到 reviewing，
+            // 否则恢复的会议会被 finalize/turn 端点当成「勘探尚未结束」
+            let phase = snap.state?.phase ?? "reviewing";
+            if ((phase === "adjudicating" || phase === "interrogating") && snap.convergence) {
+                phase = "reviewing";
+            }
+            // 终局中断愈合：正在生成中（服务重启）或已标记完成但方案为空（旧版本空返回 bug），退回 reviewing
+            if (phase === "finalizing" || (phase === "finalized" && !snap.finalSolution?.trim())) {
+                phase = "reviewing";
+            }
+            this.setState(phase, snap.rounds);
+            this.startedAt = snap.state?.startedAt;
+            this.finishedAt = snap.state?.finishedAt;
+            this.finalizedAt = snap.state?.finalizedAt;
+            this.tokensUsed = snap.tokenEstimate ?? 0;
+            return { meetingId: snap.meetingId, snapshot: snap };
+        }
+        catch (err) {
+            console.error("恢复快照失败:", err);
+            return null;
+        }
+    }
+    setState(phase, round) {
+        if (phase === "interrogating" && !this.startedAt)
+            this.startedAt = new Date().toISOString();
+        if (phase === "reviewing")
+            this.finishedAt = new Date().toISOString();
+        if (phase === "finalized")
+            this.finalizedAt = new Date().toISOString();
+        if (phase === "error")
+            this.errorAt = new Date().toISOString();
+        this.state = {
+            phase,
+            round: round ?? this.state.round,
+            startedAt: this.startedAt,
+            finishedAt: this.finishedAt,
+            finalizedAt: this.finalizedAt,
+            errorAt: this.errorAt,
+            updatedAt: new Date().toISOString(),
+        };
+    }
+    /** 请求停止：立即中断当前进行中的模型调用（R2 中也生效） */
+    requestStop() {
+        this.stopRequested = true;
+        this.runController?.abort(new Error("用户停止勘探"));
+    }
+    /** 粗略 token 计数：输入输出统一按约 1.5 字符/token 累计（CJK 主导文本） */
+    recordCall(inputChars, output) {
+        this.tokensUsed += Math.ceil(inputChars / 1.5) + Math.ceil(output.length / 1.5);
+    }
+    /** 落盘失败不影响会议主流程 */
+    saveSnapshot(meetingId) {
+        try {
+            persistSnapshot(meetingId, () => this.snapshot(meetingId));
+        }
+        catch {
+            /* 忽略持久化失败 */
+        }
+    }
+    /** 统筹者对话：provider/模型覆盖均取自会议配置快照 */
+    coordChat(meeting, messages, opts) {
+        return this.chat(meeting.config.coordinatorProvider, messages, {
+            ...opts,
+            model: meeting.config.coordinatorModel,
+        });
+    }
+    async chat(providerId, messages, opts) {
+        const input = messages.reduce((n, m) => n + m.content.length, 0);
+        const out = await chat(providerId, messages, { ...opts, signal: this.runController?.signal });
+        this.recordCall(input, out);
+        return out;
+    }
+    async chatStream(providerId, messages, onChunk, opts) {
+        const input = messages.reduce((n, m) => n + m.content.length, 0);
+        const out = await chatStream(providerId, messages, onChunk, { ...opts, signal: this.runController?.signal });
+        this.recordCall(input, out);
+        return out;
+    }
+    onEvent(fn) {
+        this.streams.add(fn);
+        return () => this.streams.delete(fn);
+    }
+    getMeeting(meetingId) {
+        return this.meetings.get(meetingId);
+    }
+    getEvents(meetingId) {
+        return this.meetings.get(meetingId)?.events ?? [];
+    }
+    nextId(items) {
+        const n = items.length + 1;
+        return `B${String(n).padStart(3, "0")}`;
+    }
+    dedupKey(description) {
+        return description.trim().replace(/[，。,.\s]/g, "").slice(0, 40);
+    }
+    /** R0 开题 */
+    async runExploration(opts) {
+        const { meetingId, question, emit, beforeRound } = opts;
+        this.runController = new AbortController();
+        this.stopRequested = false;
+        this.tokensUsed = 0;
+        this.adjudicateDirty = true;
+        const meeting = {
+            meetingId,
+            question,
+            goalType: "other",
+            events: [],
+            items: [],
+            coordHistory: [],
+            newPerRound: [],
+            convergence: null,
+            rounds: 0,
+            tokenEstimate: 0,
+            pendingTurns: [],
+            seats: getSeatConfigs(),
+            config: getRuntime(),
+        };
+        this.meetings.set(meetingId, meeting);
+        this.setState("interrogating", 0);
+        const localEmit = async (e) => {
+            meeting.events.push(e);
+            await emit(e);
+        };
+        try {
+            // 统筹者开题（首次）
+            let openingRaw = await this.coordChat(meeting, [
+                { role: "system", content: coordinatorSystemPrompt() },
+                { role: "user", content: coordinatorOpeningUser({ question }) },
+            ], { temperature: 0.2, maxTokens: 15000, timeoutMs: 300_000 });
+            let opening = extractJson(openingRaw);
+            // 解析失败：针对性重试一次
+            if (!opening) {
+                openingRaw = await this.coordChat(meeting, [
+                    { role: "system", content: coordinatorSystemPrompt() },
+                    {
+                        role: "user",
+                        content: coordinatorOpeningUser({ question }) +
+                            '\n\n上一次输出无法解析为 JSON。请严格只输出 JSON 对象本身：{"topic":"...","objective":"...","goalType":"enumerate|judge|design|diagnose|other","scope":"..."}，不要 Markdown 代码块、不要任何解释文字。',
+                    },
+                ], { temperature: 0.2, maxTokens: 15000, timeoutMs: 300_000 });
+                opening = extractJson(openingRaw);
+            }
+            // 仍失败（多为思考链占满 token 导致 JSON 截断）：从残片里逐字段正则挽救
+            if (!opening) {
+                console.warn("[opening] 两次解析失败 raw=", openingRaw.slice(0, 600));
+                const grab = (key) => {
+                    const m = openingRaw.match(new RegExp(`"${key}"\\s*:\\s*"((?:\\\\.|[^"\\\\]){4,})`, "i"));
+                    if (!m?.[1])
+                        return undefined;
+                    try {
+                        return JSON.parse(`"${m[1].slice(0, 300)}"`);
+                    }
+                    catch {
+                        return m[1].replace(/\\(.)/g, "$1").slice(0, 300);
+                    }
+                };
+                const goalRaw = openingRaw.match(/"goalType"\s*:\s*"(enumerate|judge|design|diagnose|other)"/i)?.[1];
+                if (grab("topic") || grab("objective") || goalRaw) {
+                    opening = {
+                        topic: grab("topic"),
+                        objective: grab("objective"),
+                        scope: grab("scope"),
+                        goalType: goalRaw,
+                    };
+                }
+            }
+            meeting.goalType = normalizeGoalType(opening?.goalType);
+            meeting.topic = opening?.topic?.slice(0, 80) ?? question.slice(0, 80);
+            meeting.objective = opening?.objective ?? `澄清：${question}`;
+            meeting.scope = opening?.scope ?? "通用领域";
+            if (!opening || !opening.topic || !opening.objective) {
+                await localEmit({
+                    type: "notice",
+                    level: "warn",
+                    message: "统筹者开题输出无法解析为 JSON，已使用议题原文兜底，目标类型按“其他”处理。",
+                });
+            }
+            await localEmit({
+                type: "opening",
+                topic: meeting.topic,
+                objective: meeting.objective,
+                scope: meeting.scope,
+                goalType: meeting.goalType,
+            });
+            // R1-R4 轮询
+            let stopped = false;
+            let convergence = null;
+            for (let r = 1; r <= meeting.config.maxRounds; r++) {
+                this.setState("interrogating", r);
+                // 用户插话（每轮开始前消费）
+                if (beforeRound) {
+                    const turns = beforeRound();
+                    for (const t of turns) {
+                        meeting.pendingTurns.push(t);
+                        await localEmit({
+                            type: "user_message",
+                            content: t.supplement ?? t.item?.description ?? "",
+                            kind: t.kind,
+                        });
+                        if (t.kind === "new_boundary" && t.item) {
+                            this.addUserBoundary(meeting, t.item.type, t.item.description, t.item.confidence);
+                        }
+                        else if (t.kind === "supplement" && t.supplement) {
+                            meeting.scope += `；用户补充：${t.supplement}`;
+                        }
+                        else if (t.kind === "stop") {
+                            stopped = true;
+                        }
+                    }
+                }
+                if (stopped || this.stopRequested) {
+                    stopped = true;
+                    break;
+                }
+                const { newCount } = await this.runRound(meeting, r, localEmit);
+                meeting.newPerRound.push(newCount);
+                meeting.rounds = r;
+                meeting.tokenEstimate = this.tokensUsed;
+                await localEmit({ type: "round", round: r, newCount, tokenEstimate: this.tokensUsed });
+                // R3 收敛判定
+                const converged = await this.checkConvergence(meeting);
+                if (converged) {
+                    convergence = "auto";
+                    break;
+                }
+            }
+            if (!convergence)
+                convergence = stopped ? "user_stop" : "max_rounds";
+            meeting.convergence = convergence;
+            await localEmit({ type: "converged", reason: convergence, rounds: meeting.rounds });
+            // R2 裁决（循环结束后统一执行；不再使用可能已被取消的 runController 信号）
+            this.runController = null;
+            this.setState("adjudicating", meeting.rounds);
+            // 裁决失败（如模型请求超时）不得阻断清单下发：边界已在勘探阶段入池，必须保证清单可见、可落盘
+            try {
+                await this.adjudicate(meeting, localEmit);
+            }
+            catch (adjErr) {
+                await localEmit({
+                    type: "notice",
+                    level: "warn",
+                    message: `自动裁决请求失败（${adjErr.message}），全部边界暂按「保留」入清单，可稍后人工复核或重新出方案。`,
+                });
+            }
+            const list = this.regenerateList(meeting);
+            await localEmit({ type: "list", list });
+            // 先置 reviewing 再落盘：快照相位必须是终态，否则重启恢复后会被当成「勘探未完成」
+            this.setState("reviewing", meeting.rounds);
+            this.saveSnapshot(meeting.meetingId);
+            return list;
+        }
+        catch (err) {
+            if (this.stopRequested) {
+                meeting.convergence = "user_stop";
+                await localEmit({ type: "converged", reason: "user_stop", rounds: meeting.rounds });
+                this.runController = null;
+                this.setState("adjudicating", meeting.rounds);
+                await this.adjudicate(meeting, localEmit).catch(() => { });
+                const list = this.regenerateList(meeting);
+                await localEmit({ type: "list", list });
+                this.setState("reviewing", meeting.rounds);
+                this.saveSnapshot(meeting.meetingId);
+                return list;
+            }
+            this.setState("error", meeting.rounds);
+            await localEmit({ type: "error", message: `勘探失败：${err.message}` });
+            throw err;
+        }
+        finally {
+            this.runController = null;
+        }
+    }
+    /** 单轮：统筹者对每席生成问题 → 席位回答 → 入池。用户停止时立即中断。 */
+    async runRound(meeting, round, emit) {
+        let newCount = 0;
+        for (const seat of meeting.seats) {
+            if (this.stopRequested)
+                break;
+            try {
+                const question = await this.askCoordinator(meeting, seat, round, emit);
+                await emit({ type: "question", round, seat: seat.id, question });
+                let reply = await this.askSeat(meeting, seat, round, question, emit);
+                let parsedReply = parseSeatReply(reply);
+                // 首次解析失败：区分「空返回」（思考预算耗尽/上游异常）与「格式不合规」
+                let retried = false;
+                if (!parsedReply && !this.stopRequested) {
+                    retried = true;
+                    const emptyFirst = !reply.trim();
+                    // 首次失败即留证 raw：重答成功的病例（首败次成）此前完全无据可查
+                    console.warn(`[seatReply:first] seat=${seat.id} round=${round} empty=${emptyFirst} raw=`, reply.slice(0, 300));
+                    await emit({
+                        type: "notice",
+                        level: "warn",
+                        seat: seat.id,
+                        message: emptyFirst
+                            ? `「${seat.name}」第 ${round} 轮模型空返回（可能为上游限流或思考预算耗尽），正在重试一次。`
+                            : `「${seat.name}」第 ${round} 轮发言未按 JSON 协议输出，正在要求其重答一次。`,
+                    });
+                    reply = await this.askSeat(meeting, seat, round, question, emit, true);
+                    parsedReply = parseSeatReply(reply);
+                }
+                // 重答后仍非标准 JSON（含仅靠原文挽救）：留证 raw，便于定位思考链/截断/纯文本
+                if (retried && (!parsedReply || parsedReply.salvaged) && !this.stopRequested) {
+                    console.warn(`[seatReply:retry] seat=${seat.id} round=${round} empty=${!reply.trim()} salvaged=${!!parsedReply} raw=`, reply.slice(0, 500));
+                }
+                if (parsedReply) {
+                    if (parsedReply.salvaged) {
+                        await emit({
+                            type: "notice",
+                            level: parsedReply.repaired ? "info" : "warn",
+                            seat: seat.id,
+                            message: parsedReply.repaired
+                                ? `「${seat.name}」第 ${round} 轮发言的 JSON 正文内含未转义引号，已自动修复并完整收录（保留原可信度）。`
+                                : `「${seat.name}」第 ${round} 轮发言仍非标准 JSON，已按原文挽救收录（可信度降为「中」）。`,
+                        });
+                    }
+                    // 用最终可解析的原文校正发言块（重试时前端无流式块，直接展示）
+                    await emit({ type: "reply", round, seat: seat.id, content: reply });
+                    const added = this.addBoundary(meeting, {
+                        type: seat.type, // 类型以席位绑定为准，忽略模型自报
+                        description: parsedReply.description,
+                        confidence: parsedReply.confidence,
+                        source: seat.id,
+                        sourceModel: seat.model,
+                        round,
+                    });
+                    if (added) {
+                        newCount++;
+                        await emit({ type: "boundary", round, item: added });
+                    }
+                }
+                else {
+                    // 两次均无有效内容：显式告知，避免发言静默丢失
+                    await emit({ type: "reply", round, seat: seat.id, content: "" });
+                    await emit({
+                        type: "notice",
+                        level: "warn",
+                        seat: seat.id,
+                        message: `「${seat.name}」第 ${round} 轮两次发言均无法解析且无可用内容，本轮该席无新增边界。`,
+                    });
+                }
+            }
+            catch (err) {
+                if (this.stopRequested)
+                    break;
+                await emit({
+                    type: "error",
+                    message: `席位 ${seat.name} 本轮失败：${err.message}`,
+                    seat: seat.id,
+                });
+            }
+        }
+        return { newCount };
+    }
+    poolDescription(meeting) {
+        if (meeting.items.length === 0)
+            return "（暂无）";
+        return meeting.items
+            .map((b) => `- [${b.type}] ${b.description}`)
+            .join("\n");
+    }
+    /** 统筹者向某席生成针对性问题（解析失败时针对性重试一次，仍失败则通用问题兜底并告警） */
+    async askCoordinator(meeting, seat, round, emit) {
+        const user = coordinatorQuestionUser({
+            round,
+            seatName: seat.name,
+            seatRole: seat.role,
+            seatType: seat.type,
+            topic: meeting.topic ?? "",
+            scope: meeting.scope ?? "",
+            goalType: meeting.goalType,
+            pool: this.poolDescription(meeting),
+            coordHistory: meeting.coordHistory,
+        });
+        let raw = await this.coordChat(meeting, [
+            { role: "system", content: coordinatorSystemPrompt() },
+            { role: "user", content: user },
+        ], { temperature: 0.2, maxTokens: 20480, timeoutMs: 300_000 });
+        let parsed = extractJson(raw);
+        if (!parsed?.question) {
+            raw = await this.coordChat(meeting, [
+                { role: "system", content: coordinatorSystemPrompt() },
+                { role: "user", content: user + "\n\n上一次输出无法解析为 JSON。请严格只输出 {\"question\":\"...\"}。" },
+            ], { temperature: 0.2, maxTokens: 20480, timeoutMs: 300_000 });
+            parsed = extractJson(raw);
+        }
+        // 两次 JSON 均失败（或 question 为空串/纯空白）：
+        // ① 先从截断 JSON 的 "question" 字段挽救已生成明文；② 再找自由文本问句；③ 通用兜底
+        const parsedQuestion = typeof parsed?.question === "string" ? parsed.question.trim() : "";
+        let fieldSalvaged = "";
+        if (!parsedQuestion) {
+            fieldSalvaged = trimToLastClause(scanStringFieldPrefix(raw, "question"));
+            if (fieldSalvaged.length < 12)
+                fieldSalvaged = "";
+        }
+        const salvagedQuestion = !parsedQuestion && !fieldSalvaged ? salvageQuestion(raw) : "";
+        const fallback = !parsedQuestion && !fieldSalvaged && !salvagedQuestion;
+        if (fallback) {
+            // 留证：把模型原始返回（截断）打到服务端日志，便于定位是思考链截断还是格式跑偏
+            console.warn(`[askCoordinator] 两次解析失败 seat=${seat.id} round=${round} raw=`, raw.slice(0, 500));
+        }
+        const q = parsedQuestion ||
+            fieldSalvaged ||
+            salvagedQuestion ||
+            `（第${round}轮）请补充一条当前尚未提及的、与「${seat.type}」有关的具体方面或边界。`;
+        if (fieldSalvaged) {
+            await emit({
+                type: "notice",
+                level: "warn",
+                seat: seat.id,
+                message: `统筹者对「${seat.name}」第 ${round} 轮的盘问输出被截断，已从原文挽救问题。`,
+            });
+        }
+        else if (salvagedQuestion) {
+            await emit({
+                type: "notice",
+                level: "warn",
+                seat: seat.id,
+                message: `统筹者对「${seat.name}」第 ${round} 轮的盘问未按 JSON 输出，已从原文挽救问句。`,
+            });
+        }
+        else if (fallback) {
+            await emit({
+                type: "notice",
+                level: "warn",
+                seat: seat.id,
+                message: `统筹者对「${seat.name}」第 ${round} 轮的盘问两次均无法解析，已使用通用问题兜底。`,
+            });
+        }
+        meeting.coordHistory.push(`R${round} 致${seat.name}：${q}`);
+        return q;
+    }
+    /** 勘探席作答；流式时通过 reply_chunk 实时推送增量。remind=true 为解析失败后的非流式重试 */
+    async askSeat(meeting, seat, round, question, emit, remind = false) {
+        const messages = [
+            { role: "system", content: seatSystemPrompt(seat, meeting.goalType) },
+            {
+                role: "user",
+                content: `议题：${meeting.topic}\n范围：${meeting.scope}\n第${round}轮，统筹者向你提问：${question}\n请严格按输出协议作答。` +
+                    (remind
+                        ? '\n\n上一次输出无法解析为 JSON。本次必须只输出 JSON 对象本身：{"description":"一句话边界描述","confidence":"high|medium|low"}，不要 Markdown 代码块、不要任何解释文字。'
+                        : ""),
+            },
+        ];
+        if (this.stream && !remind) {
+            // 累计原始输出，仅把 description 字段的明文增量推给前端（不裸渲 JSON）
+            let raw = "";
+            let emitted = "";
+            return this.chatStream(seat.provider, messages, (delta) => {
+                raw += delta;
+                const plain = scanDescriptionPrefix(raw);
+                if (plain.length > emitted.length) {
+                    void emit({ type: "reply_chunk", round, seat: seat.id, delta: plain.slice(emitted.length) });
+                    emitted = plain;
+                }
+            }, { temperature: 0.2, maxTokens: 30000, model: seat.model, timeoutMs: 300_000 });
+        }
+        return this.chat(seat.provider, messages, { temperature: 0.2, maxTokens: 30000, model: seat.model, timeoutMs: 300_000 });
+    }
+    addBoundary(meeting, b) {
+        const key = this.dedupKey(b.description);
+        if (meeting.items.some((x) => this.dedupKey(x.description) === key))
+            return null;
+        this.adjudicateDirty = true;
+        const item = {
+            id: this.nextId(meeting.items),
+            ...b,
+            status: { kind: "kept" },
+        };
+        meeting.items.push(item);
         return item;
     }
-    async continueWithSupplement(list, supplement, extraRounds = 2) {
-        this.scope += `\n[用户补充] ${supplement}`;
-        this.emit({ type: "user_message", content: supplement, kind: "supplement" });
-        const before = this.maxRounds;
-        this.maxRounds = this.round + extraRounds;
-        for (let r = this.round + 1; r <= this.maxRounds; r++) {
-            await this.runRound();
-            const conv = await this.checkConvergence();
-            if (conv.converged)
-                break;
-        }
-        this.maxRounds = before;
-        await this.adjudicate();
-        const newList = {
-            ...list,
-            scope: this.scope,
-            items: [...this.pool].sort((a, b) => BOUNDARY_TYPES.indexOf(a.type) - BOUNDARY_TYPES.indexOf(b.type)),
-            rounds: this.round,
-            disputesResolved: this.disputesResolved,
-            tokenEstimate: this.tokenEstimate(),
+    addUserBoundary(meeting, type, description, confidence = "high") {
+        this.adjudicateDirty = true;
+        const item = {
+            id: this.nextId(meeting.items),
+            type,
+            description,
+            confidence,
+            source: "user",
+            sourceModel: "user",
+            round: 0,
+            status: { kind: "kept" },
         };
-        this.emit({ type: "list", list: newList });
-        return newList;
+        meeting.items.push(item);
+        return item;
     }
-    // ---- 终局：最终方案 ----
-    async finalSolution(list) {
-        const raw = await this.ask(this.coordinatorProvider, COORDINATOR_SYSTEM, coordinatorFinalUser({ topic: this.topic, objective: this.objective, scope: this.scope, list: list.items }));
-        this.emit({ type: "final", solution: raw });
-        return raw;
+    /** R3 收敛判定：先本地规则，再 LLM 复核 */
+    async checkConvergence(meeting) {
+        const recent = meeting.newPerRound.slice(-meeting.config.convergenceWindowN);
+        if (recent.length < meeting.config.convergenceWindowN)
+            return false;
+        // 判据为「每席每轮新增率」；threshold>=1 视为旧版绝对条数配置，自动换算为比率
+        const seatCount = Math.max(1, meeting.seats.length);
+        const limit = meeting.config.convergenceThreshold >= 1
+            ? meeting.config.convergenceThreshold / seatCount
+            : meeting.config.convergenceThreshold;
+        const localConverged = recent.every((n) => n / seatCount <= limit);
+        if (!localConverged)
+            return false;
+        const raw = await this.coordChat(meeting, [
+            { role: "system", content: coordinatorSystemPrompt() },
+            {
+                role: "user",
+                content: coordinatorConvergeUser({
+                    rounds: meeting.rounds,
+                    newPerRound: meeting.newPerRound,
+                    pool: this.poolDescription(meeting),
+                }),
+            },
+        ], { temperature: 0.1, maxTokens: 8000, timeoutMs: 300_000 });
+        return /true|是|收敛/.test(raw) && !/false|否|继续/.test(raw);
     }
-    // 供外部读取当前状态
-    snapshot() {
+    /** R2 裁决：保留 / 合并 / 否决，校验合并目标合法性 */
+    async adjudicate(meeting, emit) {
+        if (meeting.items.length === 0)
+            return;
+        const itemsPayload = meeting.items.map((b) => ({
+            id: b.id,
+            type: b.type,
+            description: b.description,
+        }));
+        const messages = [
+            { role: "system", content: coordinatorSystemPrompt() },
+            { role: "user", content: coordinatorAdjudicateUser({ items: itemsPayload }) },
+        ];
+        let decisions = extractJson(await this.coordChat(meeting, messages, { temperature: 0.2, maxTokens: 40960, timeoutMs: 300_000 }));
+        if (!Array.isArray(decisions)) {
+            // 重试一次：强调只输出 JSON 数组
+            decisions = extractJson(await this.coordChat(meeting, [
+                ...messages,
+                {
+                    role: "user",
+                    content: "上一次输出无法解析为 JSON 数组。请严格只输出 JSON 数组本身，不要 Markdown 代码块、不要任何解释文字，且必须覆盖全部条目。",
+                },
+            ], { temperature: 0.1, maxTokens: 40960, timeoutMs: 300_000 }));
+        }
+        if (!Array.isArray(decisions)) {
+            // 裁决两次均失败：全部条目暂按保留处理，并显式告警（不再静默）
+            await emit({
+                type: "notice",
+                level: "warn",
+                message: "统筹者裁决输出两次均无法解析，全部条目暂按保留处理。",
+            });
+            return;
+        }
+        const validIds = new Set(meeting.items.map((b) => b.id));
+        // 第一遍：确定每条的结论，非法裁决一律降级为"保留"
+        const verdictOf = new Map();
+        for (const d of decisions) {
+            if (!d.id || !validIds.has(d.id))
+                continue;
+            if (d.verdict === "否决") {
+                verdictOf.set(d.id, { kind: "rejected", reason: d.reason });
+            }
+            else if (d.verdict === "合并") {
+                verdictOf.set(d.id, { kind: "merged", mergeInto: d.mergeInto ?? "", reason: d.reason });
+            }
+            else {
+                verdictOf.set(d.id, { kind: "kept" });
+            }
+        }
+        // 第二遍：校验合并目标（必须存在且为保留），否则降级为保留
+        for (const [id, v] of verdictOf) {
+            if (v.kind === "merged") {
+                const target = v.mergeInto ? verdictOf.get(v.mergeInto) : undefined;
+                if (!v.mergeInto || !validIds.has(v.mergeInto) || !target || target.kind !== "kept") {
+                    verdictOf.set(id, { kind: "kept" });
+                }
+            }
+        }
+        for (const item of meeting.items) {
+            const v = verdictOf.get(item.id);
+            if (!v) {
+                item.status = { kind: "kept" };
+                continue;
+            }
+            if (v.kind === "rejected") {
+                item.status = { kind: "rejected", reason: v.reason ?? "统筹者否决" };
+            }
+            else if (v.kind === "merged" && v.mergeInto) {
+                const target = meeting.items.find((b) => b.id === v.mergeInto);
+                item.status = { kind: "merged", mergedInto: v.mergeInto, reason: v.reason };
+                if (target && !target.mergedFrom?.includes(item.id)) {
+                    target.mergedFrom = [...(target.mergedFrom ?? []), item.id];
+                }
+            }
+            else {
+                item.status = { kind: "kept" };
+            }
+        }
+        this.adjudicateDirty = false;
+    }
+    regenerateList(meeting) {
+        const typeOrder = { 目标: 0, 约束: 1, 反例: 2, 前提: 3, 盲区: 4 };
+        const items = [...meeting.items].sort((a, b) => {
+            const statusOrder = (s) => s.kind === "kept" ? 0 : s.kind === "merged" ? 1 : 2;
+            return (statusOrder(a.status) - statusOrder(b.status) ||
+                typeOrder[a.type] - typeOrder[b.type] ||
+                a.id.localeCompare(b.id));
+        });
         return {
-            meetingId: this.meetingId,
-            state: this.round === 0 ? "idle" : "interrogating",
-            boundaryPool: [...this.pool],
-            roundNumber: this.round,
-            coordinatorHistory: [...this.coordHistory],
-            userInterjections: [],
-            createdAt: "",
-            updatedAt: "",
+            items,
+            rounds: meeting.rounds,
+            convergence: meeting.convergence ?? "auto",
+            disputesResolved: items.filter((b) => b.status.kind !== "kept").length,
+            tokenEstimate: this.tokensUsed,
+        };
+    }
+    /** 重新生成清单（池有变更时先重裁），供补充/手动追加后调用 */
+    async regenerateListAsync(meeting) {
+        if (this.adjudicateDirty) {
+            this.runController = null; // 评审期调用不受勘探中断信号影响
+            await this.adjudicate(meeting, async () => { });
+        }
+        return this.regenerateList(meeting);
+    }
+    // ============ R5 ============
+    /** 手动追加一条用户边界（绕过模型） */
+    addUserBoundaryById(meetingId, type, description, confidence = "high") {
+        const m = this.meetings.get(meetingId);
+        if (!m)
+            return null;
+        return this.addUserBoundary(m, type, description, confidence);
+    }
+    /**
+     * 用户插话的语义分类（统筹者 LLM 判定）。
+     * 显式 kind 优先；无法判定返回 other，由调用方向用户澄清，不擅自处理。
+     */
+    async classifyUserTurn(meetingId, content, explicit) {
+        if (explicit)
+            return explicit;
+        const m = this.meetings.get(meetingId);
+        if (!m)
+            return { kind: "other" };
+        const raw = await this.coordChat(m, [
+            { role: "system", content: coordinatorSystemPrompt() },
+            { role: "user", content: coordinatorClassifyUserTurnUser({ topic: m.topic ?? m.question, content }) },
+        ], { temperature: 0.1, maxTokens: 8000, timeoutMs: 300_000 }).catch(() => "");
+        const parsed = extractJson(raw);
+        const kind = parsed?.kind;
+        if (kind === "stop")
+            return { kind: "stop" };
+        if (kind === "supplement" && content.trim())
+            return { kind: "supplement", supplement: content.trim().slice(0, 500) };
+        if (kind === "new_boundary") {
+            const rawType = parsed?.boundaryType;
+            const type = ["目标", "约束", "反例", "前提", "盲区"].includes(rawType)
+                ? rawType
+                : "盲区";
+            const desc = (parsed?.description || content).trim().slice(0, 300);
+            return { kind: "new_boundary", item: { type, description: desc, confidence: "high" } };
+        }
+        return { kind: "other" };
+    }
+    /** 收敛后用户补充：并入议题，再跑 extraRounds 轮（同样支持即时停止与插话） */
+    async continueWithSupplement(meetingId, supplement, emit, beforeRound) {
+        const m = this.meetings.get(meetingId);
+        if (!m)
+            return null;
+        this.runController = new AbortController();
+        this.stopRequested = false;
+        const localEmit = async (e) => {
+            m.events.push(e);
+            await emit(e);
+        };
+        const user = coordinatorSupplementUser({ topic: m.topic ?? "", scope: m.scope ?? "", supplement });
+        const raw = await this.coordChat(m, [
+            { role: "system", content: coordinatorSystemPrompt() },
+            { role: "user", content: user },
+        ], { temperature: 0.2, maxTokens: 12000, timeoutMs: 300_000 });
+        const parsed = extractJson(raw);
+        m.scope = parsed?.scope ?? `${m.scope}；补充：${supplement}`;
+        m.objective += `；补充澄清：${supplement}`;
+        await localEmit({ type: "user_message", content: supplement, kind: "supplement" });
+        this.saveSnapshot(meetingId);
+        let stopped = false;
+        for (let i = 1; i <= m.config.extraRounds; i++) {
+            const round = m.rounds + i;
+            this.setState("interrogating", round);
+            if (beforeRound) {
+                for (const t of beforeRound()) {
+                    m.pendingTurns.push(t);
+                    await localEmit({
+                        type: "user_message",
+                        content: t.supplement ?? t.item?.description ?? "",
+                        kind: t.kind,
+                    });
+                    if (t.kind === "new_boundary" && t.item) {
+                        this.addUserBoundary(m, t.item.type, t.item.description, t.item.confidence);
+                    }
+                    else if (t.kind === "supplement" && t.supplement) {
+                        m.scope += `；用户补充：${t.supplement}`;
+                    }
+                    else if (t.kind === "stop") {
+                        stopped = true;
+                    }
+                }
+            }
+            if (stopped || this.stopRequested)
+                break;
+            const { newCount } = await this.runRound(m, round, localEmit);
+            m.newPerRound.push(newCount);
+            m.rounds = round;
+            m.tokenEstimate = this.tokensUsed;
+            await localEmit({ type: "round", round, newCount, tokenEstimate: this.tokensUsed });
+        }
+        m.convergence = this.stopRequested || stopped ? "user_stop" : "auto";
+        await localEmit({ type: "converged", reason: m.convergence, rounds: m.rounds });
+        this.runController = null;
+        this.setState("adjudicating", m.rounds);
+        // 与主勘探路径一致：裁决失败也要保证清单下发与落盘
+        try {
+            await this.adjudicate(m, localEmit);
+        }
+        catch (adjErr) {
+            await localEmit({
+                type: "notice",
+                level: "warn",
+                message: `自动裁决请求失败（${adjErr.message}），全部边界暂按「保留」入清单，可稍后人工复核或重新出方案。`,
+            });
+        }
+        const list = this.regenerateList(m);
+        await localEmit({ type: "list", list });
+        this.saveSnapshot(meetingId);
+        this.setState("reviewing", m.rounds);
+        return list;
+    }
+    /** R5 终局：只把裁决保留（kept）的边界喂给终局，否决/合并不作为依据 */
+    async finalSolution(meetingId) {
+        const m = this.meetings.get(meetingId);
+        if (!m)
+            throw new Error("会议不存在");
+        this.setState("finalizing", m.rounds);
+        const kept = m.items.filter((b) => b.status.kind === "kept");
+        const baseMessages = [
+            { role: "system", content: coordinatorSystemPrompt() },
+            {
+                role: "user",
+                content: coordinatorFinalUser({
+                    topic: m.topic ?? "",
+                    objective: m.objective ?? "",
+                    scope: m.scope ?? "",
+                    list: kept,
+                }),
+            },
+        ];
+        try {
+            // maxTokens 给足 81920：free 通道后端模型随机且思考链与正文共享预算，预算不足时正文可能为空
+            let content = (await this.coordChat(m, baseMessages, {
+                temperature: 0.5,
+                maxTokens: 81920,
+                timeoutMs: 600_000,
+            })).trim();
+            // 空返回兜底：重试一次并强调直接输出正文
+            if (!content) {
+                console.warn(`[finalSolution] seat=coordinator meeting=${meetingId} 首次空返回，重试一次`);
+                content = (await this.coordChat(m, [
+                    ...baseMessages,
+                    {
+                        role: "user",
+                        content: "上一次返回内容为空（可能思考过程耗尽了输出额度）。请不要再进行长段思考，直接输出完整的 Markdown 方案正文，立即从「## 方案概述」开始。",
+                    },
+                ], { temperature: 0.5, maxTokens: 81920, timeoutMs: 600_000 })).trim();
+            }
+            if (!content) {
+                throw new Error("终局模型连续两次空返回（思考预算耗尽或上游异常），请稍后重试，或更换统筹者模型");
+            }
+            m.finalSolution = content;
+            m.events.push({ type: "final", solution: content });
+            this.setState("finalized", m.rounds);
+            this.saveSnapshot(meetingId);
+            return content;
+        }
+        catch (err) {
+            // 任何失败（网络/超时/空返回）都必须回滚相位，否则会议卡死在 finalizing：
+            // 不重启服务就无法再次出方案，重绑/刷新后还会被当成「勘探尚未结束」
+            this.setState("reviewing", m.rounds);
+            this.saveSnapshot(meetingId);
+            throw err;
+        }
+    }
+    /** 会议快照（状态与时间戳由编排器内部维护） */
+    snapshot(meetingId) {
+        const m = this.meetings.get(meetingId);
+        if (!m)
+            return null;
+        return {
+            meetingId: m.meetingId,
+            question: m.question,
+            topic: m.topic,
+            objective: m.objective,
+            scope: m.scope,
+            goalType: m.goalType,
+            state: this.state,
+            items: m.items,
+            list: this.regenerateList(m),
+            events: m.events,
+            convergence: m.convergence,
+            rounds: m.rounds,
+            tokenEstimate: this.tokensUsed,
+            finalSolution: m.finalSolution,
+            createdAt: this.state.startedAt ?? new Date().toISOString(),
+            updatedAt: this.state.updatedAt || new Date().toISOString(),
         };
     }
 }
-export { BOUNDARY_TYPES };

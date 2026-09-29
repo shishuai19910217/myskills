@@ -10,7 +10,6 @@
     "server": "node dist/server.js",
     "verify": "npm run build && node dist/verify-providers.js",
     "experiment": "npm run build && node dist/experiment.js",
-    "backfeed": "npm run build && node dist/backfeed.js",
     "cli": "npm run build && node dist/cli.js"
   },
   "dependencies": {

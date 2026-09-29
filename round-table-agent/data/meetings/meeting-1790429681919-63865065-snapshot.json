@@ -1,0 +1,5773 @@
+{
+  "meetingId": "meeting-1790429681919-63865065",
+  "question": "影响小说阅读“读下去”的因素有哪些?(影响读者\"喜欢、有兴趣、能追读\"的体感、逻辑、合理、时空问题，并按优先级输出修复处方)",
+  "topic": "梳理影响小说读者持续追读意愿的核心因素，并按优先级输出对应修复处方",
+  "objective": "梳理影响读者追读体验的完整维度清单，输出按优先级排序的可落地修复方案；补充澄清：继续勘探；补充澄清：继续勘探",
+  "scope": "聚焦读者端影响追读意愿的核心因素，包括追读过程中的体感体验、故事逻辑自洽性、时空合理性，以及节奏、悬念、代入感、角色吸引力等与即时阅读体验直接相关的因素，并按优先级输出可落地的修复处方；仍排除小说出版、营销、作者非创作类因素等与读者即时追读体验无关的内容；本轮沿目标→约束→反例→前提→盲区维度继续深化勘探，直至各席达成收敛。",
+  "goalType": "design",
+  "state": {
+    "phase": "adjudicating",
+    "round": 10,
+    "startedAt": "2026-09-26T06:26:52.310Z",
+    "finishedAt": "2026-09-26T14:38:05.651Z",
+    "finalizedAt": "2026-09-26T15:35:54.346Z",
+    "updatedAt": "2026-09-26T15:54:04.642Z"
+  },
+  "items": [
+    {
+      "id": "B001",
+      "type": "目标",
+      "description": "阶段性满足目标（悬念解答、情感共鸣、成长认同）在章节周期中的兑现节点错位，如开章抛出的疑问跨过多章未回应、情感高潮与成长节点被压在同一章挤占",
+      "confidence": "medium",
+      "source": "forward",
+      "sourceModel": "free",
+      "round": 1,
+      "status": {
+        "kind": "kept"
+      }
+    },
+    {
+      "id": "B002",
+      "type": "约束",
+      "description": "连载小说核心设定（力量体系、人物基础属性、世界观基础规则）出现无合理过渡的前后矛盾，构成读者认知接受的刚性约束",
+      "confidence": "high",
+      "source": "reverse",
+      "sourceModel": "free",
+      "round": 1,
+      "status": {
+        "kind": "kept"
+      }
+    },
+    {
+      "id": "B003",
+      "type": "反例",
+      "description": "一类无限流小说中期每个副本开局仍有悬念、单章数据平稳，但主角反复被规则和队友胁迫行动，通关后既不拿回主动权，也不惩罚恩将仇报者，读者因持续憋屈和道德情绪无报偿而在卷末批量弃书。",
+      "confidence": "high",
+      "source": "counter",
+      "sourceModel": "free",
+      "round": 1,
+      "status": {
+        "kind": "kept"
+      }
+    },
+    {
+      "id": "B004",
+      "type": "前提",
+      "description": "读者在启动追读行为前，默认将作者过往完结记录、作品口碑作为信任锚点，若该前提缺失（如作者无完结作品、口碑为负），会直接降低其初始追读意愿",
+      "confidence": "high",
+      "source": "assumption",
+      "sourceModel": "free",
+      "round": 1,
+      "status": {
+        "kind": "kept"
+      }
+    },
+    {
+      "id": "B005",
+      "type": "盲区",
+      "description": "章节末尾钩子的信息密度与读者所处阅读场景的注意力带宽不匹配（如碎片时间里需要多步回忆才能接上的复杂悬念、睡前场景中引发过度兴奋难以入睡的高强度钩子），导致读者主动推迟或放弃下一章点击的具体情境错配",
+      "confidence": "medium",
+      "source": "blindspot",
+      "sourceModel": "free",
+      "round": 1,
+      "status": {
+        "kind": "kept"
+      }
+    },
+    {
+      "id": "B006",
+      "type": "目标",
+      "description": "日更读者以单章悬念钩子和短频快爽点为目标、周更读者以周更剧情推进量为目标、养肥后补更读者以攒够完整剧情弧后的连读爆发密度为目标，三类目标错配会直接削弱持续追读意愿",
+      "confidence": "medium",
+      "source": "forward",
+      "sourceModel": "free",
+      "round": 2,
+      "status": {
+        "kind": "kept"
+      }
+    },
+    {
+      "id": "B007",
+      "type": "约束",
+      "description": "禁止在固定叙事视角中无过渡地插入其他角色的内心活动或感知信息，导致视角人称漂移",
+      "confidence": "high",
+      "source": "reverse",
+      "sourceModel": "free",
+      "round": 2,
+      "status": {
+        "kind": "kept"
+      }
+    },
+    {
+      "id": "B008",
+      "type": "反例",
+      "description": "存在一类完结作品（如《雪中悍刀行》后期、《大奉打更人》后期）：设定自洽、节奏与钩子正常、主角主动权充足，却因中后期换地图/战力膨胀导致前期高人气配角与CP长期缺席甚至被强行写死，读者情感投资的存量资产被清零，共同可枚举特征是掉追读反馈集中在『喜欢的角色不出现了/羁绊线断了』而非逻辑、节奏或主角能动性问题，说明追读意愿还依赖作者不可单方面回收的角色情感锚点",
+      "confidence": "medium",
+      "source": "counter",
+      "sourceModel": "free",
+      "round": 2,
+      "status": {
+        "kind": "kept"
+      }
+    },
+    {
+      "id": "B009",
+      "type": "前提",
+      "description": "隐含前提：开篇3至5章内确立的类型定位与核心爽点承诺一旦在后续章节偏移或迟迟不兑现，读者会将其视为'文不对题'而直接弃书，其杀伤力大于文笔瑕疵或单章节奏拖沓等可容忍问题；该前提需验证——现实中也存在前期承诺延后兑现但读者因其他补偿（如人物魅力、悬念钩子）继续追读的反例，故承诺违背与流失之间并非无条件必然。",
+      "confidence": "medium",
+      "source": "assumption",
+      "sourceModel": "free",
+      "round": 2,
+      "status": {
+        "kind": "kept"
+      }
+    },
+    {
+      "id": "B010",
+      "type": "盲区",
+      "description": "跨设备进度不同步若发生在章末悬念或关键反转附近，且精确阅读锚点与章节切割点同时丢失，使读者被迫回读大段内容或跳漏情节，就会把普通续读摩擦转化为追读中断。",
+      "confidence": "high",
+      "source": "blindspot",
+      "sourceModel": "free",
+      "round": 2,
+      "status": {
+        "kind": "kept"
+      }
+    },
+    {
+      "id": "B011",
+      "type": "约束",
+      "description": "前文已用可验证锚点（如路程需三日、伤口七日愈合、季节年份）明确的时间跨度与空间距离，后续章节不得在无任何过渡交代的情况下被无声缩短、拉长或瞬移，尤其禁止角色在未描写中途行程的情况下直接出现在远处地点，或时间线倒流导致已发生的事件被重置。",
+      "confidence": "high",
+      "source": "reverse",
+      "sourceModel": "free",
+      "round": 3,
+      "status": {
+        "kind": "kept"
+      }
+    },
+    {
+      "id": "B012",
+      "type": "反例",
+      "description": "内容四项指标均达标但作者因病或长假断更两周以上，连载期追读数据腰斩——更新稳定性独立于内容质量构成批量弃读诱因",
+      "confidence": "high",
+      "source": "counter",
+      "sourceModel": "free",
+      "round": 3,
+      "status": {
+        "kind": "kept"
+      }
+    },
+    {
+      "id": "B013",
+      "type": "前提",
+      "description": "读者默认跨更后仍能凭记忆激活关键人物关系、术语和未回收伏笔；一旦更新间隔过长、支线庞杂或专名仅单次出现，就会因上下文断裂而看不懂或被迫重读旧章。",
+      "confidence": "high",
+      "source": "assumption",
+      "sourceModel": "free",
+      "round": 3,
+      "status": {
+        "kind": "kept"
+      }
+    },
+    {
+      "id": "B014",
+      "type": "盲区",
+      "description": "阅读平台在章末悬念处插入的强制广告、弹窗等交互打断因素，是否属于读者端追读体感边界、其修复责任应归于平台侧还是创作侧的归属划分盲区",
+      "confidence": "medium",
+      "source": "blindspot",
+      "sourceModel": "free",
+      "round": 3,
+      "status": {
+        "kind": "kept"
+      }
+    },
+    {
+      "id": "B015",
+      "type": "目标",
+      "description": "需区分读者非剧情类追读目标：情绪宣泄或代偿、解谜与信息补全、角色或CP陪伴、世界观与审美体验；并校验这些目标在卷中提前兑现、落空或被其他线索替代后，是否出现下一章点击动机真空。",
+      "confidence": "high",
+      "source": "forward",
+      "sourceModel": "free",
+      "round": 4,
+      "status": {
+        "kind": "kept"
+      }
+    },
+    {
+      "id": "B016",
+      "type": "约束",
+      "description": "已公开超过10章、且在前文被重复强调至少3次的核心人设、CP走向或关键剧情承诺，禁止在10章内无任何伏笔提示的前提下于单章内单方面推翻；若此类无铺垫的翻转累计达到3处，即视为触发读者批量弃读的临界条件。",
+      "confidence": "medium",
+      "source": "reverse",
+      "sourceModel": "free",
+      "round": 4,
+      "status": {
+        "kind": "kept"
+      }
+    },
+    {
+      "id": "B017",
+      "type": "反例",
+      "description": "反派利己流作品：逻辑、节奏、设定均自洽，但主角为修炼或求生毫无负担地献祭曾救助自己的无辜者，且叙事将其合理化为必要代价，读者因道德安全感被冒犯而批量弃书。",
+      "confidence": "high",
+      "source": "counter",
+      "sourceModel": "free",
+      "round": 4,
+      "status": {
+        "kind": "kept"
+      }
+    },
+    {
+      "id": "B018",
+      "type": "前提",
+      "description": "读者默认作者在连载过半时不会无预警切换核心叙事风格或调整已公开的核心爽点定位，若发生即视作背弃前期阅读契约，通常导致弃读而非接受；该前提适用于长期连载且前期已建立稳定风格预期的作品，但对作者已提前公告或前期本就风格摇摆的作者未必成立",
+      "confidence": "medium",
+      "source": "assumption",
+      "sourceModel": "free",
+      "round": 4,
+      "status": {
+        "kind": "kept"
+      }
+    },
+    {
+      "id": "B019",
+      "type": "盲区",
+      "description": "需按剧透内容相对读者当前阅读进度的“超前跨度”与“信息性质”（身份、反转、生死、CP结局等）交叉分类，并验证追读动机是转为赶进度核对答案、回避已知情感冲击，还是直接弃读。",
+      "confidence": "high",
+      "source": "blindspot",
+      "sourceModel": "free",
+      "round": 4,
+      "status": {
+        "kind": "kept"
+      }
+    },
+    {
+      "id": "B020",
+      "type": "反例",
+      "description": "唐家三少《终极斗罗》保持了雷打不动的稳定更新、自洽的战力设定与成熟的主角团人设，但中后期情节完全固化在血脉压制与越级必胜的既定模板中，读者因对所有危机与反转均能精准预判、丧失意外感而引发大规模弃读。",
+      "confidence": "high",
+      "source": "counter",
+      "sourceModel": "free",
+      "round": 5,
+      "status": {
+        "kind": "kept"
+      }
+    },
+    {
+      "id": "B021",
+      "type": "前提",
+      "description": "读者默认主角的动机或行事逻辑若发生颠覆性转变，前文至少要有一次可回溯的伏笔或暗示，否则当章揭晓时会因人设崩塌感触发弃读，这一伏笔最少出现次数及距揭晓的章节数尚未界定",
+      "confidence": "medium",
+      "source": "assumption",
+      "sourceModel": "free",
+      "round": 5,
+      "status": {
+        "kind": "kept"
+      }
+    },
+    {
+      "id": "B022",
+      "type": "盲区",
+      "description": "读者在睡眠不足、工作高压或情绪低落等临时状态下，对慢热、压抑、虐心情节的容忍阈值会显著下降，从而把平时可接受的内容判定为劝退并停止追读。",
+      "confidence": "high",
+      "source": "blindspot",
+      "sourceModel": "free",
+      "round": 5,
+      "status": {
+        "kind": "kept"
+      }
+    },
+    {
+      "id": "B023",
+      "type": "目标",
+      "description": "读者追读过程中，已投入时间形成的‘完成已读全部章节’目标与内容吸引力下降产生冲突时，会直接降低其点击下一章的即时意愿，表现为停止追更或跳过最新章节直接退出阅读界面",
+      "confidence": "high",
+      "source": "forward",
+      "sourceModel": "free",
+      "round": 7,
+      "status": {
+        "kind": "kept"
+      }
+    },
+    {
+      "id": "B024",
+      "type": "约束",
+      "description": "单章首次出现且需读者记忆的人名、地名、术语等陌生信息总量存在可接受上限（经验阈值约为5-7个，成组铺陈时需额外给出锚点），该上限在开篇/新地图开启/大换角阶段可适当放宽、在中段日常章节与信息密集的设定解释章需收紧；一旦超限，读者会出现人名张冠李戴、频繁回翻找人、跳读设定段落，继而在连续2-3章内弃读，因此处方应限制单章新增专名数量并让旧角色优先出场承接。",
+      "confidence": "medium",
+      "source": "reverse",
+      "sourceModel": "free",
+      "round": 7,
+      "status": {
+        "kind": "kept"
+      }
+    },
+    {
+      "id": "B025",
+      "type": "反例",
+      "description": "在生死决战或重大悬念揭露后的承接章节中，章首插入功法设定或前情重述会强行打断读者的即时情绪冲刺惯性，反被判定为注水消解危机感而诱发弃读。",
+      "confidence": "high",
+      "source": "counter",
+      "sourceModel": "free",
+      "round": 7,
+      "status": {
+        "kind": "kept"
+      }
+    },
+    {
+      "id": "B026",
+      "type": "前提",
+      "description": "默认中后期核心卖点偏移（如种田日常转向朝堂权谋）无预警发生时读者必然弃读，忽略读者是否因主角核心目标连续、前期沉没成本或新卖点更契合而留存——需验证偏移触发弃读的条件究竟是『偏移本身』还是『偏移伴随主角行为逻辑断裂且无过渡铺垫』。",
+      "confidence": "medium",
+      "source": "assumption",
+      "sourceModel": "free",
+      "round": 7,
+      "status": {
+        "kind": "kept"
+      }
+    },
+    {
+      "id": "B027",
+      "type": "盲区",
+      "description": "需把平台外生触发作为独立于正文质量的变量层验证：更新提醒的到达率、推送时机、频率与通知文案，书架/榜单的排序位置与标签，章末评论区的剧透、站队、催更互动密度，都会改变下一章点击意愿。",
+      "confidence": "high",
+      "source": "blindspot",
+      "sourceModel": "free",
+      "round": 7,
+      "status": {
+        "kind": "kept"
+      }
+    },
+    {
+      "id": "B028",
+      "type": "目标",
+      "description": "把不同连载阶段的追读目标视为恒定，未识别入坑期要看钩子与代入许可、卷中要看关系/世界推进与阶段性兑现、临近完结要看主线收束与伏笔清偿；当读者目标已迁移而内容仍停留在上一阶段时，点击动机会从好奇追更滑向惯性打卡、怕烂尾而快速扫读，甚至断更。",
+      "confidence": "high",
+      "source": "forward",
+      "sourceModel": "free",
+      "round": 8,
+      "status": {
+        "kind": "kept"
+      }
+    },
+    {
+      "id": "B029",
+      "type": "约束",
+      "description": "主角连续被压制且无任何反击动作或心理代偿的篇幅不得超过3章，超限前必须至少出现一次可见的反击行动、局部胜利或有效的心理代偿描写，否则视为触碰追读红线",
+      "confidence": "medium",
+      "source": "reverse",
+      "sourceModel": "free",
+      "round": 8,
+      "status": {
+        "kind": "kept"
+      }
+    },
+    {
+      "id": "B030",
+      "type": "反例",
+      "description": "高人气关键配角遭遇不可逆毁灭（献祭发刀）的情节转折章，会使追求危机张力与复仇预期的主线向读者追读意愿暴增，同时促使将情感寄托于该角色的读者因负面刺激过载当即弃读，击穿了‘强戏剧冲突必然普适性提升追读率’的假设。",
+      "confidence": "high",
+      "source": "counter",
+      "sourceModel": "free",
+      "round": 8,
+      "status": {
+        "kind": "kept"
+      }
+    },
+    {
+      "id": "B031",
+      "type": "前提",
+      "description": "默认无预警改频仅属偶发意外、单次可被读者原谅，只有连续多次才触发弃追——即该前提破灭对追读意愿的打击存在次数阈值，而非首次发生即与内容质量无关地独立扣分",
+      "confidence": "medium",
+      "source": "assumption",
+      "sourceModel": "free",
+      "round": 8,
+      "status": {
+        "kind": "kept"
+      }
+    },
+    {
+      "id": "B032",
+      "type": "盲区",
+      "description": "自动连播或倍速听书时，章末悬念与下一章开头之间缺少主动翻页停顿，若下一章立即切换视角、时间线或揭晓答案，钩子会被无缝吞没，读者来不及预期和紧张，甚至因信息错位而劝退。",
+      "confidence": "high",
+      "source": "blindspot",
+      "sourceModel": "free",
+      "round": 8,
+      "status": {
+        "kind": "kept"
+      }
+    },
+    {
+      "id": "B033",
+      "type": "目标",
+      "description": "初始追读目标迁移后，内容仍沿用旧目标驱动情节的滞后章节阈值（如主角核心目标在第N章变更后，超过3章仍以旧目标组织冲突与推进，读者追读目标失配）",
+      "confidence": "medium",
+      "source": "forward",
+      "sourceModel": "free",
+      "round": 10,
+      "status": {
+        "kind": "kept"
+      }
+    },
+    {
+      "id": "B034",
+      "type": "约束",
+      "description": "单章同时推进的独立支线、场景或角色组数量超过3个时，会超出多数读者工作记忆容量，构成影响追读意愿的刚性约束",
+      "confidence": "high",
+      "source": "reverse",
+      "sourceModel": "free",
+      "round": 10,
+      "status": {
+        "kind": "kept"
+      }
+    },
+    {
+      "id": "B035",
+      "type": "前提",
+      "description": "读者默认已发布章节是不可变文本，不会被作者删除或大幅改写，因此追读时无需为前文与后文对不上而回查、重新校验或担心错过信息——该默认一旦被打破（如作者回改伏笔、删章后前文引用失效），读者会额外付出回读核对成本并产生",
+      "confidence": "medium",
+      "source": "assumption",
+      "sourceModel": "free",
+      "round": 10,
+      "status": {
+        "kind": "kept"
+      }
+    },
+    {
+      "id": "B036",
+      "type": "盲区",
+      "description": "读者将甲书的角色名或绰号张冠李戴到乙书同名、近名角色上，误判乙书当前对话中的人物关系与立场，从而认为关键情节突兀或情感错位而跳更。",
+      "confidence": "high",
+      "source": "blindspot",
+      "sourceModel": "free",
+      "round": 10,
+      "status": {
+        "kind": "kept"
+      }
+    }
+  ],
+  "list": {
+    "items": [
+      {
+        "id": "B001",
+        "type": "目标",
+        "description": "阶段性满足目标（悬念解答、情感共鸣、成长认同）在章节周期中的兑现节点错位，如开章抛出的疑问跨过多章未回应、情感高潮与成长节点被压在同一章挤占",
+        "confidence": "medium",
+        "source": "forward",
+        "sourceModel": "free",
+        "round": 1,
+        "status": {
+          "kind": "kept"
+        }
+      },
+      {
+        "id": "B006",
+        "type": "目标",
+        "description": "日更读者以单章悬念钩子和短频快爽点为目标、周更读者以周更剧情推进量为目标、养肥后补更读者以攒够完整剧情弧后的连读爆发密度为目标，三类目标错配会直接削弱持续追读意愿",
+        "confidence": "medium",
+        "source": "forward",
+        "sourceModel": "free",
+        "round": 2,
+        "status": {
+          "kind": "kept"
+        }
+      },
+      {
+        "id": "B015",
+        "type": "目标",
+        "description": "需区分读者非剧情类追读目标：情绪宣泄或代偿、解谜与信息补全、角色或CP陪伴、世界观与审美体验；并校验这些目标在卷中提前兑现、落空或被其他线索替代后，是否出现下一章点击动机真空。",
+        "confidence": "high",
+        "source": "forward",
+        "sourceModel": "free",
+        "round": 4,
+        "status": {
+          "kind": "kept"
+        }
+      },
+      {
+        "id": "B023",
+        "type": "目标",
+        "description": "读者追读过程中，已投入时间形成的‘完成已读全部章节’目标与内容吸引力下降产生冲突时，会直接降低其点击下一章的即时意愿，表现为停止追更或跳过最新章节直接退出阅读界面",
+        "confidence": "high",
+        "source": "forward",
+        "sourceModel": "free",
+        "round": 7,
+        "status": {
+          "kind": "kept"
+        }
+      },
+      {
+        "id": "B028",
+        "type": "目标",
+        "description": "把不同连载阶段的追读目标视为恒定，未识别入坑期要看钩子与代入许可、卷中要看关系/世界推进与阶段性兑现、临近完结要看主线收束与伏笔清偿；当读者目标已迁移而内容仍停留在上一阶段时，点击动机会从好奇追更滑向惯性打卡、怕烂尾而快速扫读，甚至断更。",
+        "confidence": "high",
+        "source": "forward",
+        "sourceModel": "free",
+        "round": 8,
+        "status": {
+          "kind": "kept"
+        }
+      },
+      {
+        "id": "B033",
+        "type": "目标",
+        "description": "初始追读目标迁移后，内容仍沿用旧目标驱动情节的滞后章节阈值（如主角核心目标在第N章变更后，超过3章仍以旧目标组织冲突与推进，读者追读目标失配）",
+        "confidence": "medium",
+        "source": "forward",
+        "sourceModel": "free",
+        "round": 10,
+        "status": {
+          "kind": "kept"
+        }
+      },
+      {
+        "id": "B002",
+        "type": "约束",
+        "description": "连载小说核心设定（力量体系、人物基础属性、世界观基础规则）出现无合理过渡的前后矛盾，构成读者认知接受的刚性约束",
+        "confidence": "high",
+        "source": "reverse",
+        "sourceModel": "free",
+        "round": 1,
+        "status": {
+          "kind": "kept"
+        }
+      },
+      {
+        "id": "B007",
+        "type": "约束",
+        "description": "禁止在固定叙事视角中无过渡地插入其他角色的内心活动或感知信息，导致视角人称漂移",
+        "confidence": "high",
+        "source": "reverse",
+        "sourceModel": "free",
+        "round": 2,
+        "status": {
+          "kind": "kept"
+        }
+      },
+      {
+        "id": "B011",
+        "type": "约束",
+        "description": "前文已用可验证锚点（如路程需三日、伤口七日愈合、季节年份）明确的时间跨度与空间距离，后续章节不得在无任何过渡交代的情况下被无声缩短、拉长或瞬移，尤其禁止角色在未描写中途行程的情况下直接出现在远处地点，或时间线倒流导致已发生的事件被重置。",
+        "confidence": "high",
+        "source": "reverse",
+        "sourceModel": "free",
+        "round": 3,
+        "status": {
+          "kind": "kept"
+        }
+      },
+      {
+        "id": "B016",
+        "type": "约束",
+        "description": "已公开超过10章、且在前文被重复强调至少3次的核心人设、CP走向或关键剧情承诺，禁止在10章内无任何伏笔提示的前提下于单章内单方面推翻；若此类无铺垫的翻转累计达到3处，即视为触发读者批量弃读的临界条件。",
+        "confidence": "medium",
+        "source": "reverse",
+        "sourceModel": "free",
+        "round": 4,
+        "status": {
+          "kind": "kept"
+        }
+      },
+      {
+        "id": "B024",
+        "type": "约束",
+        "description": "单章首次出现且需读者记忆的人名、地名、术语等陌生信息总量存在可接受上限（经验阈值约为5-7个，成组铺陈时需额外给出锚点），该上限在开篇/新地图开启/大换角阶段可适当放宽、在中段日常章节与信息密集的设定解释章需收紧；一旦超限，读者会出现人名张冠李戴、频繁回翻找人、跳读设定段落，继而在连续2-3章内弃读，因此处方应限制单章新增专名数量并让旧角色优先出场承接。",
+        "confidence": "medium",
+        "source": "reverse",
+        "sourceModel": "free",
+        "round": 7,
+        "status": {
+          "kind": "kept"
+        }
+      },
+      {
+        "id": "B029",
+        "type": "约束",
+        "description": "主角连续被压制且无任何反击动作或心理代偿的篇幅不得超过3章，超限前必须至少出现一次可见的反击行动、局部胜利或有效的心理代偿描写，否则视为触碰追读红线",
+        "confidence": "medium",
+        "source": "reverse",
+        "sourceModel": "free",
+        "round": 8,
+        "status": {
+          "kind": "kept"
+        }
+      },
+      {
+        "id": "B034",
+        "type": "约束",
+        "description": "单章同时推进的独立支线、场景或角色组数量超过3个时，会超出多数读者工作记忆容量，构成影响追读意愿的刚性约束",
+        "confidence": "high",
+        "source": "reverse",
+        "sourceModel": "free",
+        "round": 10,
+        "status": {
+          "kind": "kept"
+        }
+      },
+      {
+        "id": "B003",
+        "type": "反例",
+        "description": "一类无限流小说中期每个副本开局仍有悬念、单章数据平稳，但主角反复被规则和队友胁迫行动，通关后既不拿回主动权，也不惩罚恩将仇报者，读者因持续憋屈和道德情绪无报偿而在卷末批量弃书。",
+        "confidence": "high",
+        "source": "counter",
+        "sourceModel": "free",
+        "round": 1,
+        "status": {
+          "kind": "kept"
+        }
+      },
+      {
+        "id": "B008",
+        "type": "反例",
+        "description": "存在一类完结作品（如《雪中悍刀行》后期、《大奉打更人》后期）：设定自洽、节奏与钩子正常、主角主动权充足，却因中后期换地图/战力膨胀导致前期高人气配角与CP长期缺席甚至被强行写死，读者情感投资的存量资产被清零，共同可枚举特征是掉追读反馈集中在『喜欢的角色不出现了/羁绊线断了』而非逻辑、节奏或主角能动性问题，说明追读意愿还依赖作者不可单方面回收的角色情感锚点",
+        "confidence": "medium",
+        "source": "counter",
+        "sourceModel": "free",
+        "round": 2,
+        "status": {
+          "kind": "kept"
+        }
+      },
+      {
+        "id": "B012",
+        "type": "反例",
+        "description": "内容四项指标均达标但作者因病或长假断更两周以上，连载期追读数据腰斩——更新稳定性独立于内容质量构成批量弃读诱因",
+        "confidence": "high",
+        "source": "counter",
+        "sourceModel": "free",
+        "round": 3,
+        "status": {
+          "kind": "kept"
+        }
+      },
+      {
+        "id": "B017",
+        "type": "反例",
+        "description": "反派利己流作品：逻辑、节奏、设定均自洽，但主角为修炼或求生毫无负担地献祭曾救助自己的无辜者，且叙事将其合理化为必要代价，读者因道德安全感被冒犯而批量弃书。",
+        "confidence": "high",
+        "source": "counter",
+        "sourceModel": "free",
+        "round": 4,
+        "status": {
+          "kind": "kept"
+        }
+      },
+      {
+        "id": "B020",
+        "type": "反例",
+        "description": "唐家三少《终极斗罗》保持了雷打不动的稳定更新、自洽的战力设定与成熟的主角团人设，但中后期情节完全固化在血脉压制与越级必胜的既定模板中，读者因对所有危机与反转均能精准预判、丧失意外感而引发大规模弃读。",
+        "confidence": "high",
+        "source": "counter",
+        "sourceModel": "free",
+        "round": 5,
+        "status": {
+          "kind": "kept"
+        }
+      },
+      {
+        "id": "B025",
+        "type": "反例",
+        "description": "在生死决战或重大悬念揭露后的承接章节中，章首插入功法设定或前情重述会强行打断读者的即时情绪冲刺惯性，反被判定为注水消解危机感而诱发弃读。",
+        "confidence": "high",
+        "source": "counter",
+        "sourceModel": "free",
+        "round": 7,
+        "status": {
+          "kind": "kept"
+        }
+      },
+      {
+        "id": "B030",
+        "type": "反例",
+        "description": "高人气关键配角遭遇不可逆毁灭（献祭发刀）的情节转折章，会使追求危机张力与复仇预期的主线向读者追读意愿暴增，同时促使将情感寄托于该角色的读者因负面刺激过载当即弃读，击穿了‘强戏剧冲突必然普适性提升追读率’的假设。",
+        "confidence": "high",
+        "source": "counter",
+        "sourceModel": "free",
+        "round": 8,
+        "status": {
+          "kind": "kept"
+        }
+      },
+      {
+        "id": "B004",
+        "type": "前提",
+        "description": "读者在启动追读行为前，默认将作者过往完结记录、作品口碑作为信任锚点，若该前提缺失（如作者无完结作品、口碑为负），会直接降低其初始追读意愿",
+        "confidence": "high",
+        "source": "assumption",
+        "sourceModel": "free",
+        "round": 1,
+        "status": {
+          "kind": "kept"
+        }
+      },
+      {
+        "id": "B009",
+        "type": "前提",
+        "description": "隐含前提：开篇3至5章内确立的类型定位与核心爽点承诺一旦在后续章节偏移或迟迟不兑现，读者会将其视为'文不对题'而直接弃书，其杀伤力大于文笔瑕疵或单章节奏拖沓等可容忍问题；该前提需验证——现实中也存在前期承诺延后兑现但读者因其他补偿（如人物魅力、悬念钩子）继续追读的反例，故承诺违背与流失之间并非无条件必然。",
+        "confidence": "medium",
+        "source": "assumption",
+        "sourceModel": "free",
+        "round": 2,
+        "status": {
+          "kind": "kept"
+        }
+      },
+      {
+        "id": "B013",
+        "type": "前提",
+        "description": "读者默认跨更后仍能凭记忆激活关键人物关系、术语和未回收伏笔；一旦更新间隔过长、支线庞杂或专名仅单次出现，就会因上下文断裂而看不懂或被迫重读旧章。",
+        "confidence": "high",
+        "source": "assumption",
+        "sourceModel": "free",
+        "round": 3,
+        "status": {
+          "kind": "kept"
+        }
+      },
+      {
+        "id": "B018",
+        "type": "前提",
+        "description": "读者默认作者在连载过半时不会无预警切换核心叙事风格或调整已公开的核心爽点定位，若发生即视作背弃前期阅读契约，通常导致弃读而非接受；该前提适用于长期连载且前期已建立稳定风格预期的作品，但对作者已提前公告或前期本就风格摇摆的作者未必成立",
+        "confidence": "medium",
+        "source": "assumption",
+        "sourceModel": "free",
+        "round": 4,
+        "status": {
+          "kind": "kept"
+        }
+      },
+      {
+        "id": "B021",
+        "type": "前提",
+        "description": "读者默认主角的动机或行事逻辑若发生颠覆性转变，前文至少要有一次可回溯的伏笔或暗示，否则当章揭晓时会因人设崩塌感触发弃读，这一伏笔最少出现次数及距揭晓的章节数尚未界定",
+        "confidence": "medium",
+        "source": "assumption",
+        "sourceModel": "free",
+        "round": 5,
+        "status": {
+          "kind": "kept"
+        }
+      },
+      {
+        "id": "B026",
+        "type": "前提",
+        "description": "默认中后期核心卖点偏移（如种田日常转向朝堂权谋）无预警发生时读者必然弃读，忽略读者是否因主角核心目标连续、前期沉没成本或新卖点更契合而留存——需验证偏移触发弃读的条件究竟是『偏移本身』还是『偏移伴随主角行为逻辑断裂且无过渡铺垫』。",
+        "confidence": "medium",
+        "source": "assumption",
+        "sourceModel": "free",
+        "round": 7,
+        "status": {
+          "kind": "kept"
+        }
+      },
+      {
+        "id": "B031",
+        "type": "前提",
+        "description": "默认无预警改频仅属偶发意外、单次可被读者原谅，只有连续多次才触发弃追——即该前提破灭对追读意愿的打击存在次数阈值，而非首次发生即与内容质量无关地独立扣分",
+        "confidence": "medium",
+        "source": "assumption",
+        "sourceModel": "free",
+        "round": 8,
+        "status": {
+          "kind": "kept"
+        }
+      },
+      {
+        "id": "B035",
+        "type": "前提",
+        "description": "读者默认已发布章节是不可变文本，不会被作者删除或大幅改写，因此追读时无需为前文与后文对不上而回查、重新校验或担心错过信息——该默认一旦被打破（如作者回改伏笔、删章后前文引用失效），读者会额外付出回读核对成本并产生",
+        "confidence": "medium",
+        "source": "assumption",
+        "sourceModel": "free",
+        "round": 10,
+        "status": {
+          "kind": "kept"
+        }
+      },
+      {
+        "id": "B005",
+        "type": "盲区",
+        "description": "章节末尾钩子的信息密度与读者所处阅读场景的注意力带宽不匹配（如碎片时间里需要多步回忆才能接上的复杂悬念、睡前场景中引发过度兴奋难以入睡的高强度钩子），导致读者主动推迟或放弃下一章点击的具体情境错配",
+        "confidence": "medium",
+        "source": "blindspot",
+        "sourceModel": "free",
+        "round": 1,
+        "status": {
+          "kind": "kept"
+        }
+      },
+      {
+        "id": "B010",
+        "type": "盲区",
+        "description": "跨设备进度不同步若发生在章末悬念或关键反转附近，且精确阅读锚点与章节切割点同时丢失，使读者被迫回读大段内容或跳漏情节，就会把普通续读摩擦转化为追读中断。",
+        "confidence": "high",
+        "source": "blindspot",
+        "sourceModel": "free",
+        "round": 2,
+        "status": {
+          "kind": "kept"
+        }
+      },
+      {
+        "id": "B014",
+        "type": "盲区",
+        "description": "阅读平台在章末悬念处插入的强制广告、弹窗等交互打断因素，是否属于读者端追读体感边界、其修复责任应归于平台侧还是创作侧的归属划分盲区",
+        "confidence": "medium",
+        "source": "blindspot",
+        "sourceModel": "free",
+        "round": 3,
+        "status": {
+          "kind": "kept"
+        }
+      },
+      {
+        "id": "B019",
+        "type": "盲区",
+        "description": "需按剧透内容相对读者当前阅读进度的“超前跨度”与“信息性质”（身份、反转、生死、CP结局等）交叉分类，并验证追读动机是转为赶进度核对答案、回避已知情感冲击，还是直接弃读。",
+        "confidence": "high",
+        "source": "blindspot",
+        "sourceModel": "free",
+        "round": 4,
+        "status": {
+          "kind": "kept"
+        }
+      },
+      {
+        "id": "B022",
+        "type": "盲区",
+        "description": "读者在睡眠不足、工作高压或情绪低落等临时状态下，对慢热、压抑、虐心情节的容忍阈值会显著下降，从而把平时可接受的内容判定为劝退并停止追读。",
+        "confidence": "high",
+        "source": "blindspot",
+        "sourceModel": "free",
+        "round": 5,
+        "status": {
+          "kind": "kept"
+        }
+      },
+      {
+        "id": "B027",
+        "type": "盲区",
+        "description": "需把平台外生触发作为独立于正文质量的变量层验证：更新提醒的到达率、推送时机、频率与通知文案，书架/榜单的排序位置与标签，章末评论区的剧透、站队、催更互动密度，都会改变下一章点击意愿。",
+        "confidence": "high",
+        "source": "blindspot",
+        "sourceModel": "free",
+        "round": 7,
+        "status": {
+          "kind": "kept"
+        }
+      },
+      {
+        "id": "B032",
+        "type": "盲区",
+        "description": "自动连播或倍速听书时，章末悬念与下一章开头之间缺少主动翻页停顿，若下一章立即切换视角、时间线或揭晓答案，钩子会被无缝吞没，读者来不及预期和紧张，甚至因信息错位而劝退。",
+        "confidence": "high",
+        "source": "blindspot",
+        "sourceModel": "free",
+        "round": 8,
+        "status": {
+          "kind": "kept"
+        }
+      },
+      {
+        "id": "B036",
+        "type": "盲区",
+        "description": "读者将甲书的角色名或绰号张冠李戴到乙书同名、近名角色上，误判乙书当前对话中的人物关系与立场，从而认为关键情节突兀或情感错位而跳更。",
+        "confidence": "high",
+        "source": "blindspot",
+        "sourceModel": "free",
+        "round": 10,
+        "status": {
+          "kind": "kept"
+        }
+      }
+    ],
+    "rounds": 10,
+    "convergence": "auto",
+    "disputesResolved": 0,
+    "tokenEstimate": 119818
+  },
+  "events": [
+    {
+      "type": "opening",
+      "topic": "梳理影响小说读者持续追读意愿的核心因素，并按优先级输出对应修复处方",
+      "objective": "梳理影响读者追读体验的完整维度清单，输出按优先级排序的可落地修复方案",
+      "scope": "本题边界为聚焦读者端影响追读意愿的体感、逻辑、时空合理性等相关因素，以及对应可落地的修复处方；超出范围的是小说出版、营销、作者非创作类因素等与读者即时追读体验无关的内容",
+      "goalType": "design"
+    },
+    {
+      "type": "question",
+      "round": 1,
+      "seat": "forward",
+      "question": "读者从打开小说到最终形成长期追读习惯，会经历哪些阶段性的满足目标（如悬念解谜、情感共鸣、成长认同等），这些目标各自应在章节周期的什么节点被兑现？"
+    },
+    {
+      "type": "notice",
+      "level": "warn",
+      "seat": "forward",
+      "message": "「正向勘探者」第 1 轮模型空返回（可能为上游限流或思考预算耗尽），正在重试一次。"
+    },
+    {
+      "type": "reply",
+      "round": 1,
+      "seat": "forward",
+      "content": "{\"description\":\"阶段性满足目标（悬念解答、情感共鸣、成长认同）在章节周期中的兑现节点错位，如开章抛出的疑问跨过多章未回应、情感高潮与成长节点被压在同一章挤占\",\"confidence\":\"medium\"}"
+    },
+    {
+      "type": "boundary",
+      "round": 1,
+      "item": {
+        "id": "B001",
+        "type": "目标",
+        "description": "阶段性满足目标（悬念解答、情感共鸣、成长认同）在章节周期中的兑现节点错位，如开章抛出的疑问跨过多章未回应、情感高潮与成长节点被压在同一章挤占",
+        "confidence": "medium",
+        "source": "forward",
+        "sourceModel": "free",
+        "round": 1,
+        "status": {
+          "kind": "kept"
+        }
+      }
+    },
+    {
+      "type": "question",
+      "round": 1,
+      "seat": "reverse",
+      "question": "读者追读连载小说时，会受到哪些来自文本内容或自身认知接受层面的刚性约束而放弃持续追读？"
+    },
+    {
+      "type": "notice",
+      "level": "warn",
+      "seat": "reverse",
+      "message": "「反向勘探者」第 1 轮模型空返回（可能为上游限流或思考预算耗尽），正在重试一次。"
+    },
+    {
+      "type": "reply",
+      "round": 1,
+      "seat": "reverse",
+      "content": "{\"description\":\"连载小说核心设定（力量体系、人物基础属性、世界观基础规则）出现无合理过渡的前后矛盾，构成读者认知接受的刚性约束\",\"confidence\":\"high\"}"
+    },
+    {
+      "type": "boundary",
+      "round": 1,
+      "item": {
+        "id": "B002",
+        "type": "约束",
+        "description": "连载小说核心设定（力量体系、人物基础属性、世界观基础规则）出现无合理过渡的前后矛盾，构成读者认知接受的刚性约束",
+        "confidence": "high",
+        "source": "reverse",
+        "sourceModel": "free",
+        "round": 1,
+        "status": {
+          "kind": "kept"
+        }
+      }
+    },
+    {
+      "type": "question",
+      "round": 1,
+      "seat": "counter",
+      "question": "哪些看起来追读数据正常、读者却在中期批量弃书的小说，其弃书触发点属于设定矛盾与目标兑现错位之外？请举出可枚举的反例类型。"
+    },
+    {
+      "type": "notice",
+      "level": "warn",
+      "seat": "counter",
+      "message": "「反例猎人」第 1 轮模型空返回（可能为上游限流或思考预算耗尽），正在重试一次。"
+    },
+    {
+      "type": "reply",
+      "round": 1,
+      "seat": "counter",
+      "content": "{\"description\":\"一类无限流小说中期每个副本开局仍有悬念、单章数据平稳，但主角反复被规则和队友胁迫行动，通关后既不拿回主动权，也不惩罚恩将仇报者，读者因持续憋屈和道德情绪无报偿而在卷末批量弃书。\",\"confidence\":\"high\"}"
+    },
+    {
+      "type": "boundary",
+      "round": 1,
+      "item": {
+        "id": "B003",
+        "type": "反例",
+        "description": "一类无限流小说中期每个副本开局仍有悬念、单章数据平稳，但主角反复被规则和队友胁迫行动，通关后既不拿回主动权，也不惩罚恩将仇报者，读者因持续憋屈和道德情绪无报偿而在卷末批量弃书。",
+        "confidence": "high",
+        "source": "counter",
+        "sourceModel": "free",
+        "round": 1,
+        "status": {
+          "kind": "kept"
+        }
+      }
+    },
+    {
+      "type": "question",
+      "round": 1,
+      "seat": "assumption",
+      "question": "读者在开始追读前，是否以作者过往完结记录或作品口碑作为默认信任前提，且此前提的缺失会否改变其追读意愿？"
+    },
+    {
+      "type": "notice",
+      "level": "warn",
+      "seat": "assumption",
+      "message": "「假设审问者」第 1 轮模型空返回（可能为上游限流或思考预算耗尽），正在重试一次。"
+    },
+    {
+      "type": "reply",
+      "round": 1,
+      "seat": "assumption",
+      "content": "{\"description\":\"读者在启动追读行为前，默认将作者过往完结记录、作品口碑作为信任锚点，若该前提缺失（如作者无完结作品、口碑为负），会直接降低其初始追读意愿\",\"confidence\":\"high\"}"
+    },
+    {
+      "type": "boundary",
+      "round": 1,
+      "item": {
+        "id": "B004",
+        "type": "前提",
+        "description": "读者在启动追读行为前，默认将作者过往完结记录、作品口碑作为信任锚点，若该前提缺失（如作者无完结作品、口碑为负），会直接降低其初始追读意愿",
+        "confidence": "high",
+        "source": "assumption",
+        "sourceModel": "free",
+        "round": 1,
+        "status": {
+          "kind": "kept"
+        }
+      }
+    },
+    {
+      "type": "question",
+      "round": 1,
+      "seat": "blindspot",
+      "question": "章节末尾的断点钩子设计与读者实际阅读场景（碎片时间、睡前、通勤）之间的错配，是否可能成为边界池遗漏的追读中断因素？"
+    },
+    {
+      "type": "notice",
+      "level": "warn",
+      "seat": "blindspot",
+      "message": "「盲区审计员」第 1 轮模型空返回（可能为上游限流或思考预算耗尽），正在重试一次。"
+    },
+    {
+      "type": "reply",
+      "round": 1,
+      "seat": "blindspot",
+      "content": "{\"description\":\"章节末尾钩子的信息密度与读者所处阅读场景的注意力带宽不匹配（如碎片时间里需要多步回忆才能接上的复杂悬念、睡前场景中引发过度兴奋难以入睡的高强度钩子），导致读者主动推迟或放弃下一章点击的具体情境错配\",\"confidence\":\"medium\"}"
+    },
+    {
+      "type": "boundary",
+      "round": 1,
+      "item": {
+        "id": "B005",
+        "type": "盲区",
+        "description": "章节末尾钩子的信息密度与读者所处阅读场景的注意力带宽不匹配（如碎片时间里需要多步回忆才能接上的复杂悬念、睡前场景中引发过度兴奋难以入睡的高强度钩子），导致读者主动推迟或放弃下一章点击的具体情境错配",
+        "confidence": "medium",
+        "source": "blindspot",
+        "sourceModel": "free",
+        "round": 1,
+        "status": {
+          "kind": "kept"
+        }
+      }
+    },
+    {
+      "type": "round",
+      "round": 1,
+      "newCount": 5,
+      "tokenEstimate": 9168
+    },
+    {
+      "type": "question",
+      "round": 2,
+      "seat": "forward",
+      "question": "处于日更、周更、养肥后补更等不同追读节奏的读者，分别有哪些可枚举的核心阅读目标会影响其持续追读决策？"
+    },
+    {
+      "type": "notice",
+      "level": "warn",
+      "seat": "forward",
+      "message": "「正向勘探者」第 2 轮模型空返回（可能为上游限流或思考预算耗尽），正在重试一次。"
+    },
+    {
+      "type": "reply",
+      "round": 2,
+      "seat": "forward",
+      "content": "{\"description\":\"日更读者以单章悬念钩子和短频快爽点为目标、周更读者以周更剧情推进量为目标、养肥后补更读者以攒够完整剧情弧后的连读爆发密度为目标，三类目标错配会直接削弱持续追读意愿\",\"confidence\":\"medium\"}"
+    },
+    {
+      "type": "boundary",
+      "round": 2,
+      "item": {
+        "id": "B006",
+        "type": "目标",
+        "description": "日更读者以单章悬念钩子和短频快爽点为目标、周更读者以周更剧情推进量为目标、养肥后补更读者以攒够完整剧情弧后的连读爆发密度为目标，三类目标错配会直接削弱持续追读意愿",
+        "confidence": "medium",
+        "source": "forward",
+        "sourceModel": "free",
+        "round": 2,
+        "status": {
+          "kind": "kept"
+        }
+      }
+    },
+    {
+      "type": "question",
+      "round": 2,
+      "seat": "reverse",
+      "question": "除核心设定前后矛盾外，还有哪些作用于读者阅读体感的文本刚性问题会直接阻断持续追读？"
+    },
+    {
+      "type": "notice",
+      "level": "warn",
+      "seat": "reverse",
+      "message": "「反向勘探者」第 2 轮模型空返回（可能为上游限流或思考预算耗尽），正在重试一次。"
+    },
+    {
+      "type": "reply",
+      "round": 2,
+      "seat": "reverse",
+      "content": "{\"description\":\"禁止在固定叙事视角中无过渡地插入其他角色的内心活动或感知信息，导致视角人称漂移\",\"confidence\":\"high\"}"
+    },
+    {
+      "type": "boundary",
+      "round": 2,
+      "item": {
+        "id": "B007",
+        "type": "约束",
+        "description": "禁止在固定叙事视角中无过渡地插入其他角色的内心活动或感知信息，导致视角人称漂移",
+        "confidence": "high",
+        "source": "reverse",
+        "sourceModel": "free",
+        "round": 2,
+        "status": {
+          "kind": "kept"
+        }
+      }
+    },
+    {
+      "type": "question",
+      "round": 2,
+      "seat": "counter",
+      "question": "有哪些设定自洽、节奏与钩子均正常、主角主动权充足却仍在中后期掉追读的完结数据或读者反馈案例？其可枚举的共同特征是什么？"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "counter",
+      "delta": "存在"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "counter",
+      "delta": "一类"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "counter",
+      "delta": "完结"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "counter",
+      "delta": "作品"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "counter",
+      "delta": "（"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "counter",
+      "delta": "如《"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "counter",
+      "delta": "雪中悍刀行》后期、"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "counter",
+      "delta": "《大奉打更人》后期"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "counter",
+      "delta": "）"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "counter",
+      "delta": "："
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "counter",
+      "delta": "设定自洽、节奏与钩子"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "counter",
+      "delta": "正常、"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "counter",
+      "delta": "主角主动权充足，却因"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "counter",
+      "delta": "中"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "counter",
+      "delta": "后期换"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "counter",
+      "delta": "地图/战"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "counter",
+      "delta": "力膨胀"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "counter",
+      "delta": "导致前期高"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "counter",
+      "delta": "人气配角与CP"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "counter",
+      "delta": "长期"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "counter",
+      "delta": "缺席甚至"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "counter",
+      "delta": "被强行"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "counter",
+      "delta": "写"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "counter",
+      "delta": "死，读者情感投资的"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "counter",
+      "delta": "存量"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "counter",
+      "delta": "资产被清零，共同"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "counter",
+      "delta": "可"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "counter",
+      "delta": "枚举特征"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "counter",
+      "delta": "是掉"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "counter",
+      "delta": "追读反馈"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "counter",
+      "delta": "集中在"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "counter",
+      "delta": "『"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "counter",
+      "delta": "喜欢"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "counter",
+      "delta": "的角色不"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "counter",
+      "delta": "出现了"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "counter",
+      "delta": "/"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "counter",
+      "delta": "羁"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "counter",
+      "delta": "绊"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "counter",
+      "delta": "线断"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "counter",
+      "delta": "了』而非逻辑"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "counter",
+      "delta": "、"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "counter",
+      "delta": "节奏或主角"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "counter",
+      "delta": "能"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "counter",
+      "delta": "动"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "counter",
+      "delta": "性问题，说明"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "counter",
+      "delta": "追"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "counter",
+      "delta": "读意愿"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "counter",
+      "delta": "还依赖作者"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "counter",
+      "delta": "不可"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "counter",
+      "delta": "单"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "counter",
+      "delta": "方面"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "counter",
+      "delta": "回收"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "counter",
+      "delta": "的角色"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "counter",
+      "delta": "情感"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "counter",
+      "delta": "锚"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "counter",
+      "delta": "点"
+    },
+    {
+      "type": "reply",
+      "round": 2,
+      "seat": "counter",
+      "content": "{\"description\":\"存在一类完结作品（如《雪中悍刀行》后期、《大奉打更人》后期）：设定自洽、节奏与钩子正常、主角主动权充足，却因中后期换地图/战力膨胀导致前期高人气配角与CP长期缺席甚至被强行写死，读者情感投资的存量资产被清零，共同可枚举特征是掉追读反馈集中在『喜欢的角色不出现了/羁绊线断了』而非逻辑、节奏或主角能动性问题，说明追读意愿还依赖作者不可单方面回收的角色情感锚点\",\"confidence\":\"medium\"}"
+    },
+    {
+      "type": "boundary",
+      "round": 2,
+      "item": {
+        "id": "B008",
+        "type": "反例",
+        "description": "存在一类完结作品（如《雪中悍刀行》后期、《大奉打更人》后期）：设定自洽、节奏与钩子正常、主角主动权充足，却因中后期换地图/战力膨胀导致前期高人气配角与CP长期缺席甚至被强行写死，读者情感投资的存量资产被清零，共同可枚举特征是掉追读反馈集中在『喜欢的角色不出现了/羁绊线断了』而非逻辑、节奏或主角能动性问题，说明追读意愿还依赖作者不可单方面回收的角色情感锚点",
+        "confidence": "medium",
+        "source": "counter",
+        "sourceModel": "free",
+        "round": 2,
+        "status": {
+          "kind": "kept"
+        }
+      }
+    },
+    {
+      "type": "question",
+      "round": 2,
+      "seat": "assumption",
+      "question": "读者追读前默认作品开篇确立的核心类型定位与核心爽点承诺会在后续兑现，若该前提被违背会如何影响追读意愿？"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "assumption",
+      "delta": "隐含前提：开篇3"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "assumption",
+      "delta": "至"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "assumption",
+      "delta": "5章内确立"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "assumption",
+      "delta": "的类型定位与核心爽"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "assumption",
+      "delta": "点承诺一旦"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "assumption",
+      "delta": "在"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "assumption",
+      "delta": "后续章节偏移或"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "assumption",
+      "delta": "迟迟"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "assumption",
+      "delta": "不兑现，读者"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "assumption",
+      "delta": "会将其"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "assumption",
+      "delta": "视为'"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "assumption",
+      "delta": "文"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "assumption",
+      "delta": "不对"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "assumption",
+      "delta": "题"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "assumption",
+      "delta": "'而直接弃"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "assumption",
+      "delta": "书"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "assumption",
+      "delta": "，其"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "assumption",
+      "delta": "杀"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "assumption",
+      "delta": "伤"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "assumption",
+      "delta": "力大于文"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "assumption",
+      "delta": "笔瑕疵"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "assumption",
+      "delta": "或"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "assumption",
+      "delta": "单"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "assumption",
+      "delta": "章"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "assumption",
+      "delta": "节奏拖"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "assumption",
+      "delta": "沓"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "assumption",
+      "delta": "等"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "assumption",
+      "delta": "可容忍"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "assumption",
+      "delta": "问题；"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "assumption",
+      "delta": "该"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "assumption",
+      "delta": "前提"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "assumption",
+      "delta": "需验证"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "assumption",
+      "delta": "——"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "assumption",
+      "delta": "现实中"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "assumption",
+      "delta": "也"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "assumption",
+      "delta": "存在前期"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "assumption",
+      "delta": "承诺延"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "assumption",
+      "delta": "后兑现"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "assumption",
+      "delta": "但"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "assumption",
+      "delta": "读者因"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "assumption",
+      "delta": "其他"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "assumption",
+      "delta": "补偿"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "assumption",
+      "delta": "（"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "assumption",
+      "delta": "如人物魅力"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "assumption",
+      "delta": "、悬念钩"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "assumption",
+      "delta": "子）继续"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "assumption",
+      "delta": "追读的反"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "assumption",
+      "delta": "例，故"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "assumption",
+      "delta": "承诺"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "assumption",
+      "delta": "违背"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "assumption",
+      "delta": "与"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "assumption",
+      "delta": "流失"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "assumption",
+      "delta": "之间并非无"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "assumption",
+      "delta": "条件必然"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 2,
+      "seat": "assumption",
+      "delta": "。"
+    },
+    {
+      "type": "reply",
+      "round": 2,
+      "seat": "assumption",
+      "content": "{\"description\":\"隐含前提：开篇3至5章内确立的类型定位与核心爽点承诺一旦在后续章节偏移或迟迟不兑现，读者会将其视为'文不对题'而直接弃书，其杀伤力大于文笔瑕疵或单章节奏拖沓等可容忍问题；该前提需验证——现实中也存在前期承诺延后兑现但读者因其他补偿（如人物魅力、悬念钩子）继续追读的反例，故承诺违背与流失之间并非无条件必然。\",\"confidence\":\"medium\"}"
+    },
+    {
+      "type": "boundary",
+      "round": 2,
+      "item": {
+        "id": "B009",
+        "type": "前提",
+        "description": "隐含前提：开篇3至5章内确立的类型定位与核心爽点承诺一旦在后续章节偏移或迟迟不兑现，读者会将其视为'文不对题'而直接弃书，其杀伤力大于文笔瑕疵或单章节奏拖沓等可容忍问题；该前提需验证——现实中也存在前期承诺延后兑现但读者因其他补偿（如人物魅力、悬念钩子）继续追读的反例，故承诺违背与流失之间并非无条件必然。",
+        "confidence": "medium",
+        "source": "assumption",
+        "sourceModel": "free",
+        "round": 2,
+        "status": {
+          "kind": "kept"
+        }
+      }
+    },
+    {
+      "type": "question",
+      "round": 2,
+      "seat": "blindspot",
+      "question": "读者跨设备续读时，进度同步、章节切割点丢失等平台侧体验断层，会在什么条件下导致追读中断？"
+    },
+    {
+      "type": "notice",
+      "level": "warn",
+      "seat": "blindspot",
+      "message": "「盲区审计员」第 2 轮模型空返回（可能为上游限流或思考预算耗尽），正在重试一次。"
+    },
+    {
+      "type": "reply",
+      "round": 2,
+      "seat": "blindspot",
+      "content": "{\"description\":\"跨设备进度不同步若发生在章末悬念或关键反转附近，且精确阅读锚点与章节切割点同时丢失，使读者被迫回读大段内容或跳漏情节，就会把普通续读摩擦转化为追读中断。\",\"confidence\":\"high\"}"
+    },
+    {
+      "type": "boundary",
+      "round": 2,
+      "item": {
+        "id": "B010",
+        "type": "盲区",
+        "description": "跨设备进度不同步若发生在章末悬念或关键反转附近，且精确阅读锚点与章节切割点同时丢失，使读者被迫回读大段内容或跳漏情节，就会把普通续读摩擦转化为追读中断。",
+        "confidence": "high",
+        "source": "blindspot",
+        "sourceModel": "free",
+        "round": 2,
+        "status": {
+          "kind": "kept"
+        }
+      }
+    },
+    {
+      "type": "round",
+      "round": 2,
+      "newCount": 5,
+      "tokenEstimate": 18197
+    },
+    {
+      "type": "question",
+      "round": 3,
+      "seat": "forward",
+      "question": "读者在追读中会自发设定短期目标（如等角色回归、等伏笔回收），当这些目标被长期搁置或明确延后时，读者会采取哪些可枚举的调整行为？这些行为如何反作用于追读意愿？"
+    },
+    {
+      "type": "error",
+      "message": "席位 正向勘探者 本轮失败：请求超时",
+      "seat": "forward"
+    },
+    {
+      "type": "question",
+      "round": 3,
+      "seat": "reverse",
+      "question": "除设定与视角外，读者对剧情内时间流速、空间位移的连续性还存在哪些一旦违反就难以原谅的硬约束？"
+    },
+    {
+      "type": "notice",
+      "level": "warn",
+      "seat": "reverse",
+      "message": "「反向勘探者」第 3 轮模型空返回（可能为上游限流或思考预算耗尽），正在重试一次。"
+    },
+    {
+      "type": "reply",
+      "round": 3,
+      "seat": "reverse",
+      "content": "{\"description\":\"前文已用可验证锚点（如路程需三日、伤口七日愈合、季节年份）明确的时间跨度与空间距离，后续章节不得在无任何过渡交代的情况下被无声缩短、拉长或瞬移，尤其禁止角色在未描写中途行程的情况下直接出现在远处地点，或时间线倒流导致已发生的事件被重置。\",\"confidence\":\"high\"}"
+    },
+    {
+      "type": "boundary",
+      "round": 3,
+      "item": {
+        "id": "B011",
+        "type": "约束",
+        "description": "前文已用可验证锚点（如路程需三日、伤口七日愈合、季节年份）明确的时间跨度与空间距离，后续章节不得在无任何过渡交代的情况下被无声缩短、拉长或瞬移，尤其禁止角色在未描写中途行程的情况下直接出现在远处地点，或时间线倒流导致已发生的事件被重置。",
+        "confidence": "high",
+        "source": "reverse",
+        "sourceModel": "free",
+        "round": 3,
+        "status": {
+          "kind": "kept"
+        }
+      }
+    },
+    {
+      "type": "question",
+      "round": 3,
+      "seat": "counter",
+      "question": "请列举满足设定自洽、节奏适配、情感锚点稳固、类型承诺兑现到位，却仍在连载期出现批量读者中断追读的可枚举案例及共性原因。"
+    },
+    {
+      "type": "notice",
+      "level": "warn",
+      "seat": "counter",
+      "message": "「反例猎人」第 3 轮模型空返回（可能为上游限流或思考预算耗尽），正在重试一次。"
+    },
+    {
+      "type": "reply",
+      "round": 3,
+      "seat": "counter",
+      "content": "{\"description\":\"内容四项指标均达标但作者因病或长假断更两周以上，连载期追读数据腰斩——更新稳定性独立于内容质量构成批量弃读诱因\",\"confidence\":\"high\"}"
+    },
+    {
+      "type": "boundary",
+      "round": 3,
+      "item": {
+        "id": "B012",
+        "type": "反例",
+        "description": "内容四项指标均达标但作者因病或长假断更两周以上，连载期追读数据腰斩——更新稳定性独立于内容质量构成批量弃读诱因",
+        "confidence": "high",
+        "source": "counter",
+        "sourceModel": "free",
+        "round": 3,
+        "status": {
+          "kind": "kept"
+        }
+      }
+    },
+    {
+      "type": "question",
+      "round": 3,
+      "seat": "assumption",
+      "question": "读者在持续追更时默认哪些自身状态成立，例如记得住跨更前情、术语不遗忘、已读章节不被暗中修订？请枚举这类隐形前提及其崩塌情形。"
+    },
+    {
+      "type": "notice",
+      "level": "warn",
+      "seat": "assumption",
+      "message": "「假设审问者」第 3 轮模型空返回（可能为上游限流或思考预算耗尽），正在重试一次。"
+    },
+    {
+      "type": "reply",
+      "round": 3,
+      "seat": "assumption",
+      "content": "{\"description\":\"读者默认跨更后仍能凭记忆激活关键人物关系、术语和未回收伏笔；一旦更新间隔过长、支线庞杂或专名仅单次出现，就会因上下文断裂而看不懂或被迫重读旧章。\",\"confidence\":\"high\"}"
+    },
+    {
+      "type": "boundary",
+      "round": 3,
+      "item": {
+        "id": "B013",
+        "type": "前提",
+        "description": "读者默认跨更后仍能凭记忆激活关键人物关系、术语和未回收伏笔；一旦更新间隔过长、支线庞杂或专名仅单次出现，就会因上下文断裂而看不懂或被迫重读旧章。",
+        "confidence": "high",
+        "source": "assumption",
+        "sourceModel": "free",
+        "round": 3,
+        "status": {
+          "kind": "kept"
+        }
+      }
+    },
+    {
+      "type": "question",
+      "round": 3,
+      "seat": "blindspot",
+      "question": "阅读平台在章末悬念钩子处插入强制广告或弹窗，对读者追读意愿的影响程度及可落地的规避方案属于哪类盲区？"
+    },
+    {
+      "type": "notice",
+      "level": "warn",
+      "seat": "blindspot",
+      "message": "「盲区审计员」第 3 轮模型空返回（可能为上游限流或思考预算耗尽），正在重试一次。"
+    },
+    {
+      "type": "reply",
+      "round": 3,
+      "seat": "blindspot",
+      "content": "{\"description\":\"阅读平台在章末悬念处插入的强制广告、弹窗等交互打断因素，是否属于读者端追读体感边界、其修复责任应归于平台侧还是创作侧的归属划分盲区\",\"confidence\":\"medium\"}"
+    },
+    {
+      "type": "boundary",
+      "round": 3,
+      "item": {
+        "id": "B014",
+        "type": "盲区",
+        "description": "阅读平台在章末悬念处插入的强制广告、弹窗等交互打断因素，是否属于读者端追读体感边界、其修复责任应归于平台侧还是创作侧的归属划分盲区",
+        "confidence": "medium",
+        "source": "blindspot",
+        "sourceModel": "free",
+        "round": 3,
+        "status": {
+          "kind": "kept"
+        }
+      }
+    },
+    {
+      "type": "round",
+      "round": 3,
+      "newCount": 4,
+      "tokenEstimate": 30091
+    },
+    {
+      "type": "question",
+      "round": 4,
+      "seat": "forward",
+      "question": "读者自身设定的追读目标除获取剧情外还能分成哪几类？这些目标在追读途中发生迁移、提前达成或被替代时，会如何影响其继续点击下一章的决定？"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "forward",
+      "delta": "需"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "forward",
+      "delta": "区分"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "forward",
+      "delta": "读者"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "forward",
+      "delta": "非"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "forward",
+      "delta": "剧情"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "forward",
+      "delta": "类"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "forward",
+      "delta": "追"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "forward",
+      "delta": "读"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "forward",
+      "delta": "目标"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "forward",
+      "delta": "："
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "forward",
+      "delta": "情绪"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "forward",
+      "delta": "宣泄"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "forward",
+      "delta": "或"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "forward",
+      "delta": "代偿"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "forward",
+      "delta": "、"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "forward",
+      "delta": "解谜"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "forward",
+      "delta": "与"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "forward",
+      "delta": "信息"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "forward",
+      "delta": "补"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "forward",
+      "delta": "全"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "forward",
+      "delta": "、"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "forward",
+      "delta": "角色"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "forward",
+      "delta": "或"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "forward",
+      "delta": "CP"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "forward",
+      "delta": "陪伴"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "forward",
+      "delta": "、"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "forward",
+      "delta": "世界观"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "forward",
+      "delta": "与"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "forward",
+      "delta": "审美"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "forward",
+      "delta": "体验"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "forward",
+      "delta": "；"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "forward",
+      "delta": "并"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "forward",
+      "delta": "校验"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "forward",
+      "delta": "这些"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "forward",
+      "delta": "目标"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "forward",
+      "delta": "在"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "forward",
+      "delta": "卷"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "forward",
+      "delta": "中"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "forward",
+      "delta": "提前"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "forward",
+      "delta": "兑现"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "forward",
+      "delta": "、"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "forward",
+      "delta": "落空"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "forward",
+      "delta": "或"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "forward",
+      "delta": "被"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "forward",
+      "delta": "其他"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "forward",
+      "delta": "线索"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "forward",
+      "delta": "替代"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "forward",
+      "delta": "后"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "forward",
+      "delta": "，"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "forward",
+      "delta": "是否"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "forward",
+      "delta": "出现"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "forward",
+      "delta": "下"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "forward",
+      "delta": "一章"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "forward",
+      "delta": "点击"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "forward",
+      "delta": "动机"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "forward",
+      "delta": "真空"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "forward",
+      "delta": "。"
+    },
+    {
+      "type": "reply",
+      "round": 4,
+      "seat": "forward",
+      "content": "{\"description\":\"需区分读者非剧情类追读目标：情绪宣泄或代偿、解谜与信息补全、角色或CP陪伴、世界观与审美体验；并校验这些目标在卷中提前兑现、落空或被其他线索替代后，是否出现下一章点击动机真空。\",\"confidence\":\"high\"}"
+    },
+    {
+      "type": "boundary",
+      "round": 4,
+      "item": {
+        "id": "B015",
+        "type": "目标",
+        "description": "需区分读者非剧情类追读目标：情绪宣泄或代偿、解谜与信息补全、角色或CP陪伴、世界观与审美体验；并校验这些目标在卷中提前兑现、落空或被其他线索替代后，是否出现下一章点击动机真空。",
+        "confidence": "high",
+        "source": "forward",
+        "sourceModel": "free",
+        "round": 4,
+        "status": {
+          "kind": "kept"
+        }
+      }
+    },
+    {
+      "type": "question",
+      "round": 4,
+      "seat": "reverse",
+      "question": "是否存在作者中途单方面修改已公开的核心人设、CP走向或剧情承诺这类创作约束？其触发读者批量弃读的临界条件是什么？"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "reverse",
+      "delta": "已公开超过"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "reverse",
+      "delta": "10章、"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "reverse",
+      "delta": "且在"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "reverse",
+      "delta": "前文被"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "reverse",
+      "delta": "重复强调至少"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "reverse",
+      "delta": "3次的核心人设"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "reverse",
+      "delta": "、CP走向或关键"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "reverse",
+      "delta": "剧情承诺，"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "reverse",
+      "delta": "禁止在1"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "reverse",
+      "delta": "0章内无任何伏"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "reverse",
+      "delta": "笔提示的前提下"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "reverse",
+      "delta": "于单章内单方面推翻"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "reverse",
+      "delta": "；若此类"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "reverse",
+      "delta": "无"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "reverse",
+      "delta": "铺"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "reverse",
+      "delta": "垫的翻"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "reverse",
+      "delta": "转累计"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "reverse",
+      "delta": "达到"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "reverse",
+      "delta": "3处，即"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "reverse",
+      "delta": "视为触发读者"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "reverse",
+      "delta": "批量弃读的临界条件。"
+    },
+    {
+      "type": "reply",
+      "round": 4,
+      "seat": "reverse",
+      "content": "{\"description\":\"已公开超过10章、且在前文被重复强调至少3次的核心人设、CP走向或关键剧情承诺，禁止在10章内无任何伏笔提示的前提下于单章内单方面推翻；若此类无铺垫的翻转累计达到3处，即视为触发读者批量弃读的临界条件。\",\"confidence\":\"medium\"}"
+    },
+    {
+      "type": "boundary",
+      "round": 4,
+      "item": {
+        "id": "B016",
+        "type": "约束",
+        "description": "已公开超过10章、且在前文被重复强调至少3次的核心人设、CP走向或关键剧情承诺，禁止在10章内无任何伏笔提示的前提下于单章内单方面推翻；若此类无铺垫的翻转累计达到3处，即视为触发读者批量弃读的临界条件。",
+        "confidence": "medium",
+        "source": "reverse",
+        "sourceModel": "free",
+        "round": 4,
+        "status": {
+          "kind": "kept"
+        }
+      }
+    },
+    {
+      "type": "question",
+      "round": 4,
+      "seat": "counter",
+      "question": "除主角憋屈、情感锚点清零、断更外，还有哪类作品在逻辑、节奏、设定都无懈可击时，仍让读者批量弃书？"
+    },
+    {
+      "type": "notice",
+      "level": "warn",
+      "seat": "counter",
+      "message": "「反例猎人」第 4 轮模型空返回（可能为上游限流或思考预算耗尽），正在重试一次。"
+    },
+    {
+      "type": "reply",
+      "round": 4,
+      "seat": "counter",
+      "content": "{\"description\":\"反派利己流作品：逻辑、节奏、设定均自洽，但主角为修炼或求生毫无负担地献祭曾救助自己的无辜者，且叙事将其合理化为必要代价，读者因道德安全感被冒犯而批量弃书。\",\"confidence\":\"high\"}"
+    },
+    {
+      "type": "boundary",
+      "round": 4,
+      "item": {
+        "id": "B017",
+        "type": "反例",
+        "description": "反派利己流作品：逻辑、节奏、设定均自洽，但主角为修炼或求生毫无负担地献祭曾救助自己的无辜者，且叙事将其合理化为必要代价，读者因道德安全感被冒犯而批量弃书。",
+        "confidence": "high",
+        "source": "counter",
+        "sourceModel": "free",
+        "round": 4,
+        "status": {
+          "kind": "kept"
+        }
+      }
+    },
+    {
+      "type": "question",
+      "round": 4,
+      "seat": "assumption",
+      "question": "读者是否默认作者不会在连载过半时无预警切换核心叙事风格或调整已公开的核心爽点定位，该前提若被打破对追读意愿的影响程度如何？"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "assumption",
+      "delta": "读者"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "assumption",
+      "delta": "默认作者"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "assumption",
+      "delta": "在连载过半"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "assumption",
+      "delta": "时不会无预警切换核心"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "assumption",
+      "delta": "叙事风格或调整已公开的核心"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "assumption",
+      "delta": "爽点定位，若发生"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "assumption",
+      "delta": "即"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "assumption",
+      "delta": "视"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "assumption",
+      "delta": "作背弃"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "assumption",
+      "delta": "前期"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "assumption",
+      "delta": "阅读"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "assumption",
+      "delta": "契约"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "assumption",
+      "delta": "，通常"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "assumption",
+      "delta": "导致"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "assumption",
+      "delta": "弃"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "assumption",
+      "delta": "读而非"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "assumption",
+      "delta": "接受"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "assumption",
+      "delta": "；"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "assumption",
+      "delta": "该"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "assumption",
+      "delta": "前提适用于"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "assumption",
+      "delta": "长期"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "assumption",
+      "delta": "连载且"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "assumption",
+      "delta": "前期"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "assumption",
+      "delta": "已建立"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "assumption",
+      "delta": "稳定风格"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "assumption",
+      "delta": "预期"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "assumption",
+      "delta": "的作品"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "assumption",
+      "delta": "，但"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "assumption",
+      "delta": "对作者"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "assumption",
+      "delta": "已"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "assumption",
+      "delta": "提前"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "assumption",
+      "delta": "公告"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "assumption",
+      "delta": "或前期"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "assumption",
+      "delta": "本"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "assumption",
+      "delta": "就风格摇"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "assumption",
+      "delta": "摆的"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "assumption",
+      "delta": "作者"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "assumption",
+      "delta": "未必"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 4,
+      "seat": "assumption",
+      "delta": "成立"
+    },
+    {
+      "type": "reply",
+      "round": 4,
+      "seat": "assumption",
+      "content": "{\"description\":\"读者默认作者在连载过半时不会无预警切换核心叙事风格或调整已公开的核心爽点定位，若发生即视作背弃前期阅读契约，通常导致弃读而非接受；该前提适用于长期连载且前期已建立稳定风格预期的作品，但对作者已提前公告或前期本就风格摇摆的作者未必成立\",\"confidence\":\"medium\"}"
+    },
+    {
+      "type": "boundary",
+      "round": 4,
+      "item": {
+        "id": "B018",
+        "type": "前提",
+        "description": "读者默认作者在连载过半时不会无预警切换核心叙事风格或调整已公开的核心爽点定位，若发生即视作背弃前期阅读契约，通常导致弃读而非接受；该前提适用于长期连载且前期已建立稳定风格预期的作品，但对作者已提前公告或前期本就风格摇摆的作者未必成立",
+        "confidence": "medium",
+        "source": "assumption",
+        "sourceModel": "free",
+        "round": 4,
+        "status": {
+          "kind": "kept"
+        }
+      }
+    },
+    {
+      "type": "question",
+      "round": 4,
+      "seat": "blindspot",
+      "question": "读者在追读中途被评论区、书评或社群剧透关键反转或角色结局时，其追读动机如何被改写？可枚举哪些剧透类型与对应的行为分支？"
+    },
+    {
+      "type": "notice",
+      "level": "warn",
+      "seat": "blindspot",
+      "message": "「盲区审计员」第 4 轮模型空返回（可能为上游限流或思考预算耗尽），正在重试一次。"
+    },
+    {
+      "type": "reply",
+      "round": 4,
+      "seat": "blindspot",
+      "content": "{\"description\":\"需按剧透内容相对读者当前阅读进度的“超前跨度”与“信息性质”（身份、反转、生死、CP结局等）交叉分类，并验证追读动机是转为赶进度核对答案、回避已知情感冲击，还是直接弃读。\",\"confidence\":\"high\"}"
+    },
+    {
+      "type": "boundary",
+      "round": 4,
+      "item": {
+        "id": "B019",
+        "type": "盲区",
+        "description": "需按剧透内容相对读者当前阅读进度的“超前跨度”与“信息性质”（身份、反转、生死、CP结局等）交叉分类，并验证追读动机是转为赶进度核对答案、回避已知情感冲击，还是直接弃读。",
+        "confidence": "high",
+        "source": "blindspot",
+        "sourceModel": "free",
+        "round": 4,
+        "status": {
+          "kind": "kept"
+        }
+      }
+    },
+    {
+      "type": "round",
+      "round": 4,
+      "newCount": 5,
+      "tokenEstimate": 41597
+    },
+    {
+      "type": "converged",
+      "reason": "max_rounds",
+      "rounds": 4
+    },
+    {
+      "type": "list",
+      "list": {
+        "items": [
+          {
+            "id": "B001",
+            "type": "目标",
+            "description": "阶段性满足目标（悬念解答、情感共鸣、成长认同）在章节周期中的兑现节点错位，如开章抛出的疑问跨过多章未回应、情感高潮与成长节点被压在同一章挤占",
+            "confidence": "medium",
+            "source": "forward",
+            "sourceModel": "free",
+            "round": 1,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B006",
+            "type": "目标",
+            "description": "日更读者以单章悬念钩子和短频快爽点为目标、周更读者以周更剧情推进量为目标、养肥后补更读者以攒够完整剧情弧后的连读爆发密度为目标，三类目标错配会直接削弱持续追读意愿",
+            "confidence": "medium",
+            "source": "forward",
+            "sourceModel": "free",
+            "round": 2,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B015",
+            "type": "目标",
+            "description": "需区分读者非剧情类追读目标：情绪宣泄或代偿、解谜与信息补全、角色或CP陪伴、世界观与审美体验；并校验这些目标在卷中提前兑现、落空或被其他线索替代后，是否出现下一章点击动机真空。",
+            "confidence": "high",
+            "source": "forward",
+            "sourceModel": "free",
+            "round": 4,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B002",
+            "type": "约束",
+            "description": "连载小说核心设定（力量体系、人物基础属性、世界观基础规则）出现无合理过渡的前后矛盾，构成读者认知接受的刚性约束",
+            "confidence": "high",
+            "source": "reverse",
+            "sourceModel": "free",
+            "round": 1,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B007",
+            "type": "约束",
+            "description": "禁止在固定叙事视角中无过渡地插入其他角色的内心活动或感知信息，导致视角人称漂移",
+            "confidence": "high",
+            "source": "reverse",
+            "sourceModel": "free",
+            "round": 2,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B011",
+            "type": "约束",
+            "description": "前文已用可验证锚点（如路程需三日、伤口七日愈合、季节年份）明确的时间跨度与空间距离，后续章节不得在无任何过渡交代的情况下被无声缩短、拉长或瞬移，尤其禁止角色在未描写中途行程的情况下直接出现在远处地点，或时间线倒流导致已发生的事件被重置。",
+            "confidence": "high",
+            "source": "reverse",
+            "sourceModel": "free",
+            "round": 3,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B016",
+            "type": "约束",
+            "description": "已公开超过10章、且在前文被重复强调至少3次的核心人设、CP走向或关键剧情承诺，禁止在10章内无任何伏笔提示的前提下于单章内单方面推翻；若此类无铺垫的翻转累计达到3处，即视为触发读者批量弃读的临界条件。",
+            "confidence": "medium",
+            "source": "reverse",
+            "sourceModel": "free",
+            "round": 4,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B003",
+            "type": "反例",
+            "description": "一类无限流小说中期每个副本开局仍有悬念、单章数据平稳，但主角反复被规则和队友胁迫行动，通关后既不拿回主动权，也不惩罚恩将仇报者，读者因持续憋屈和道德情绪无报偿而在卷末批量弃书。",
+            "confidence": "high",
+            "source": "counter",
+            "sourceModel": "free",
+            "round": 1,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B008",
+            "type": "反例",
+            "description": "存在一类完结作品（如《雪中悍刀行》后期、《大奉打更人》后期）：设定自洽、节奏与钩子正常、主角主动权充足，却因中后期换地图/战力膨胀导致前期高人气配角与CP长期缺席甚至被强行写死，读者情感投资的存量资产被清零，共同可枚举特征是掉追读反馈集中在『喜欢的角色不出现了/羁绊线断了』而非逻辑、节奏或主角能动性问题，说明追读意愿还依赖作者不可单方面回收的角色情感锚点",
+            "confidence": "medium",
+            "source": "counter",
+            "sourceModel": "free",
+            "round": 2,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B012",
+            "type": "反例",
+            "description": "内容四项指标均达标但作者因病或长假断更两周以上，连载期追读数据腰斩——更新稳定性独立于内容质量构成批量弃读诱因",
+            "confidence": "high",
+            "source": "counter",
+            "sourceModel": "free",
+            "round": 3,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B017",
+            "type": "反例",
+            "description": "反派利己流作品：逻辑、节奏、设定均自洽，但主角为修炼或求生毫无负担地献祭曾救助自己的无辜者，且叙事将其合理化为必要代价，读者因道德安全感被冒犯而批量弃书。",
+            "confidence": "high",
+            "source": "counter",
+            "sourceModel": "free",
+            "round": 4,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B004",
+            "type": "前提",
+            "description": "读者在启动追读行为前，默认将作者过往完结记录、作品口碑作为信任锚点，若该前提缺失（如作者无完结作品、口碑为负），会直接降低其初始追读意愿",
+            "confidence": "high",
+            "source": "assumption",
+            "sourceModel": "free",
+            "round": 1,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B009",
+            "type": "前提",
+            "description": "隐含前提：开篇3至5章内确立的类型定位与核心爽点承诺一旦在后续章节偏移或迟迟不兑现，读者会将其视为'文不对题'而直接弃书，其杀伤力大于文笔瑕疵或单章节奏拖沓等可容忍问题；该前提需验证——现实中也存在前期承诺延后兑现但读者因其他补偿（如人物魅力、悬念钩子）继续追读的反例，故承诺违背与流失之间并非无条件必然。",
+            "confidence": "medium",
+            "source": "assumption",
+            "sourceModel": "free",
+            "round": 2,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B013",
+            "type": "前提",
+            "description": "读者默认跨更后仍能凭记忆激活关键人物关系、术语和未回收伏笔；一旦更新间隔过长、支线庞杂或专名仅单次出现，就会因上下文断裂而看不懂或被迫重读旧章。",
+            "confidence": "high",
+            "source": "assumption",
+            "sourceModel": "free",
+            "round": 3,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B018",
+            "type": "前提",
+            "description": "读者默认作者在连载过半时不会无预警切换核心叙事风格或调整已公开的核心爽点定位，若发生即视作背弃前期阅读契约，通常导致弃读而非接受；该前提适用于长期连载且前期已建立稳定风格预期的作品，但对作者已提前公告或前期本就风格摇摆的作者未必成立",
+            "confidence": "medium",
+            "source": "assumption",
+            "sourceModel": "free",
+            "round": 4,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B005",
+            "type": "盲区",
+            "description": "章节末尾钩子的信息密度与读者所处阅读场景的注意力带宽不匹配（如碎片时间里需要多步回忆才能接上的复杂悬念、睡前场景中引发过度兴奋难以入睡的高强度钩子），导致读者主动推迟或放弃下一章点击的具体情境错配",
+            "confidence": "medium",
+            "source": "blindspot",
+            "sourceModel": "free",
+            "round": 1,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B010",
+            "type": "盲区",
+            "description": "跨设备进度不同步若发生在章末悬念或关键反转附近，且精确阅读锚点与章节切割点同时丢失，使读者被迫回读大段内容或跳漏情节，就会把普通续读摩擦转化为追读中断。",
+            "confidence": "high",
+            "source": "blindspot",
+            "sourceModel": "free",
+            "round": 2,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B014",
+            "type": "盲区",
+            "description": "阅读平台在章末悬念处插入的强制广告、弹窗等交互打断因素，是否属于读者端追读体感边界、其修复责任应归于平台侧还是创作侧的归属划分盲区",
+            "confidence": "medium",
+            "source": "blindspot",
+            "sourceModel": "free",
+            "round": 3,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B019",
+            "type": "盲区",
+            "description": "需按剧透内容相对读者当前阅读进度的“超前跨度”与“信息性质”（身份、反转、生死、CP结局等）交叉分类，并验证追读动机是转为赶进度核对答案、回避已知情感冲击，还是直接弃读。",
+            "confidence": "high",
+            "source": "blindspot",
+            "sourceModel": "free",
+            "round": 4,
+            "status": {
+              "kind": "kept"
+            }
+          }
+        ],
+        "rounds": 4,
+        "convergence": "max_rounds",
+        "disputesResolved": 0,
+        "tokenEstimate": 44027
+      }
+    },
+    {
+      "type": "user_message",
+      "content": "继续勘探",
+      "kind": "supplement"
+    },
+    {
+      "type": "error",
+      "message": "席位 正向勘探者 本轮失败：请求超时",
+      "seat": "forward"
+    },
+    {
+      "type": "error",
+      "message": "席位 反向勘探者 本轮失败：请求超时",
+      "seat": "reverse"
+    },
+    {
+      "type": "question",
+      "round": 5,
+      "seat": "counter",
+      "question": "是否存在设定自洽、节奏顺畅、角色有吸引力、更新稳定，但读者因剧情均可精准预判、毫无意外感而弃读的具体作品案例？"
+    },
+    {
+      "type": "notice",
+      "level": "warn",
+      "seat": "counter",
+      "message": "「反例猎人」第 5 轮模型空返回（可能为上游限流或思考预算耗尽），正在重试一次。"
+    },
+    {
+      "type": "reply",
+      "round": 5,
+      "seat": "counter",
+      "content": "{\"description\":\"唐家三少《终极斗罗》保持了雷打不动的稳定更新、自洽的战力设定与成熟的主角团人设，但中后期情节完全固化在血脉压制与越级必胜的既定模板中，读者因对所有危机与反转均能精准预判、丧失意外感而引发大规模弃读。\",\"confidence\":\"high\"}"
+    },
+    {
+      "type": "boundary",
+      "round": 5,
+      "item": {
+        "id": "B020",
+        "type": "反例",
+        "description": "唐家三少《终极斗罗》保持了雷打不动的稳定更新、自洽的战力设定与成熟的主角团人设，但中后期情节完全固化在血脉压制与越级必胜的既定模板中，读者因对所有危机与反转均能精准预判、丧失意外感而引发大规模弃读。",
+        "confidence": "high",
+        "source": "counter",
+        "sourceModel": "free",
+        "round": 5,
+        "status": {
+          "kind": "kept"
+        }
+      }
+    },
+    {
+      "type": "question",
+      "round": 5,
+      "seat": "assumption",
+      "question": "读者是否默认主角的核心行事逻辑与底层动机不会在无前期伏笔的情况下发生颠覆性转变，该前提被打破的弃读触发条件有哪些？"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 5,
+      "seat": "assumption",
+      "delta": "读者默认主角的"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 5,
+      "seat": "assumption",
+      "delta": "动机"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 5,
+      "seat": "assumption",
+      "delta": "或"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 5,
+      "seat": "assumption",
+      "delta": "行事"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 5,
+      "seat": "assumption",
+      "delta": "逻辑若"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 5,
+      "seat": "assumption",
+      "delta": "发生颠覆"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 5,
+      "seat": "assumption",
+      "delta": "性转变，前"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 5,
+      "seat": "assumption",
+      "delta": "文至少要有"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 5,
+      "seat": "assumption",
+      "delta": "一次可"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 5,
+      "seat": "assumption",
+      "delta": "回溯的伏笔"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 5,
+      "seat": "assumption",
+      "delta": "或"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 5,
+      "seat": "assumption",
+      "delta": "暗示，"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 5,
+      "seat": "assumption",
+      "delta": "否则当"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 5,
+      "seat": "assumption",
+      "delta": "章"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 5,
+      "seat": "assumption",
+      "delta": "揭晓"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 5,
+      "seat": "assumption",
+      "delta": "时"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 5,
+      "seat": "assumption",
+      "delta": "会因"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 5,
+      "seat": "assumption",
+      "delta": "人"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 5,
+      "seat": "assumption",
+      "delta": "设崩塌感"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 5,
+      "seat": "assumption",
+      "delta": "触发"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 5,
+      "seat": "assumption",
+      "delta": "弃读，"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 5,
+      "seat": "assumption",
+      "delta": "这一"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 5,
+      "seat": "assumption",
+      "delta": "伏"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 5,
+      "seat": "assumption",
+      "delta": "笔最少"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 5,
+      "seat": "assumption",
+      "delta": "出现"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 5,
+      "seat": "assumption",
+      "delta": "次数及"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 5,
+      "seat": "assumption",
+      "delta": "距"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 5,
+      "seat": "assumption",
+      "delta": "揭晓"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 5,
+      "seat": "assumption",
+      "delta": "的章"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 5,
+      "seat": "assumption",
+      "delta": "节数"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 5,
+      "seat": "assumption",
+      "delta": "尚未"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 5,
+      "seat": "assumption",
+      "delta": "界定"
+    },
+    {
+      "type": "reply",
+      "round": 5,
+      "seat": "assumption",
+      "content": "{\"description\":\"读者默认主角的动机或行事逻辑若发生颠覆性转变，前文至少要有一次可回溯的伏笔或暗示，否则当章揭晓时会因人设崩塌感触发弃读，这一伏笔最少出现次数及距揭晓的章节数尚未界定\",\"confidence\":\"medium\"}"
+    },
+    {
+      "type": "boundary",
+      "round": 5,
+      "item": {
+        "id": "B021",
+        "type": "前提",
+        "description": "读者默认主角的动机或行事逻辑若发生颠覆性转变，前文至少要有一次可回溯的伏笔或暗示，否则当章揭晓时会因人设崩塌感触发弃读，这一伏笔最少出现次数及距揭晓的章节数尚未界定",
+        "confidence": "medium",
+        "source": "assumption",
+        "sourceModel": "free",
+        "round": 5,
+        "status": {
+          "kind": "kept"
+        }
+      }
+    },
+    {
+      "type": "question",
+      "round": 5,
+      "seat": "blindspot",
+      "question": "除已提及的追读中断场景外，哪些读者端\"阅读能力或状态变化\"（如弃读后回归、连续阅读疲劳、多书并追串线）会形成新的盲区？"
+    },
+    {
+      "type": "notice",
+      "level": "warn",
+      "seat": "blindspot",
+      "message": "「盲区审计员」第 5 轮模型空返回（可能为上游限流或思考预算耗尽），正在重试一次。"
+    },
+    {
+      "type": "reply",
+      "round": 5,
+      "seat": "blindspot",
+      "content": "{\"description\":\"读者在睡眠不足、工作高压或情绪低落等临时状态下，对慢热、压抑、虐心情节的容忍阈值会显著下降，从而把平时可接受的内容判定为劝退并停止追读。\",\"confidence\":\"high\"}"
+    },
+    {
+      "type": "boundary",
+      "round": 5,
+      "item": {
+        "id": "B022",
+        "type": "盲区",
+        "description": "读者在睡眠不足、工作高压或情绪低落等临时状态下，对慢热、压抑、虐心情节的容忍阈值会显著下降，从而把平时可接受的内容判定为劝退并停止追读。",
+        "confidence": "high",
+        "source": "blindspot",
+        "sourceModel": "free",
+        "round": 5,
+        "status": {
+          "kind": "kept"
+        }
+      }
+    },
+    {
+      "type": "round",
+      "round": 5,
+      "newCount": 3,
+      "tokenEstimate": 53081
+    },
+    {
+      "type": "question",
+      "round": 7,
+      "seat": "forward",
+      "question": "读者在追读过程中，因已投入时间形成的“完成已读部分”目标，与内容吸引力下降发生冲突时，会如何影响其继续点击下一章的行为？"
+    },
+    {
+      "type": "notice",
+      "level": "warn",
+      "seat": "forward",
+      "message": "「正向勘探者」第 7 轮模型空返回（可能为上游限流或思考预算耗尽），正在重试一次。"
+    },
+    {
+      "type": "reply",
+      "round": 7,
+      "seat": "forward",
+      "content": "{\"description\":\"读者追读过程中，已投入时间形成的‘完成已读全部章节’目标与内容吸引力下降产生冲突时，会直接降低其点击下一章的即时意愿，表现为停止追更或跳过最新章节直接退出阅读界面\",\"confidence\":\"high\"}"
+    },
+    {
+      "type": "boundary",
+      "round": 7,
+      "item": {
+        "id": "B023",
+        "type": "目标",
+        "description": "读者追读过程中，已投入时间形成的‘完成已读全部章节’目标与内容吸引力下降产生冲突时，会直接降低其点击下一章的即时意愿，表现为停止追更或跳过最新章节直接退出阅读界面",
+        "confidence": "high",
+        "source": "forward",
+        "sourceModel": "free",
+        "round": 7,
+        "status": {
+          "kind": "kept"
+        }
+      }
+    },
+    {
+      "type": "question",
+      "round": 7,
+      "seat": "reverse",
+      "question": "单章内新引入的人物、地名、术语等陌生信息是否存在读者可接受的容量上限？该上限是否随连载阶段与场景类型而变化，超限时读者会以何种表现弃读？"
+    },
+    {
+      "type": "notice",
+      "level": "warn",
+      "seat": "reverse",
+      "message": "「反向勘探者」第 7 轮模型空返回（可能为上游限流或思考预算耗尽），正在重试一次。"
+    },
+    {
+      "type": "reply",
+      "round": 7,
+      "seat": "reverse",
+      "content": "{\"description\":\"单章首次出现且需读者记忆的人名、地名、术语等陌生信息总量存在可接受上限（经验阈值约为5-7个，成组铺陈时需额外给出锚点），该上限在开篇/新地图开启/大换角阶段可适当放宽、在中段日常章节与信息密集的设定解释章需收紧；一旦超限，读者会出现人名张冠李戴、频繁回翻找人、跳读设定段落，继而在连续2-3章内弃读，因此处方应限制单章新增专名数量并让旧角色优先出场承接。\",\"confidence\":\"medium\"}"
+    },
+    {
+      "type": "boundary",
+      "round": 7,
+      "item": {
+        "id": "B024",
+        "type": "约束",
+        "description": "单章首次出现且需读者记忆的人名、地名、术语等陌生信息总量存在可接受上限（经验阈值约为5-7个，成组铺陈时需额外给出锚点），该上限在开篇/新地图开启/大换角阶段可适当放宽、在中段日常章节与信息密集的设定解释章需收紧；一旦超限，读者会出现人名张冠李戴、频繁回翻找人、跳读设定段落，继而在连续2-3章内弃读，因此处方应限制单章新增专名数量并让旧角色优先出场承接。",
+        "confidence": "medium",
+        "source": "reverse",
+        "sourceModel": "free",
+        "round": 7,
+        "status": {
+          "kind": "kept"
+        }
+      }
+    },
+    {
+      "type": "question",
+      "round": 7,
+      "seat": "counter",
+      "question": "在哪些可枚举的连载场景中，章首前情回顾、术语解释或人物重述本为降低理解门槛，却反而构成弃读触发点？"
+    },
+    {
+      "type": "notice",
+      "level": "warn",
+      "seat": "counter",
+      "message": "「反例猎人」第 7 轮模型空返回（可能为上游限流或思考预算耗尽），正在重试一次。"
+    },
+    {
+      "type": "reply",
+      "round": 7,
+      "seat": "counter",
+      "content": "{\"description\":\"在生死决战或重大悬念揭露后的承接章节中，章首插入功法设定或前情重述会强行打断读者的即时情绪冲刺惯性，反被判定为注水消解危机感而诱发弃读。\",\"confidence\":\"high\"}"
+    },
+    {
+      "type": "boundary",
+      "round": 7,
+      "item": {
+        "id": "B025",
+        "type": "反例",
+        "description": "在生死决战或重大悬念揭露后的承接章节中，章首插入功法设定或前情重述会强行打断读者的即时情绪冲刺惯性，反被判定为注水消解危机感而诱发弃读。",
+        "confidence": "high",
+        "source": "counter",
+        "sourceModel": "free",
+        "round": 7,
+        "status": {
+          "kind": "kept"
+        }
+      }
+    },
+    {
+      "type": "question",
+      "round": 7,
+      "seat": "assumption",
+      "question": "读者默认作品的核心受众定位与核心卖点承诺不会在连载中后期无预警偏移，该前提被打破时是否必然触发弃读？"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 7,
+      "seat": "assumption",
+      "delta": "默认中"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 7,
+      "seat": "assumption",
+      "delta": "后期核心"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 7,
+      "seat": "assumption",
+      "delta": "卖点偏"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 7,
+      "seat": "assumption",
+      "delta": "移（如种田日常"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 7,
+      "seat": "assumption",
+      "delta": "转向"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 7,
+      "seat": "assumption",
+      "delta": "朝堂权谋）无"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 7,
+      "seat": "assumption",
+      "delta": "预警发生"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 7,
+      "seat": "assumption",
+      "delta": "时"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 7,
+      "seat": "assumption",
+      "delta": "读者必然弃读，忽略"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 7,
+      "seat": "assumption",
+      "delta": "读者"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 7,
+      "seat": "assumption",
+      "delta": "是否"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 7,
+      "seat": "assumption",
+      "delta": "因主角核心目标连续"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 7,
+      "seat": "assumption",
+      "delta": "、前期"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 7,
+      "seat": "assumption",
+      "delta": "沉"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 7,
+      "seat": "assumption",
+      "delta": "没成本或新卖点更"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 7,
+      "seat": "assumption",
+      "delta": "契合"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 7,
+      "seat": "assumption",
+      "delta": "而留存"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 7,
+      "seat": "assumption",
+      "delta": "——需"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 7,
+      "seat": "assumption",
+      "delta": "验证偏"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 7,
+      "seat": "assumption",
+      "delta": "移触发"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 7,
+      "seat": "assumption",
+      "delta": "弃读的条件"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 7,
+      "seat": "assumption",
+      "delta": "究竟是"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 7,
+      "seat": "assumption",
+      "delta": "『"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 7,
+      "seat": "assumption",
+      "delta": "偏"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 7,
+      "seat": "assumption",
+      "delta": "移本身』还是"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 7,
+      "seat": "assumption",
+      "delta": "『偏"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 7,
+      "seat": "assumption",
+      "delta": "移伴随"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 7,
+      "seat": "assumption",
+      "delta": "主角"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 7,
+      "seat": "assumption",
+      "delta": "行为"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 7,
+      "seat": "assumption",
+      "delta": "逻辑"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 7,
+      "seat": "assumption",
+      "delta": "断裂且"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 7,
+      "seat": "assumption",
+      "delta": "无过渡铺垫』。"
+    },
+    {
+      "type": "reply",
+      "round": 7,
+      "seat": "assumption",
+      "content": "{\"description\":\"默认中后期核心卖点偏移（如种田日常转向朝堂权谋）无预警发生时读者必然弃读，忽略读者是否因主角核心目标连续、前期沉没成本或新卖点更契合而留存——需验证偏移触发弃读的条件究竟是『偏移本身』还是『偏移伴随主角行为逻辑断裂且无过渡铺垫』。\",\"confidence\":\"medium\"}"
+    },
+    {
+      "type": "boundary",
+      "round": 7,
+      "item": {
+        "id": "B026",
+        "type": "前提",
+        "description": "默认中后期核心卖点偏移（如种田日常转向朝堂权谋）无预警发生时读者必然弃读，忽略读者是否因主角核心目标连续、前期沉没成本或新卖点更契合而留存——需验证偏移触发弃读的条件究竟是『偏移本身』还是『偏移伴随主角行为逻辑断裂且无过渡铺垫』。",
+        "confidence": "medium",
+        "source": "assumption",
+        "sourceModel": "free",
+        "round": 7,
+        "status": {
+          "kind": "kept"
+        }
+      }
+    },
+    {
+      "type": "question",
+      "round": 7,
+      "seat": "blindspot",
+      "question": "读者追读时所在平台的章节更新提醒、榜单推荐、评论区互动节奏，哪些机制会独立于内容质量改变其下一章点击意愿？可否枚举？"
+    },
+    {
+      "type": "notice",
+      "level": "warn",
+      "seat": "blindspot",
+      "message": "「盲区审计员」第 7 轮模型空返回（可能为上游限流或思考预算耗尽），正在重试一次。"
+    },
+    {
+      "type": "reply",
+      "round": 7,
+      "seat": "blindspot",
+      "content": "{\"description\":\"需把平台外生触发作为独立于正文质量的变量层验证：更新提醒的到达率、推送时机、频率与通知文案，书架/榜单的排序位置与标签，章末评论区的剧透、站队、催更互动密度，都会改变下一章点击意愿。\",\"confidence\":\"high\"}"
+    },
+    {
+      "type": "boundary",
+      "round": 7,
+      "item": {
+        "id": "B027",
+        "type": "盲区",
+        "description": "需把平台外生触发作为独立于正文质量的变量层验证：更新提醒的到达率、推送时机、频率与通知文案，书架/榜单的排序位置与标签，章末评论区的剧透、站队、催更互动密度，都会改变下一章点击意愿。",
+        "confidence": "high",
+        "source": "blindspot",
+        "sourceModel": "free",
+        "round": 7,
+        "status": {
+          "kind": "kept"
+        }
+      }
+    },
+    {
+      "type": "round",
+      "round": 7,
+      "newCount": 5,
+      "tokenEstimate": 69247
+    },
+    {
+      "type": "converged",
+      "reason": "auto",
+      "rounds": 7
+    },
+    {
+      "type": "notice",
+      "level": "warn",
+      "message": "统筹者裁决输出两次均无法解析，全部条目暂按保留处理。"
+    },
+    {
+      "type": "list",
+      "list": {
+        "items": [
+          {
+            "id": "B001",
+            "type": "目标",
+            "description": "阶段性满足目标（悬念解答、情感共鸣、成长认同）在章节周期中的兑现节点错位，如开章抛出的疑问跨过多章未回应、情感高潮与成长节点被压在同一章挤占",
+            "confidence": "medium",
+            "source": "forward",
+            "sourceModel": "free",
+            "round": 1,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B006",
+            "type": "目标",
+            "description": "日更读者以单章悬念钩子和短频快爽点为目标、周更读者以周更剧情推进量为目标、养肥后补更读者以攒够完整剧情弧后的连读爆发密度为目标，三类目标错配会直接削弱持续追读意愿",
+            "confidence": "medium",
+            "source": "forward",
+            "sourceModel": "free",
+            "round": 2,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B015",
+            "type": "目标",
+            "description": "需区分读者非剧情类追读目标：情绪宣泄或代偿、解谜与信息补全、角色或CP陪伴、世界观与审美体验；并校验这些目标在卷中提前兑现、落空或被其他线索替代后，是否出现下一章点击动机真空。",
+            "confidence": "high",
+            "source": "forward",
+            "sourceModel": "free",
+            "round": 4,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B023",
+            "type": "目标",
+            "description": "读者追读过程中，已投入时间形成的‘完成已读全部章节’目标与内容吸引力下降产生冲突时，会直接降低其点击下一章的即时意愿，表现为停止追更或跳过最新章节直接退出阅读界面",
+            "confidence": "high",
+            "source": "forward",
+            "sourceModel": "free",
+            "round": 7,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B002",
+            "type": "约束",
+            "description": "连载小说核心设定（力量体系、人物基础属性、世界观基础规则）出现无合理过渡的前后矛盾，构成读者认知接受的刚性约束",
+            "confidence": "high",
+            "source": "reverse",
+            "sourceModel": "free",
+            "round": 1,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B007",
+            "type": "约束",
+            "description": "禁止在固定叙事视角中无过渡地插入其他角色的内心活动或感知信息，导致视角人称漂移",
+            "confidence": "high",
+            "source": "reverse",
+            "sourceModel": "free",
+            "round": 2,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B011",
+            "type": "约束",
+            "description": "前文已用可验证锚点（如路程需三日、伤口七日愈合、季节年份）明确的时间跨度与空间距离，后续章节不得在无任何过渡交代的情况下被无声缩短、拉长或瞬移，尤其禁止角色在未描写中途行程的情况下直接出现在远处地点，或时间线倒流导致已发生的事件被重置。",
+            "confidence": "high",
+            "source": "reverse",
+            "sourceModel": "free",
+            "round": 3,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B016",
+            "type": "约束",
+            "description": "已公开超过10章、且在前文被重复强调至少3次的核心人设、CP走向或关键剧情承诺，禁止在10章内无任何伏笔提示的前提下于单章内单方面推翻；若此类无铺垫的翻转累计达到3处，即视为触发读者批量弃读的临界条件。",
+            "confidence": "medium",
+            "source": "reverse",
+            "sourceModel": "free",
+            "round": 4,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B024",
+            "type": "约束",
+            "description": "单章首次出现且需读者记忆的人名、地名、术语等陌生信息总量存在可接受上限（经验阈值约为5-7个，成组铺陈时需额外给出锚点），该上限在开篇/新地图开启/大换角阶段可适当放宽、在中段日常章节与信息密集的设定解释章需收紧；一旦超限，读者会出现人名张冠李戴、频繁回翻找人、跳读设定段落，继而在连续2-3章内弃读，因此处方应限制单章新增专名数量并让旧角色优先出场承接。",
+            "confidence": "medium",
+            "source": "reverse",
+            "sourceModel": "free",
+            "round": 7,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B003",
+            "type": "反例",
+            "description": "一类无限流小说中期每个副本开局仍有悬念、单章数据平稳，但主角反复被规则和队友胁迫行动，通关后既不拿回主动权，也不惩罚恩将仇报者，读者因持续憋屈和道德情绪无报偿而在卷末批量弃书。",
+            "confidence": "high",
+            "source": "counter",
+            "sourceModel": "free",
+            "round": 1,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B008",
+            "type": "反例",
+            "description": "存在一类完结作品（如《雪中悍刀行》后期、《大奉打更人》后期）：设定自洽、节奏与钩子正常、主角主动权充足，却因中后期换地图/战力膨胀导致前期高人气配角与CP长期缺席甚至被强行写死，读者情感投资的存量资产被清零，共同可枚举特征是掉追读反馈集中在『喜欢的角色不出现了/羁绊线断了』而非逻辑、节奏或主角能动性问题，说明追读意愿还依赖作者不可单方面回收的角色情感锚点",
+            "confidence": "medium",
+            "source": "counter",
+            "sourceModel": "free",
+            "round": 2,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B012",
+            "type": "反例",
+            "description": "内容四项指标均达标但作者因病或长假断更两周以上，连载期追读数据腰斩——更新稳定性独立于内容质量构成批量弃读诱因",
+            "confidence": "high",
+            "source": "counter",
+            "sourceModel": "free",
+            "round": 3,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B017",
+            "type": "反例",
+            "description": "反派利己流作品：逻辑、节奏、设定均自洽，但主角为修炼或求生毫无负担地献祭曾救助自己的无辜者，且叙事将其合理化为必要代价，读者因道德安全感被冒犯而批量弃书。",
+            "confidence": "high",
+            "source": "counter",
+            "sourceModel": "free",
+            "round": 4,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B020",
+            "type": "反例",
+            "description": "唐家三少《终极斗罗》保持了雷打不动的稳定更新、自洽的战力设定与成熟的主角团人设，但中后期情节完全固化在血脉压制与越级必胜的既定模板中，读者因对所有危机与反转均能精准预判、丧失意外感而引发大规模弃读。",
+            "confidence": "high",
+            "source": "counter",
+            "sourceModel": "free",
+            "round": 5,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B025",
+            "type": "反例",
+            "description": "在生死决战或重大悬念揭露后的承接章节中，章首插入功法设定或前情重述会强行打断读者的即时情绪冲刺惯性，反被判定为注水消解危机感而诱发弃读。",
+            "confidence": "high",
+            "source": "counter",
+            "sourceModel": "free",
+            "round": 7,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B004",
+            "type": "前提",
+            "description": "读者在启动追读行为前，默认将作者过往完结记录、作品口碑作为信任锚点，若该前提缺失（如作者无完结作品、口碑为负），会直接降低其初始追读意愿",
+            "confidence": "high",
+            "source": "assumption",
+            "sourceModel": "free",
+            "round": 1,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B009",
+            "type": "前提",
+            "description": "隐含前提：开篇3至5章内确立的类型定位与核心爽点承诺一旦在后续章节偏移或迟迟不兑现，读者会将其视为'文不对题'而直接弃书，其杀伤力大于文笔瑕疵或单章节奏拖沓等可容忍问题；该前提需验证——现实中也存在前期承诺延后兑现但读者因其他补偿（如人物魅力、悬念钩子）继续追读的反例，故承诺违背与流失之间并非无条件必然。",
+            "confidence": "medium",
+            "source": "assumption",
+            "sourceModel": "free",
+            "round": 2,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B013",
+            "type": "前提",
+            "description": "读者默认跨更后仍能凭记忆激活关键人物关系、术语和未回收伏笔；一旦更新间隔过长、支线庞杂或专名仅单次出现，就会因上下文断裂而看不懂或被迫重读旧章。",
+            "confidence": "high",
+            "source": "assumption",
+            "sourceModel": "free",
+            "round": 3,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B018",
+            "type": "前提",
+            "description": "读者默认作者在连载过半时不会无预警切换核心叙事风格或调整已公开的核心爽点定位，若发生即视作背弃前期阅读契约，通常导致弃读而非接受；该前提适用于长期连载且前期已建立稳定风格预期的作品，但对作者已提前公告或前期本就风格摇摆的作者未必成立",
+            "confidence": "medium",
+            "source": "assumption",
+            "sourceModel": "free",
+            "round": 4,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B021",
+            "type": "前提",
+            "description": "读者默认主角的动机或行事逻辑若发生颠覆性转变，前文至少要有一次可回溯的伏笔或暗示，否则当章揭晓时会因人设崩塌感触发弃读，这一伏笔最少出现次数及距揭晓的章节数尚未界定",
+            "confidence": "medium",
+            "source": "assumption",
+            "sourceModel": "free",
+            "round": 5,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B026",
+            "type": "前提",
+            "description": "默认中后期核心卖点偏移（如种田日常转向朝堂权谋）无预警发生时读者必然弃读，忽略读者是否因主角核心目标连续、前期沉没成本或新卖点更契合而留存——需验证偏移触发弃读的条件究竟是『偏移本身』还是『偏移伴随主角行为逻辑断裂且无过渡铺垫』。",
+            "confidence": "medium",
+            "source": "assumption",
+            "sourceModel": "free",
+            "round": 7,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B005",
+            "type": "盲区",
+            "description": "章节末尾钩子的信息密度与读者所处阅读场景的注意力带宽不匹配（如碎片时间里需要多步回忆才能接上的复杂悬念、睡前场景中引发过度兴奋难以入睡的高强度钩子），导致读者主动推迟或放弃下一章点击的具体情境错配",
+            "confidence": "medium",
+            "source": "blindspot",
+            "sourceModel": "free",
+            "round": 1,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B010",
+            "type": "盲区",
+            "description": "跨设备进度不同步若发生在章末悬念或关键反转附近，且精确阅读锚点与章节切割点同时丢失，使读者被迫回读大段内容或跳漏情节，就会把普通续读摩擦转化为追读中断。",
+            "confidence": "high",
+            "source": "blindspot",
+            "sourceModel": "free",
+            "round": 2,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B014",
+            "type": "盲区",
+            "description": "阅读平台在章末悬念处插入的强制广告、弹窗等交互打断因素，是否属于读者端追读体感边界、其修复责任应归于平台侧还是创作侧的归属划分盲区",
+            "confidence": "medium",
+            "source": "blindspot",
+            "sourceModel": "free",
+            "round": 3,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B019",
+            "type": "盲区",
+            "description": "需按剧透内容相对读者当前阅读进度的“超前跨度”与“信息性质”（身份、反转、生死、CP结局等）交叉分类，并验证追读动机是转为赶进度核对答案、回避已知情感冲击，还是直接弃读。",
+            "confidence": "high",
+            "source": "blindspot",
+            "sourceModel": "free",
+            "round": 4,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B022",
+            "type": "盲区",
+            "description": "读者在睡眠不足、工作高压或情绪低落等临时状态下，对慢热、压抑、虐心情节的容忍阈值会显著下降，从而把平时可接受的内容判定为劝退并停止追读。",
+            "confidence": "high",
+            "source": "blindspot",
+            "sourceModel": "free",
+            "round": 5,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B027",
+            "type": "盲区",
+            "description": "需把平台外生触发作为独立于正文质量的变量层验证：更新提醒的到达率、推送时机、频率与通知文案，书架/榜单的排序位置与标签，章末评论区的剧透、站队、催更互动密度，都会改变下一章点击意愿。",
+            "confidence": "high",
+            "source": "blindspot",
+            "sourceModel": "free",
+            "round": 7,
+            "status": {
+              "kind": "kept"
+            }
+          }
+        ],
+        "rounds": 7,
+        "convergence": "auto",
+        "disputesResolved": 0,
+        "tokenEstimate": 74133
+      }
+    },
+    {
+      "type": "final",
+      "solution": "## 方案概述\n\n读者持续追读意愿的本质是**每章阅读的即时收益（爽点、悬念、情感回报、信息增量）必须持续大于即时成本（认知负荷、时间投入、情绪消耗、道德不适）**。本方案基于27条边界约束，将追读意愿拆解为**内容承诺兑现、认知负荷管理、情绪体验维护、节奏预期管理、外部环境适配**五大模块，按**刚性约束→高损反例→目标错配→前提验证→盲区补全**的优先级输出修复处方，核心策略是建立**可量化的承诺台账、专名密度上限、情绪回报周期表、更新稳定性SLA**四大管控机制，并针对平台侧与作者侧责任边界给出明确划分。\n\n## 关键结论\n\n**一、刚性约束（违反即触发批量弃读，优先级最高）**\n\n| 编号 | 结论 | 依据 |\n|------|------|------|\n| 1 | **核心设定一致性是不可逾越的红线**：力量体系、人物属性、世界观规则一旦公开并重复强调，后续任何矛盾都必须有合理过渡与铺垫，否则直接构成认知接受崩塌 | B002、B011 |\n| 2 | **叙事视角漂移是零容忍错误**：固定视角中插入他人内心活动或感知信息，属于技术性硬伤，修复优先级高于任何内容优化 | B007 |\n| 3 | **已公开承诺禁止无铺垫推翻**：核心人设、CP走向、关键剧情承诺在10章内无伏笔提示的单章翻转，累计3处即触发批量弃读临界点 | B016 |\n| 4 | **主角动机颠覆必须有可回溯伏笔**：前文至少存在一次暗示，且伏笔与揭晓的间距需控制在读者记忆有效范围内（建议≤20章） | B021 |\n\n**二、高损反例（已验证的批量弃读模式，优先级次高）**\n\n| 编号 | 结论 | 依据 |\n|------|------|------|\n| 5 | **道德情绪无报偿是隐性杀手**：即使逻辑、节奏、设定全部自洽，主角持续被胁迫/被迫牺牲无辜者/恩将仇报而叙事不给予报偿，读者会因憋屈感批量弃书 | B003、B017 |\n| 6 | **角色情感锚点不可单方面回收**：中后期换地图/战力膨胀导致高人气配角长期缺席或被写死，读者情感投资存量资产被清零，掉追读反馈集中于\"喜欢的角色不出现了\" | B008 |\n| 7 | **可预测性陷阱**：更新稳定、设定自洽但情节完全模板化（如血脉压制+越级必胜），读者丧失意外感后仍会大规模弃读 | B020 |\n| 8 | **更新稳定性独立于内容质量**：断更两周以上即使内容达标，追读数据也会腰斩，更新SLA是内容之外的第二生命线 | B012 |\n\n**三、目标错配（读者类型与内容供给的匹配问题，优先级中高）**\n\n| 编号 | 结论 | 依据 |\n|------|------|------|\n| 9 | **三类读者目标需差异化满足**：日更读者要单章钩子+短频快爽点，周更读者要周更剧情推进量，养肥读者要完整剧情弧的连读爆发密度；三者不可兼得时需明确主服务对象 | B006 |\n| 10 | **非剧情类追读目标需持续供给**：情绪宣泄/代偿、解谜补全、角色陪伴、世界观审美四类目标在卷中提前兑现或落空后，会出现下一章点击动机真空 | B015 |\n| 11 | **沉没成本与内容吸引力的冲突管理**：读者已投入时间形成\"读完已更章节\"目标后，内容吸引力下降会直接抑制下一章点击，需用阶段性高价值节点对冲 | B023 |\n\n**四、前提验证（需区分成立条件，优先级中）**\n\n| 编号 | 结论 | 依据 |\n|------|------|------|\n| 12 | **信任锚点影响初始追读但非持续追读**：作者完结记录、口碑影响开篇点击率，但持续追读更依赖连载期的内容兑现 | B004 |\n| 13 | **类型承诺偏移的杀伤力有条件性**：前期承诺延后兑现时，若人物魅力或悬念钩子足够强，读者可能留存；真正触发弃读的是\"偏移+主角行为逻辑断裂+无过渡铺垫\"的组合 | B009、B026 |\n| 14 | **风格切换需区分预告与否**：已提前公告或前期本就风格摇摆的作品，风格调整不构成背弃契约；长期稳定风格作品的无预警切换则必然导致弃读 | B018 |\n| 15 | **跨更记忆依赖有容量上限**：更新间隔过长、支线庞杂、专名仅单次出现时，读者会因上下文断裂而弃读，需控制活跃专名总量与支线并行数 | B013 |\n\n**五、盲区补全（需纳入方案的隐性变量，优先级中低）**\n\n| 编号 | 结论 | 依据 |\n|------|------|------|\n| 16 | **章末钩子需匹配阅读场景注意力带宽**：碎片时间不适合需要多步回忆的复杂悬念，睡前场景不适合过度兴奋的高强度钩子，需按场景设计钩子类型 | B005 |\n| 17 | **跨设备进度同步是续读摩擦源**：章末悬念或关键反转附近的进度丢失会转化为追读中断，需在技术侧保障精确阅读锚点 | B010 |\n| 18 | **读者临时状态影响容忍阈值**：睡眠不足、高压、情绪低落时对慢热/压抑/虐心情节的容忍度显著下降，需在连载节奏中预留\"情绪喘息章\" | B022 |\n| 19 | **平台外生触发独立影响点击意愿**：更新提醒到达率、推送时机、书架排序、评论区剧透/站队/催更互动密度均改变下一章点击概率 | B027 |\n| 20 | **平台交互打断的责任归属需明确**：章末强制广告、弹窗属于平台侧责任，创作侧无法直接修复，但可通过调整章末位置（如钩子前移）降低打断损失 | B014 |\n| 21 | **剧透影响需按超前跨度与信息性质分类**：身份/反转/生死/CP结局等不同性质剧透，对追读动机的影响方向不同（赶进度核对/回避情感冲击/直接弃读），需差异化应对 | B019 |\n\n## 落地方案\n\n### 模块一：建立内容承诺台账（对应结论1、3、4、13、14）\n\n**做什么**：建立作品级\"承诺-兑现\"追踪系统，确保所有已公开承诺被有序兑现。\n\n**怎么做**：\n1. 创建承诺台账表，记录以下字段：承诺内容、首次出现章节、重复强调次数、承诺类型（人设/CP/剧情/设定）、承诺兑现截止章节、当前状态（待兑现/已兑现/已推翻）\n2. 每10章进行一次承诺审计，检查是否有承诺即将超期、是否有无铺垫推翻的承诺\n3. 对需延后兑现的承诺，在延后期间至少每20章提供一次\"承诺仍在\"的暗示或关联线索\n4. 对需推翻的承诺，至少提前10章铺设伏笔，且伏笔需可回溯（读者回看时能识别）\n\n**验收标准**：任意10章窗口内，无铺垫推翻的承诺数=0；所有已公开承诺在台账中有明确兑现或铺垫记录；累计无铺垫推翻数<3。\n\n---\n\n### 模块二：认知负荷管控（对应结论2、15、B024）\n\n**做什么**：控制单章信息密度，确保读者记忆负担在可承受范围内。\n\n**怎么做**：\n1. 设定单章新增专名上限：日常章节≤5个，新地图/大换角阶段≤7个，且成组铺陈时需提供锚点（如角色关系图、势力归属说明）\n2. 旧角色优先出场承接：新章节引入新角色前，先让2-3个已建立认知的旧角色出场过渡\n3. 活跃专名总量控制：同一时间并行活跃的角色/地点/术语总数建议≤30个，超出后需通过剧情让部分专名\"休眠\"\n4. 视角一致性检查：每章完成后进行视角审计，确保固定视角章节无他人内心活动插入\n5. 时间空间锚点核查：涉及时间跨度或空间移动的章节，需与前文已建立的可验证锚点对照，确保无无声缩短/拉长/瞬移\n\n**验收标准**：读者抽样反馈中\"人名混淆/回翻找人/跳读设定\"提及率下降50%以上；视角漂移错误为0；时间空间矛盾为0。\n\n---\n\n### 模块三：情绪回报周期设计（对应结论5、6、10、18）\n\n**做什么**：设计情绪回报节奏，确保读者的道德期待、角色情感投资、非剧情类目标得到周期性满足。\n\n**怎么做**：\n1. 建立情绪回报周期表：每5-10章至少安排一次情绪报偿节点（道德正义实现、角色互动升温、谜题部分解答、爽点兑现）\n2. 道德情绪管理：主角被胁迫/牺牲/委屈的章节后，3章内必须安排报偿（反击、惩罚、补偿、他人理解），禁止连续5章以上无报偿的憋屈剧情\n3. 角色情感锚点维护：每次换地图/开新卷前，盘点核心配角与CP的\"出场配额\"，确保高人气角色每30章内至少出场1次或通过他人提及维持存在感\n4. 非剧情目标供给轮换：情绪宣泄、解谜补全、角色陪伴、世界观审美四类目标在每卷中至少各覆盖1次\n5. 情绪喘息章设计：在连续压抑/高虐/高紧张章节后，安排1章轻松/温情/日常章节作为情绪缓冲\n\n**验收标准**：读者反馈中\"憋屈/压抑/角色不见了\"类弃读投诉下降60%以上；每卷四类非剧情目标供给覆盖率达100%。\n\n---\n\n### 模块四：节奏与预期管理（对应结论7、9、11、16）\n\n**做什么**：匹配不同读者类型的节奏预期，同时保持不可预测性。\n\n**怎么做**：\n1. 明确主服务读者类型：在作品设定阶段确定主服务对象（日更/周更/养肥），并据此设计章节信息密度与钩子强度\n2. 钩子场景适配：常规章末使用中等强度钩子（适合碎片时间），周末/假期章末可使用高强度钩子（适合沉浸阅读）；睡前章节避免使用引发过度兴奋的钩子\n3. 意外感维护：每10章至少引入1次读者无法预判的剧情转折（但需在承诺台账内可解释），避免完全模板化的危机-解决循环\n4. 沉没成本对冲：在读者可能因\"已读全部章节\"目标达成而失去动力时（如卷末、大高潮后），安排新悬念或新目标快速接续\n5. 承接章节情绪惯性保护：生死决战或重大悬念揭露后的下一章，禁止章首插入设定说明或前情重述，直接延续情绪冲刺\n\n**验收标准**：读者对\"可预测/套路化\"的投诉下降50%以上；卷末弃读率较卷中均值不高于1.5倍；承接章节的即时点击续读率≥80%。\n\n---\n\n### 模块五：更新稳定性与外部环境适配（对应结论8、16、17、19、20、21）\n\n**做什么**：保障更新节奏稳定，并协调平台侧因素降低续读摩擦。\n\n**怎么做**：\n1. 更新SLA承诺：设定最低更新频率（如日更/周更≥3次），断更超过7天需提前公告并说明原因；断更超过14天需提供\"回归补偿章\"（信息密度更高或情绪报偿更强）\n2. 跨设备同步保障：与平台技术侧沟通，确保章末悬念附近的阅读进度精确同步；若平台无法保障，则在章末前1-2段设置\"安全回读锚点\"（如关键信息重复提示）\n3. 平台外生触发协同：与平台运营沟通更新提醒推送时机（建议在读者活跃时段前1小时）；关注书架/榜单排序位置变化；监控评论区剧透情况，必要时在正文前加\"本章含剧透\"提示\n4. 平台广告打断应对：若平台强制插入广告，将章末钩子前移1-2段，确保广告出现前读者已获得关键悬念信息\n5. 剧透分级管理：根据剧透超前跨度（<5章/5-20章/>20章）和信息性质（身份/反转/生死/CP结局）分类，对高风险剧透（如主角生死、CP结局）在正文中提前加固情感预期，降低剧透冲击\n\n**验收标准**：断更超过14天的情况全年≤1次；因进度不同步导致的追读中断投诉下降70%以上；平台推送后1小时内点击率提升20%以上。\n\n---\n\n### 模块六：读者类型差异化策略（对应结论9、12）\n\n**做什么**：针对不同读者类型提供差异化内容供给，同时管理信任锚点。\n\n**怎么做**：\n1. 读者画像分层：通过评论区互动、订阅数据识别日更/周更/养肥三类读者占比，确定主服务对象\n2. 内容供给分层：日更读者为主时，每章确保有单章爽点；周更读者为主时，每周更新包确保有完整剧情推进；养肥读者为主时，确保每卷有完整剧情弧\n3. 信任锚点补偿：对无完结记录或口碑为负的作者，在开篇3-5章内用更强的类型承诺兑现（更密集的爽点、更清晰的主线）来补偿初始信任缺失\n\n**验收标准**：主服务读者类型的留存率较优化前提升20%以上；新读者开篇3章留存率提升15%以上。\n\n## 风险与前提\n\n| 风险/前提 | 对应边界 | 说明 | 失效条件 |\n|-----------|----------|------|----------|\n| **承诺台账依赖作者自律与执行纪律** | B016、B021 | 台账需要持续维护，若作者不严格执行，方案失效 | 作者无法坚持每10章审计 |\n| **情绪回报周期可能牺牲叙事自由度** | B003、B017 | 强制3章内报偿可能限制压抑型叙事的展开空间 | 作品类型本身为\"压抑-爆发\"长线结构，报偿周期需延长至10章以上 |\n| **B009前提需验证** | B009 | 前期承诺延后兑现时，人物魅力/悬念钩子能否完全补偿尚未量化验证 | 若补偿机制不足以覆盖承诺偏移的杀伤力，方案需加强承诺兑现优先级 |\n| **B018前提有条件性** | B018 | 对已公告风格调整或前期风格摇摆的作品，风格切换不构成弃读诱因 | 若作品前期已建立极强稳定风格预期，无预警切换仍会触发弃读 |\n| **B026前提需验证** | B026 | 中后期卖点偏移是否触发弃读，取决于偏移是否伴随主角行为逻辑断裂 | 若偏移本身即触发弃读（而非仅伴随断裂时），需将卖点偏移纳入刚性约束 |\n| **B014平台侧责任不可控** | B014 | 平台广告/弹窗属于平台侧，创作侧只能通过钩子前移等被动应对 | 若平台广告插入位置无法预判，钩子前移策略可能失效 |\n| **B019剧透影响方向不确定** | B019 | 剧透可能转为赶进度核对答案，也可能导致回避或弃读，方向因读者而异 | 若剧透对特定读者群体（如重度剧透敏感者）的杀伤力远超预期，需额外设计防剧透机制 |\n| **B022读者临时状态不可控** | B022 | 读者睡眠不足/高压/情绪低落时的容忍阈值下降，创作侧无法实时感知 | 若读者临时状态频繁且持续，情绪喘息章可能不足以对冲 |\n| **B027平台外生触发依赖平台配合** | B027 | 推送时机、排序位置、评论区管理需平台侧协作 | 若平台不配合，该模块仅能部分生效 |\n| **B005钩子场景适配需读者行为数据** | B005 | 需了解读者主要阅读时段与场景，若数据不足则适配策略可能失准 | 若读者阅读场景高度随机且无法通过时段预测，钩子适配效果有限 |\n| **B024专名上限为经验阈值** | B024 | 5-7个为经验值，不同读者认知能力差异可能导致实际阈值不同 | 若目标读者群体为高认知能力人群，上限可放宽；反之需收紧 |\n| **B006三类读者目标不可兼得** | B006 | 需明确主服务对象，若试图同时满足三类读者可能导致均不满足 | 若读者结构高度混合且无法分层，差异化策略可能失效 |\n\n## 待补充信息\n\n1. **作品类型与连载阶段**：当前作品属于何种类型（玄幻/都市/悬疑/言情等）？处于连载前期（<50章）、中期（50-200章）还是后期（>200章）？不同阶段处方优先级需调整。\n2. **更新频率现状**：当前实际更新频率是多少？是否已建立稳定的更新节奏？\n3. **读者画像数据**：是否有读者阅读时段、设备使用、章节停留时长等行为数据？这直接影响钩子场景适配策略。\n4. **平台合作空间**：与当前连载平台的关系如何？能否推动更新提醒优化、进度同步保障、广告位置调整等平台侧改动？\n5. **历史弃读数据**：是否有过往弃读章节的定位数据（如具体在哪些章节附近流失率最高）？可用于验证方案优先级。\n6. **作者创作约束**：作者是否存在固定创作习惯（如大纲完整度、存稿量）？这影响承诺台账和更新SLA的可执行性。"
+    },
+    {
+      "type": "user_message",
+      "content": "继续勘探",
+      "kind": "supplement"
+    },
+    {
+      "type": "question",
+      "round": 8,
+      "seat": "forward",
+      "question": "读者的追读目标是否随作品连载阶段（入坑期、卷中、临近完结）发生迁移？请枚举各阶段目标种类，以及目标未迁移或错位时的点击动机变化。"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "把"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "不同"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "连载"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "阶段"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "的"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "追"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "读"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "目标"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "视为"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "恒定"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "，"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "未"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "识别"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "入坑"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "期"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "要看"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "钩子"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "与"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "代入"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "许可"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "、"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "卷"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "中"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "要看"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "关系"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "/"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "世界"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "推进"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "与"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "阶段性"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "兑现"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "、"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "临近"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "完结"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "要看"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "主线"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "收"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "束"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "与"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "伏笔"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "清偿"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "；"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "当"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "读者"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "目标"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "已"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "迁移"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "而"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "内容"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "仍"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "停"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "留在"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "上"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "一"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "阶段"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "时"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "，"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "点击"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "动"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "机会"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "从"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "好奇"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "追"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "更"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "滑"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "向"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "惯性"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "打卡"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "、"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "怕"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "烂"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "尾"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "而"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "快速"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "扫"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "读"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "，"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "甚至"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "断"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "更"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "forward",
+      "delta": "。"
+    },
+    {
+      "type": "reply",
+      "round": 8,
+      "seat": "forward",
+      "content": "{\"description\":\"把不同连载阶段的追读目标视为恒定，未识别入坑期要看钩子与代入许可、卷中要看关系/世界推进与阶段性兑现、临近完结要看主线收束与伏笔清偿；当读者目标已迁移而内容仍停留在上一阶段时，点击动机会从好奇追更滑向惯性打卡、怕烂尾而快速扫读，甚至断更。\",\"confidence\":\"high\"}"
+    },
+    {
+      "type": "boundary",
+      "round": 8,
+      "item": {
+        "id": "B028",
+        "type": "目标",
+        "description": "把不同连载阶段的追读目标视为恒定，未识别入坑期要看钩子与代入许可、卷中要看关系/世界推进与阶段性兑现、临近完结要看主线收束与伏笔清偿；当读者目标已迁移而内容仍停留在上一阶段时，点击动机会从好奇追更滑向惯性打卡、怕烂尾而快速扫读，甚至断更。",
+        "confidence": "high",
+        "source": "forward",
+        "sourceModel": "free",
+        "round": 8,
+        "status": {
+          "kind": "kept"
+        }
+      }
+    },
+    {
+      "type": "question",
+      "round": 8,
+      "seat": "reverse",
+      "question": "主角陷入持续受压制或挫败状态时，未提供任何阶段性反击动作或心理代偿的连续章节存在怎样的刚性上限？"
+    },
+    {
+      "type": "notice",
+      "level": "warn",
+      "seat": "reverse",
+      "message": "「反向勘探者」第 8 轮模型空返回（可能为上游限流或思考预算耗尽），正在重试一次。"
+    },
+    {
+      "type": "reply",
+      "round": 8,
+      "seat": "reverse",
+      "content": "{\"description\":\"主角连续被压制且无任何反击动作或心理代偿的篇幅不得超过3章，超限前必须至少出现一次可见的反击行动、局部胜利或有效的心理代偿描写，否则视为触碰追读红线\",\"confidence\":\"medium\"}"
+    },
+    {
+      "type": "boundary",
+      "round": 8,
+      "item": {
+        "id": "B029",
+        "type": "约束",
+        "description": "主角连续被压制且无任何反击动作或心理代偿的篇幅不得超过3章，超限前必须至少出现一次可见的反击行动、局部胜利或有效的心理代偿描写，否则视为触碰追读红线",
+        "confidence": "medium",
+        "source": "reverse",
+        "sourceModel": "free",
+        "round": 8,
+        "status": {
+          "kind": "kept"
+        }
+      }
+    },
+    {
+      "type": "question",
+      "round": 8,
+      "seat": "counter",
+      "question": "是否存在同一章内容让一部分读者加速追读、另一部分读者当即弃读的可枚举反例？决定这种分歧的可观察变量有哪些？"
+    },
+    {
+      "type": "notice",
+      "level": "warn",
+      "seat": "counter",
+      "message": "「反例猎人」第 8 轮模型空返回（可能为上游限流或思考预算耗尽），正在重试一次。"
+    },
+    {
+      "type": "reply",
+      "round": 8,
+      "seat": "counter",
+      "content": "{\"description\":\"高人气关键配角遭遇不可逆毁灭（献祭发刀）的情节转折章，会使追求危机张力与复仇预期的主线向读者追读意愿暴增，同时促使将情感寄托于该角色的读者因负面刺激过载当即弃读，击穿了‘强戏剧冲突必然普适性提升追读率’的假设。\",\"confidence\":\"high\"}"
+    },
+    {
+      "type": "boundary",
+      "round": 8,
+      "item": {
+        "id": "B030",
+        "type": "反例",
+        "description": "高人气关键配角遭遇不可逆毁灭（献祭发刀）的情节转折章，会使追求危机张力与复仇预期的主线向读者追读意愿暴增，同时促使将情感寄托于该角色的读者因负面刺激过载当即弃读，击穿了‘强戏剧冲突必然普适性提升追读率’的假设。",
+        "confidence": "high",
+        "source": "counter",
+        "sourceModel": "free",
+        "round": 8,
+        "status": {
+          "kind": "kept"
+        }
+      }
+    },
+    {
+      "type": "question",
+      "round": 8,
+      "seat": "assumption",
+      "question": "读者默认作者不会无预警调整已公开的更新频率，该前提破灭对追读意愿的影响是否独立于内容质量？"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "assumption",
+      "delta": "默认"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "assumption",
+      "delta": "无"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "assumption",
+      "delta": "预警改频"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "assumption",
+      "delta": "仅"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "assumption",
+      "delta": "属"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "assumption",
+      "delta": "偶发意外、"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "assumption",
+      "delta": "单"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "assumption",
+      "delta": "次可被"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "assumption",
+      "delta": "读者原谅"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "assumption",
+      "delta": "，"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "assumption",
+      "delta": "只有"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "assumption",
+      "delta": "连续"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "assumption",
+      "delta": "多次才触发"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "assumption",
+      "delta": "弃追——即该前提"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "assumption",
+      "delta": "破灭对追读意愿的"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "assumption",
+      "delta": "打击"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "assumption",
+      "delta": "存在次数"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "assumption",
+      "delta": "阈值，而非首次"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "assumption",
+      "delta": "发生"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "assumption",
+      "delta": "即与内容质量无关地独立"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 8,
+      "seat": "assumption",
+      "delta": "扣分"
+    },
+    {
+      "type": "reply",
+      "round": 8,
+      "seat": "assumption",
+      "content": "{\"description\":\"默认无预警改频仅属偶发意外、单次可被读者原谅，只有连续多次才触发弃追——即该前提破灭对追读意愿的打击存在次数阈值，而非首次发生即与内容质量无关地独立扣分\",\"confidence\":\"medium\"}"
+    },
+    {
+      "type": "boundary",
+      "round": 8,
+      "item": {
+        "id": "B031",
+        "type": "前提",
+        "description": "默认无预警改频仅属偶发意外、单次可被读者原谅，只有连续多次才触发弃追——即该前提破灭对追读意愿的打击存在次数阈值，而非首次发生即与内容质量无关地独立扣分",
+        "confidence": "medium",
+        "source": "assumption",
+        "sourceModel": "free",
+        "round": 8,
+        "status": {
+          "kind": "kept"
+        }
+      }
+    },
+    {
+      "type": "question",
+      "round": 8,
+      "seat": "blindspot",
+      "question": "读者用听书、倍速、自动连播或跳读消费时，章末停顿、悬念密度与节奏感会被压缩或放大，哪些介质与钩子的组合会失效甚至反向劝退？"
+    },
+    {
+      "type": "notice",
+      "level": "warn",
+      "seat": "blindspot",
+      "message": "「盲区审计员」第 8 轮模型空返回（可能为上游限流或思考预算耗尽），正在重试一次。"
+    },
+    {
+      "type": "reply",
+      "round": 8,
+      "seat": "blindspot",
+      "content": "{\"description\":\"自动连播或倍速听书时，章末悬念与下一章开头之间缺少主动翻页停顿，若下一章立即切换视角、时间线或揭晓答案，钩子会被无缝吞没，读者来不及预期和紧张，甚至因信息错位而劝退。\",\"confidence\":\"high\"}"
+    },
+    {
+      "type": "boundary",
+      "round": 8,
+      "item": {
+        "id": "B032",
+        "type": "盲区",
+        "description": "自动连播或倍速听书时，章末悬念与下一章开头之间缺少主动翻页停顿，若下一章立即切换视角、时间线或揭晓答案，钩子会被无缝吞没，读者来不及预期和紧张，甚至因信息错位而劝退。",
+        "confidence": "high",
+        "source": "blindspot",
+        "sourceModel": "free",
+        "round": 8,
+        "status": {
+          "kind": "kept"
+        }
+      }
+    },
+    {
+      "type": "round",
+      "round": 8,
+      "newCount": 5,
+      "tokenEstimate": 99201
+    },
+    {
+      "type": "question",
+      "round": 10,
+      "seat": "forward",
+      "question": "读者追读过程中初始追读目标发生迁移时，内容未同步适配目标迁移的章节阈值是多少？"
+    },
+    {
+      "type": "notice",
+      "level": "warn",
+      "seat": "forward",
+      "message": "「正向勘探者」第 10 轮模型空返回（可能为上游限流或思考预算耗尽），正在重试一次。"
+    },
+    {
+      "type": "reply",
+      "round": 10,
+      "seat": "forward",
+      "content": "{\"description\":\"初始追读目标迁移后，内容仍沿用旧目标驱动情节的滞后章节阈值（如主角核心目标在第N章变更后，超过3章仍以旧目标组织冲突与推进，读者追读目标失配）\",\"confidence\":\"medium\"}"
+    },
+    {
+      "type": "boundary",
+      "round": 10,
+      "item": {
+        "id": "B033",
+        "type": "目标",
+        "description": "初始追读目标迁移后，内容仍沿用旧目标驱动情节的滞后章节阈值（如主角核心目标在第N章变更后，超过3章仍以旧目标组织冲突与推进，读者追读目标失配）",
+        "confidence": "medium",
+        "source": "forward",
+        "sourceModel": "free",
+        "round": 10,
+        "status": {
+          "kind": "kept"
+        }
+      }
+    },
+    {
+      "type": "question",
+      "round": 10,
+      "seat": "reverse",
+      "question": "单章同时推进的独立支线、场景或角色组数量，达到什么可枚举状态时，会超出读者工作记忆并构成继续追读的刚性约束？"
+    },
+    {
+      "type": "notice",
+      "level": "warn",
+      "seat": "reverse",
+      "message": "「反向勘探者」第 10 轮模型空返回（可能为上游限流或思考预算耗尽），正在重试一次。"
+    },
+    {
+      "type": "reply",
+      "round": 10,
+      "seat": "reverse",
+      "content": "{\"description\":\"单章同时推进的独立支线、场景或角色组数量超过3个时，会超出多数读者工作记忆容量，构成影响追读意愿的刚性约束\",\"confidence\":\"high\"}"
+    },
+    {
+      "type": "boundary",
+      "round": 10,
+      "item": {
+        "id": "B034",
+        "type": "约束",
+        "description": "单章同时推进的独立支线、场景或角色组数量超过3个时，会超出多数读者工作记忆容量，构成影响追读意愿的刚性约束",
+        "confidence": "high",
+        "source": "reverse",
+        "sourceModel": "free",
+        "round": 10,
+        "status": {
+          "kind": "kept"
+        }
+      }
+    },
+    {
+      "type": "question",
+      "round": 10,
+      "seat": "counter",
+      "question": "是否存在主角已公开的核心金手指/能力体系，在无任何伏笔的情况下被作者临时加限制或直接失效，导致前期依赖该能力的爽点逻辑崩塌，引发读者批量弃读的反例？"
+    },
+    {
+      "type": "error",
+      "message": "席位 反例猎人 本轮失败：请求超时",
+      "seat": "counter"
+    },
+    {
+      "type": "question",
+      "round": 10,
+      "seat": "assumption",
+      "question": "读者默认作者不会在连载期间删除或大改已发布章节，这一默认若被打破，会如何影响其追读意愿？"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 10,
+      "seat": "assumption",
+      "delta": "读者"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 10,
+      "seat": "assumption",
+      "delta": "默认已发布章节是"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 10,
+      "seat": "assumption",
+      "delta": "不可变文本，不会被"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 10,
+      "seat": "assumption",
+      "delta": "作者删除或大幅改写"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 10,
+      "seat": "assumption",
+      "delta": "，因此追"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 10,
+      "seat": "assumption",
+      "delta": "读时"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 10,
+      "seat": "assumption",
+      "delta": "无需为"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 10,
+      "seat": "assumption",
+      "delta": "前"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 10,
+      "seat": "assumption",
+      "delta": "文与"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 10,
+      "seat": "assumption",
+      "delta": "后"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 10,
+      "seat": "assumption",
+      "delta": "文对"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 10,
+      "seat": "assumption",
+      "delta": "不上而回查、"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 10,
+      "seat": "assumption",
+      "delta": "重新校验或"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 10,
+      "seat": "assumption",
+      "delta": "担心"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 10,
+      "seat": "assumption",
+      "delta": "错过"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 10,
+      "seat": "assumption",
+      "delta": "信息"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 10,
+      "seat": "assumption",
+      "delta": "——"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 10,
+      "seat": "assumption",
+      "delta": "该"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 10,
+      "seat": "assumption",
+      "delta": "默认一旦被打破（"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 10,
+      "seat": "assumption",
+      "delta": "如作者回"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 10,
+      "seat": "assumption",
+      "delta": "改"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 10,
+      "seat": "assumption",
+      "delta": "伏"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 10,
+      "seat": "assumption",
+      "delta": "笔、删"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 10,
+      "seat": "assumption",
+      "delta": "章"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 10,
+      "seat": "assumption",
+      "delta": "后"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 10,
+      "seat": "assumption",
+      "delta": "前"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 10,
+      "seat": "assumption",
+      "delta": "文引用失效"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 10,
+      "seat": "assumption",
+      "delta": "），读者会额外"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 10,
+      "seat": "assumption",
+      "delta": "付出"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 10,
+      "seat": "assumption",
+      "delta": "回"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 10,
+      "seat": "assumption",
+      "delta": "读"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 10,
+      "seat": "assumption",
+      "delta": "核"
+    },
+    {
+      "type": "reply_chunk",
+      "round": 10,
+      "seat": "assumption",
+      "delta": "对成本并产生"
+    },
+    {
+      "type": "notice",
+      "level": "warn",
+      "seat": "assumption",
+      "message": "「假设审问者」第 10 轮发言仍非标准 JSON，已按原文挽救收录（可信度降为「中」）。"
+    },
+    {
+      "type": "reply",
+      "round": 10,
+      "seat": "assumption",
+      "content": "{\"description\":\"读者默认已发布章节是不可变文本，不会被作者删除或大幅改写，因此追读时无需为前文与后文对不上而回查、重新校验或担心错过信息——该默认一旦被打破（如作者回改伏笔、删章后前文引用失效），读者会额外付出回读核对成本并产生\"追了也可能被推翻\"的不安全感\",\"confidence\":\"medium\"}"
+    },
+    {
+      "type": "boundary",
+      "round": 10,
+      "item": {
+        "id": "B035",
+        "type": "前提",
+        "description": "读者默认已发布章节是不可变文本，不会被作者删除或大幅改写，因此追读时无需为前文与后文对不上而回查、重新校验或担心错过信息——该默认一旦被打破（如作者回改伏笔、删章后前文引用失效），读者会额外付出回读核对成本并产生",
+        "confidence": "medium",
+        "source": "assumption",
+        "sourceModel": "free",
+        "round": 10,
+        "status": {
+          "kind": "kept"
+        }
+      }
+    },
+    {
+      "type": "question",
+      "round": 10,
+      "seat": "blindspot",
+      "question": "读者常同期并行追读多本小说：当多本的角色名、悬念钩子、设定术语在记忆中互相覆盖，会出现哪些可枚举的错配情境，进而触发跳更或弃书？"
+    },
+    {
+      "type": "notice",
+      "level": "warn",
+      "seat": "blindspot",
+      "message": "「盲区审计员」第 10 轮模型空返回（可能为上游限流或思考预算耗尽），正在重试一次。"
+    },
+    {
+      "type": "reply",
+      "round": 10,
+      "seat": "blindspot",
+      "content": "{\"description\":\"读者将甲书的角色名或绰号张冠李戴到乙书同名、近名角色上，误判乙书当前对话中的人物关系与立场，从而认为关键情节突兀或情感错位而跳更。\",\"confidence\":\"high\"}"
+    },
+    {
+      "type": "boundary",
+      "round": 10,
+      "item": {
+        "id": "B036",
+        "type": "盲区",
+        "description": "读者将甲书的角色名或绰号张冠李戴到乙书同名、近名角色上，误判乙书当前对话中的人物关系与立场，从而认为关键情节突兀或情感错位而跳更。",
+        "confidence": "high",
+        "source": "blindspot",
+        "sourceModel": "free",
+        "round": 10,
+        "status": {
+          "kind": "kept"
+        }
+      }
+    },
+    {
+      "type": "round",
+      "round": 10,
+      "newCount": 4,
+      "tokenEstimate": 119818
+    },
+    {
+      "type": "converged",
+      "reason": "auto",
+      "rounds": 10
+    },
+    {
+      "type": "notice",
+      "level": "warn",
+      "message": "自动裁决请求失败（请求超时），全部边界暂按「保留」入清单，可稍后人工复核或重新出方案。"
+    },
+    {
+      "type": "list",
+      "list": {
+        "items": [
+          {
+            "id": "B001",
+            "type": "目标",
+            "description": "阶段性满足目标（悬念解答、情感共鸣、成长认同）在章节周期中的兑现节点错位，如开章抛出的疑问跨过多章未回应、情感高潮与成长节点被压在同一章挤占",
+            "confidence": "medium",
+            "source": "forward",
+            "sourceModel": "free",
+            "round": 1,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B006",
+            "type": "目标",
+            "description": "日更读者以单章悬念钩子和短频快爽点为目标、周更读者以周更剧情推进量为目标、养肥后补更读者以攒够完整剧情弧后的连读爆发密度为目标，三类目标错配会直接削弱持续追读意愿",
+            "confidence": "medium",
+            "source": "forward",
+            "sourceModel": "free",
+            "round": 2,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B015",
+            "type": "目标",
+            "description": "需区分读者非剧情类追读目标：情绪宣泄或代偿、解谜与信息补全、角色或CP陪伴、世界观与审美体验；并校验这些目标在卷中提前兑现、落空或被其他线索替代后，是否出现下一章点击动机真空。",
+            "confidence": "high",
+            "source": "forward",
+            "sourceModel": "free",
+            "round": 4,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B023",
+            "type": "目标",
+            "description": "读者追读过程中，已投入时间形成的‘完成已读全部章节’目标与内容吸引力下降产生冲突时，会直接降低其点击下一章的即时意愿，表现为停止追更或跳过最新章节直接退出阅读界面",
+            "confidence": "high",
+            "source": "forward",
+            "sourceModel": "free",
+            "round": 7,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B028",
+            "type": "目标",
+            "description": "把不同连载阶段的追读目标视为恒定，未识别入坑期要看钩子与代入许可、卷中要看关系/世界推进与阶段性兑现、临近完结要看主线收束与伏笔清偿；当读者目标已迁移而内容仍停留在上一阶段时，点击动机会从好奇追更滑向惯性打卡、怕烂尾而快速扫读，甚至断更。",
+            "confidence": "high",
+            "source": "forward",
+            "sourceModel": "free",
+            "round": 8,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B033",
+            "type": "目标",
+            "description": "初始追读目标迁移后，内容仍沿用旧目标驱动情节的滞后章节阈值（如主角核心目标在第N章变更后，超过3章仍以旧目标组织冲突与推进，读者追读目标失配）",
+            "confidence": "medium",
+            "source": "forward",
+            "sourceModel": "free",
+            "round": 10,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B002",
+            "type": "约束",
+            "description": "连载小说核心设定（力量体系、人物基础属性、世界观基础规则）出现无合理过渡的前后矛盾，构成读者认知接受的刚性约束",
+            "confidence": "high",
+            "source": "reverse",
+            "sourceModel": "free",
+            "round": 1,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B007",
+            "type": "约束",
+            "description": "禁止在固定叙事视角中无过渡地插入其他角色的内心活动或感知信息，导致视角人称漂移",
+            "confidence": "high",
+            "source": "reverse",
+            "sourceModel": "free",
+            "round": 2,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B011",
+            "type": "约束",
+            "description": "前文已用可验证锚点（如路程需三日、伤口七日愈合、季节年份）明确的时间跨度与空间距离，后续章节不得在无任何过渡交代的情况下被无声缩短、拉长或瞬移，尤其禁止角色在未描写中途行程的情况下直接出现在远处地点，或时间线倒流导致已发生的事件被重置。",
+            "confidence": "high",
+            "source": "reverse",
+            "sourceModel": "free",
+            "round": 3,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B016",
+            "type": "约束",
+            "description": "已公开超过10章、且在前文被重复强调至少3次的核心人设、CP走向或关键剧情承诺，禁止在10章内无任何伏笔提示的前提下于单章内单方面推翻；若此类无铺垫的翻转累计达到3处，即视为触发读者批量弃读的临界条件。",
+            "confidence": "medium",
+            "source": "reverse",
+            "sourceModel": "free",
+            "round": 4,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B024",
+            "type": "约束",
+            "description": "单章首次出现且需读者记忆的人名、地名、术语等陌生信息总量存在可接受上限（经验阈值约为5-7个，成组铺陈时需额外给出锚点），该上限在开篇/新地图开启/大换角阶段可适当放宽、在中段日常章节与信息密集的设定解释章需收紧；一旦超限，读者会出现人名张冠李戴、频繁回翻找人、跳读设定段落，继而在连续2-3章内弃读，因此处方应限制单章新增专名数量并让旧角色优先出场承接。",
+            "confidence": "medium",
+            "source": "reverse",
+            "sourceModel": "free",
+            "round": 7,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B029",
+            "type": "约束",
+            "description": "主角连续被压制且无任何反击动作或心理代偿的篇幅不得超过3章，超限前必须至少出现一次可见的反击行动、局部胜利或有效的心理代偿描写，否则视为触碰追读红线",
+            "confidence": "medium",
+            "source": "reverse",
+            "sourceModel": "free",
+            "round": 8,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B034",
+            "type": "约束",
+            "description": "单章同时推进的独立支线、场景或角色组数量超过3个时，会超出多数读者工作记忆容量，构成影响追读意愿的刚性约束",
+            "confidence": "high",
+            "source": "reverse",
+            "sourceModel": "free",
+            "round": 10,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B003",
+            "type": "反例",
+            "description": "一类无限流小说中期每个副本开局仍有悬念、单章数据平稳，但主角反复被规则和队友胁迫行动，通关后既不拿回主动权，也不惩罚恩将仇报者，读者因持续憋屈和道德情绪无报偿而在卷末批量弃书。",
+            "confidence": "high",
+            "source": "counter",
+            "sourceModel": "free",
+            "round": 1,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B008",
+            "type": "反例",
+            "description": "存在一类完结作品（如《雪中悍刀行》后期、《大奉打更人》后期）：设定自洽、节奏与钩子正常、主角主动权充足，却因中后期换地图/战力膨胀导致前期高人气配角与CP长期缺席甚至被强行写死，读者情感投资的存量资产被清零，共同可枚举特征是掉追读反馈集中在『喜欢的角色不出现了/羁绊线断了』而非逻辑、节奏或主角能动性问题，说明追读意愿还依赖作者不可单方面回收的角色情感锚点",
+            "confidence": "medium",
+            "source": "counter",
+            "sourceModel": "free",
+            "round": 2,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B012",
+            "type": "反例",
+            "description": "内容四项指标均达标但作者因病或长假断更两周以上，连载期追读数据腰斩——更新稳定性独立于内容质量构成批量弃读诱因",
+            "confidence": "high",
+            "source": "counter",
+            "sourceModel": "free",
+            "round": 3,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B017",
+            "type": "反例",
+            "description": "反派利己流作品：逻辑、节奏、设定均自洽，但主角为修炼或求生毫无负担地献祭曾救助自己的无辜者，且叙事将其合理化为必要代价，读者因道德安全感被冒犯而批量弃书。",
+            "confidence": "high",
+            "source": "counter",
+            "sourceModel": "free",
+            "round": 4,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B020",
+            "type": "反例",
+            "description": "唐家三少《终极斗罗》保持了雷打不动的稳定更新、自洽的战力设定与成熟的主角团人设，但中后期情节完全固化在血脉压制与越级必胜的既定模板中，读者因对所有危机与反转均能精准预判、丧失意外感而引发大规模弃读。",
+            "confidence": "high",
+            "source": "counter",
+            "sourceModel": "free",
+            "round": 5,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B025",
+            "type": "反例",
+            "description": "在生死决战或重大悬念揭露后的承接章节中，章首插入功法设定或前情重述会强行打断读者的即时情绪冲刺惯性，反被判定为注水消解危机感而诱发弃读。",
+            "confidence": "high",
+            "source": "counter",
+            "sourceModel": "free",
+            "round": 7,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B030",
+            "type": "反例",
+            "description": "高人气关键配角遭遇不可逆毁灭（献祭发刀）的情节转折章，会使追求危机张力与复仇预期的主线向读者追读意愿暴增，同时促使将情感寄托于该角色的读者因负面刺激过载当即弃读，击穿了‘强戏剧冲突必然普适性提升追读率’的假设。",
+            "confidence": "high",
+            "source": "counter",
+            "sourceModel": "free",
+            "round": 8,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B004",
+            "type": "前提",
+            "description": "读者在启动追读行为前，默认将作者过往完结记录、作品口碑作为信任锚点，若该前提缺失（如作者无完结作品、口碑为负），会直接降低其初始追读意愿",
+            "confidence": "high",
+            "source": "assumption",
+            "sourceModel": "free",
+            "round": 1,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B009",
+            "type": "前提",
+            "description": "隐含前提：开篇3至5章内确立的类型定位与核心爽点承诺一旦在后续章节偏移或迟迟不兑现，读者会将其视为'文不对题'而直接弃书，其杀伤力大于文笔瑕疵或单章节奏拖沓等可容忍问题；该前提需验证——现实中也存在前期承诺延后兑现但读者因其他补偿（如人物魅力、悬念钩子）继续追读的反例，故承诺违背与流失之间并非无条件必然。",
+            "confidence": "medium",
+            "source": "assumption",
+            "sourceModel": "free",
+            "round": 2,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B013",
+            "type": "前提",
+            "description": "读者默认跨更后仍能凭记忆激活关键人物关系、术语和未回收伏笔；一旦更新间隔过长、支线庞杂或专名仅单次出现，就会因上下文断裂而看不懂或被迫重读旧章。",
+            "confidence": "high",
+            "source": "assumption",
+            "sourceModel": "free",
+            "round": 3,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B018",
+            "type": "前提",
+            "description": "读者默认作者在连载过半时不会无预警切换核心叙事风格或调整已公开的核心爽点定位，若发生即视作背弃前期阅读契约，通常导致弃读而非接受；该前提适用于长期连载且前期已建立稳定风格预期的作品，但对作者已提前公告或前期本就风格摇摆的作者未必成立",
+            "confidence": "medium",
+            "source": "assumption",
+            "sourceModel": "free",
+            "round": 4,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B021",
+            "type": "前提",
+            "description": "读者默认主角的动机或行事逻辑若发生颠覆性转变，前文至少要有一次可回溯的伏笔或暗示，否则当章揭晓时会因人设崩塌感触发弃读，这一伏笔最少出现次数及距揭晓的章节数尚未界定",
+            "confidence": "medium",
+            "source": "assumption",
+            "sourceModel": "free",
+            "round": 5,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B026",
+            "type": "前提",
+            "description": "默认中后期核心卖点偏移（如种田日常转向朝堂权谋）无预警发生时读者必然弃读，忽略读者是否因主角核心目标连续、前期沉没成本或新卖点更契合而留存——需验证偏移触发弃读的条件究竟是『偏移本身』还是『偏移伴随主角行为逻辑断裂且无过渡铺垫』。",
+            "confidence": "medium",
+            "source": "assumption",
+            "sourceModel": "free",
+            "round": 7,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B031",
+            "type": "前提",
+            "description": "默认无预警改频仅属偶发意外、单次可被读者原谅，只有连续多次才触发弃追——即该前提破灭对追读意愿的打击存在次数阈值，而非首次发生即与内容质量无关地独立扣分",
+            "confidence": "medium",
+            "source": "assumption",
+            "sourceModel": "free",
+            "round": 8,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B035",
+            "type": "前提",
+            "description": "读者默认已发布章节是不可变文本，不会被作者删除或大幅改写，因此追读时无需为前文与后文对不上而回查、重新校验或担心错过信息——该默认一旦被打破（如作者回改伏笔、删章后前文引用失效），读者会额外付出回读核对成本并产生",
+            "confidence": "medium",
+            "source": "assumption",
+            "sourceModel": "free",
+            "round": 10,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B005",
+            "type": "盲区",
+            "description": "章节末尾钩子的信息密度与读者所处阅读场景的注意力带宽不匹配（如碎片时间里需要多步回忆才能接上的复杂悬念、睡前场景中引发过度兴奋难以入睡的高强度钩子），导致读者主动推迟或放弃下一章点击的具体情境错配",
+            "confidence": "medium",
+            "source": "blindspot",
+            "sourceModel": "free",
+            "round": 1,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B010",
+            "type": "盲区",
+            "description": "跨设备进度不同步若发生在章末悬念或关键反转附近，且精确阅读锚点与章节切割点同时丢失，使读者被迫回读大段内容或跳漏情节，就会把普通续读摩擦转化为追读中断。",
+            "confidence": "high",
+            "source": "blindspot",
+            "sourceModel": "free",
+            "round": 2,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B014",
+            "type": "盲区",
+            "description": "阅读平台在章末悬念处插入的强制广告、弹窗等交互打断因素，是否属于读者端追读体感边界、其修复责任应归于平台侧还是创作侧的归属划分盲区",
+            "confidence": "medium",
+            "source": "blindspot",
+            "sourceModel": "free",
+            "round": 3,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B019",
+            "type": "盲区",
+            "description": "需按剧透内容相对读者当前阅读进度的“超前跨度”与“信息性质”（身份、反转、生死、CP结局等）交叉分类，并验证追读动机是转为赶进度核对答案、回避已知情感冲击，还是直接弃读。",
+            "confidence": "high",
+            "source": "blindspot",
+            "sourceModel": "free",
+            "round": 4,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B022",
+            "type": "盲区",
+            "description": "读者在睡眠不足、工作高压或情绪低落等临时状态下，对慢热、压抑、虐心情节的容忍阈值会显著下降，从而把平时可接受的内容判定为劝退并停止追读。",
+            "confidence": "high",
+            "source": "blindspot",
+            "sourceModel": "free",
+            "round": 5,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B027",
+            "type": "盲区",
+            "description": "需把平台外生触发作为独立于正文质量的变量层验证：更新提醒的到达率、推送时机、频率与通知文案，书架/榜单的排序位置与标签，章末评论区的剧透、站队、催更互动密度，都会改变下一章点击意愿。",
+            "confidence": "high",
+            "source": "blindspot",
+            "sourceModel": "free",
+            "round": 7,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B032",
+            "type": "盲区",
+            "description": "自动连播或倍速听书时，章末悬念与下一章开头之间缺少主动翻页停顿，若下一章立即切换视角、时间线或揭晓答案，钩子会被无缝吞没，读者来不及预期和紧张，甚至因信息错位而劝退。",
+            "confidence": "high",
+            "source": "blindspot",
+            "sourceModel": "free",
+            "round": 8,
+            "status": {
+              "kind": "kept"
+            }
+          },
+          {
+            "id": "B036",
+            "type": "盲区",
+            "description": "读者将甲书的角色名或绰号张冠李戴到乙书同名、近名角色上，误判乙书当前对话中的人物关系与立场，从而认为关键情节突兀或情感错位而跳更。",
+            "confidence": "high",
+            "source": "blindspot",
+            "sourceModel": "free",
+            "round": 10,
+            "status": {
+              "kind": "kept"
+            }
+          }
+        ],
+        "rounds": 10,
+        "convergence": "auto",
+        "disputesResolved": 0,
+        "tokenEstimate": 119818
+      }
+    }
+  ],
+  "convergence": "auto",
+  "rounds": 10,
+  "tokenEstimate": 119818,
+  "finalSolution": "## 方案概述\n\n读者持续追读意愿的本质是**每章阅读的即时收益（爽点、悬念、情感回报、信息增量）必须持续大于即时成本（认知负荷、时间投入、情绪消耗、道德不适）**。本方案基于27条边界约束，将追读意愿拆解为**内容承诺兑现、认知负荷管理、情绪体验维护、节奏预期管理、外部环境适配**五大模块，按**刚性约束→高损反例→目标错配→前提验证→盲区补全**的优先级输出修复处方，核心策略是建立**可量化的承诺台账、专名密度上限、情绪回报周期表、更新稳定性SLA**四大管控机制，并针对平台侧与作者侧责任边界给出明确划分。\n\n## 关键结论\n\n**一、刚性约束（违反即触发批量弃读，优先级最高）**\n\n| 编号 | 结论 | 依据 |\n|------|------|------|\n| 1 | **核心设定一致性是不可逾越的红线**：力量体系、人物属性、世界观规则一旦公开并重复强调，后续任何矛盾都必须有合理过渡与铺垫，否则直接构成认知接受崩塌 | B002、B011 |\n| 2 | **叙事视角漂移是零容忍错误**：固定视角中插入他人内心活动或感知信息，属于技术性硬伤，修复优先级高于任何内容优化 | B007 |\n| 3 | **已公开承诺禁止无铺垫推翻**：核心人设、CP走向、关键剧情承诺在10章内无伏笔提示的单章翻转，累计3处即触发批量弃读临界点 | B016 |\n| 4 | **主角动机颠覆必须有可回溯伏笔**：前文至少存在一次暗示，且伏笔与揭晓的间距需控制在读者记忆有效范围内（建议≤20章） | B021 |\n\n**二、高损反例（已验证的批量弃读模式，优先级次高）**\n\n| 编号 | 结论 | 依据 |\n|------|------|------|\n| 5 | **道德情绪无报偿是隐性杀手**：即使逻辑、节奏、设定全部自洽，主角持续被胁迫/被迫牺牲无辜者/恩将仇报而叙事不给予报偿，读者会因憋屈感批量弃书 | B003、B017 |\n| 6 | **角色情感锚点不可单方面回收**：中后期换地图/战力膨胀导致高人气配角长期缺席或被写死，读者情感投资存量资产被清零，掉追读反馈集中于\"喜欢的角色不出现了\" | B008 |\n| 7 | **可预测性陷阱**：更新稳定、设定自洽但情节完全模板化（如血脉压制+越级必胜），读者丧失意外感后仍会大规模弃读 | B020 |\n| 8 | **更新稳定性独立于内容质量**：断更两周以上即使内容达标，追读数据也会腰斩，更新SLA是内容之外的第二生命线 | B012 |\n\n**三、目标错配（读者类型与内容供给的匹配问题，优先级中高）**\n\n| 编号 | 结论 | 依据 |\n|------|------|------|\n| 9 | **三类读者目标需差异化满足**：日更读者要单章钩子+短频快爽点，周更读者要周更剧情推进量，养肥读者要完整剧情弧的连读爆发密度；三者不可兼得时需明确主服务对象 | B006 |\n| 10 | **非剧情类追读目标需持续供给**：情绪宣泄/代偿、解谜补全、角色陪伴、世界观审美四类目标在卷中提前兑现或落空后，会出现下一章点击动机真空 | B015 |\n| 11 | **沉没成本与内容吸引力的冲突管理**：读者已投入时间形成\"读完已更章节\"目标后，内容吸引力下降会直接抑制下一章点击，需用阶段性高价值节点对冲 | B023 |\n\n**四、前提验证（需区分成立条件，优先级中）**\n\n| 编号 | 结论 | 依据 |\n|------|------|------|\n| 12 | **信任锚点影响初始追读但非持续追读**：作者完结记录、口碑影响开篇点击率，但持续追读更依赖连载期的内容兑现 | B004 |\n| 13 | **类型承诺偏移的杀伤力有条件性**：前期承诺延后兑现时，若人物魅力或悬念钩子足够强，读者可能留存；真正触发弃读的是\"偏移+主角行为逻辑断裂+无过渡铺垫\"的组合 | B009、B026 |\n| 14 | **风格切换需区分预告与否**：已提前公告或前期本就风格摇摆的作品，风格调整不构成背弃契约；长期稳定风格作品的无预警切换则必然导致弃读 | B018 |\n| 15 | **跨更记忆依赖有容量上限**：更新间隔过长、支线庞杂、专名仅单次出现时，读者会因上下文断裂而弃读，需控制活跃专名总量与支线并行数 | B013 |\n\n**五、盲区补全（需纳入方案的隐性变量，优先级中低）**\n\n| 编号 | 结论 | 依据 |\n|------|------|------|\n| 16 | **章末钩子需匹配阅读场景注意力带宽**：碎片时间不适合需要多步回忆的复杂悬念，睡前场景不适合过度兴奋的高强度钩子，需按场景设计钩子类型 | B005 |\n| 17 | **跨设备进度同步是续读摩擦源**：章末悬念或关键反转附近的进度丢失会转化为追读中断，需在技术侧保障精确阅读锚点 | B010 |\n| 18 | **读者临时状态影响容忍阈值**：睡眠不足、高压、情绪低落时对慢热/压抑/虐心情节的容忍度显著下降，需在连载节奏中预留\"情绪喘息章\" | B022 |\n| 19 | **平台外生触发独立影响点击意愿**：更新提醒到达率、推送时机、书架排序、评论区剧透/站队/催更互动密度均改变下一章点击概率 | B027 |\n| 20 | **平台交互打断的责任归属需明确**：章末强制广告、弹窗属于平台侧责任，创作侧无法直接修复，但可通过调整章末位置（如钩子前移）降低打断损失 | B014 |\n| 21 | **剧透影响需按超前跨度与信息性质分类**：身份/反转/生死/CP结局等不同性质剧透，对追读动机的影响方向不同（赶进度核对/回避情感冲击/直接弃读），需差异化应对 | B019 |\n\n## 落地方案\n\n### 模块一：建立内容承诺台账（对应结论1、3、4、13、14）\n\n**做什么**：建立作品级\"承诺-兑现\"追踪系统，确保所有已公开承诺被有序兑现。\n\n**怎么做**：\n1. 创建承诺台账表，记录以下字段：承诺内容、首次出现章节、重复强调次数、承诺类型（人设/CP/剧情/设定）、承诺兑现截止章节、当前状态（待兑现/已兑现/已推翻）\n2. 每10章进行一次承诺审计，检查是否有承诺即将超期、是否有无铺垫推翻的承诺\n3. 对需延后兑现的承诺，在延后期间至少每20章提供一次\"承诺仍在\"的暗示或关联线索\n4. 对需推翻的承诺，至少提前10章铺设伏笔，且伏笔需可回溯（读者回看时能识别）\n\n**验收标准**：任意10章窗口内，无铺垫推翻的承诺数=0；所有已公开承诺在台账中有明确兑现或铺垫记录；累计无铺垫推翻数<3。\n\n---\n\n### 模块二：认知负荷管控（对应结论2、15、B024）\n\n**做什么**：控制单章信息密度，确保读者记忆负担在可承受范围内。\n\n**怎么做**：\n1. 设定单章新增专名上限：日常章节≤5个，新地图/大换角阶段≤7个，且成组铺陈时需提供锚点（如角色关系图、势力归属说明）\n2. 旧角色优先出场承接：新章节引入新角色前，先让2-3个已建立认知的旧角色出场过渡\n3. 活跃专名总量控制：同一时间并行活跃的角色/地点/术语总数建议≤30个，超出后需通过剧情让部分专名\"休眠\"\n4. 视角一致性检查：每章完成后进行视角审计，确保固定视角章节无他人内心活动插入\n5. 时间空间锚点核查：涉及时间跨度或空间移动的章节，需与前文已建立的可验证锚点对照，确保无无声缩短/拉长/瞬移\n\n**验收标准**：读者抽样反馈中\"人名混淆/回翻找人/跳读设定\"提及率下降50%以上；视角漂移错误为0；时间空间矛盾为0。\n\n---\n\n### 模块三：情绪回报周期设计（对应结论5、6、10、18）\n\n**做什么**：设计情绪回报节奏，确保读者的道德期待、角色情感投资、非剧情类目标得到周期性满足。\n\n**怎么做**：\n1. 建立情绪回报周期表：每5-10章至少安排一次情绪报偿节点（道德正义实现、角色互动升温、谜题部分解答、爽点兑现）\n2. 道德情绪管理：主角被胁迫/牺牲/委屈的章节后，3章内必须安排报偿（反击、惩罚、补偿、他人理解），禁止连续5章以上无报偿的憋屈剧情\n3. 角色情感锚点维护：每次换地图/开新卷前，盘点核心配角与CP的\"出场配额\"，确保高人气角色每30章内至少出场1次或通过他人提及维持存在感\n4. 非剧情目标供给轮换：情绪宣泄、解谜补全、角色陪伴、世界观审美四类目标在每卷中至少各覆盖1次\n5. 情绪喘息章设计：在连续压抑/高虐/高紧张章节后，安排1章轻松/温情/日常章节作为情绪缓冲\n\n**验收标准**：读者反馈中\"憋屈/压抑/角色不见了\"类弃读投诉下降60%以上；每卷四类非剧情目标供给覆盖率达100%。\n\n---\n\n### 模块四：节奏与预期管理（对应结论7、9、11、16）\n\n**做什么**：匹配不同读者类型的节奏预期，同时保持不可预测性。\n\n**怎么做**：\n1. 明确主服务读者类型：在作品设定阶段确定主服务对象（日更/周更/养肥），并据此设计章节信息密度与钩子强度\n2. 钩子场景适配：常规章末使用中等强度钩子（适合碎片时间），周末/假期章末可使用高强度钩子（适合沉浸阅读）；睡前章节避免使用引发过度兴奋的钩子\n3. 意外感维护：每10章至少引入1次读者无法预判的剧情转折（但需在承诺台账内可解释），避免完全模板化的危机-解决循环\n4. 沉没成本对冲：在读者可能因\"已读全部章节\"目标达成而失去动力时（如卷末、大高潮后），安排新悬念或新目标快速接续\n5. 承接章节情绪惯性保护：生死决战或重大悬念揭露后的下一章，禁止章首插入设定说明或前情重述，直接延续情绪冲刺\n\n**验收标准**：读者对\"可预测/套路化\"的投诉下降50%以上；卷末弃读率较卷中均值不高于1.5倍；承接章节的即时点击续读率≥80%。\n\n---\n\n### 模块五：更新稳定性与外部环境适配（对应结论8、16、17、19、20、21）\n\n**做什么**：保障更新节奏稳定，并协调平台侧因素降低续读摩擦。\n\n**怎么做**：\n1. 更新SLA承诺：设定最低更新频率（如日更/周更≥3次），断更超过7天需提前公告并说明原因；断更超过14天需提供\"回归补偿章\"（信息密度更高或情绪报偿更强）\n2. 跨设备同步保障：与平台技术侧沟通，确保章末悬念附近的阅读进度精确同步；若平台无法保障，则在章末前1-2段设置\"安全回读锚点\"（如关键信息重复提示）\n3. 平台外生触发协同：与平台运营沟通更新提醒推送时机（建议在读者活跃时段前1小时）；关注书架/榜单排序位置变化；监控评论区剧透情况，必要时在正文前加\"本章含剧透\"提示\n4. 平台广告打断应对：若平台强制插入广告，将章末钩子前移1-2段，确保广告出现前读者已获得关键悬念信息\n5. 剧透分级管理：根据剧透超前跨度（<5章/5-20章/>20章）和信息性质（身份/反转/生死/CP结局）分类，对高风险剧透（如主角生死、CP结局）在正文中提前加固情感预期，降低剧透冲击\n\n**验收标准**：断更超过14天的情况全年≤1次；因进度不同步导致的追读中断投诉下降70%以上；平台推送后1小时内点击率提升20%以上。\n\n---\n\n### 模块六：读者类型差异化策略（对应结论9、12）\n\n**做什么**：针对不同读者类型提供差异化内容供给，同时管理信任锚点。\n\n**怎么做**：\n1. 读者画像分层：通过评论区互动、订阅数据识别日更/周更/养肥三类读者占比，确定主服务对象\n2. 内容供给分层：日更读者为主时，每章确保有单章爽点；周更读者为主时，每周更新包确保有完整剧情推进；养肥读者为主时，确保每卷有完整剧情弧\n3. 信任锚点补偿：对无完结记录或口碑为负的作者，在开篇3-5章内用更强的类型承诺兑现（更密集的爽点、更清晰的主线）来补偿初始信任缺失\n\n**验收标准**：主服务读者类型的留存率较优化前提升20%以上；新读者开篇3章留存率提升15%以上。\n\n## 风险与前提\n\n| 风险/前提 | 对应边界 | 说明 | 失效条件 |\n|-----------|----------|------|----------|\n| **承诺台账依赖作者自律与执行纪律** | B016、B021 | 台账需要持续维护，若作者不严格执行，方案失效 | 作者无法坚持每10章审计 |\n| **情绪回报周期可能牺牲叙事自由度** | B003、B017 | 强制3章内报偿可能限制压抑型叙事的展开空间 | 作品类型本身为\"压抑-爆发\"长线结构，报偿周期需延长至10章以上 |\n| **B009前提需验证** | B009 | 前期承诺延后兑现时，人物魅力/悬念钩子能否完全补偿尚未量化验证 | 若补偿机制不足以覆盖承诺偏移的杀伤力，方案需加强承诺兑现优先级 |\n| **B018前提有条件性** | B018 | 对已公告风格调整或前期风格摇摆的作品，风格切换不构成弃读诱因 | 若作品前期已建立极强稳定风格预期，无预警切换仍会触发弃读 |\n| **B026前提需验证** | B026 | 中后期卖点偏移是否触发弃读，取决于偏移是否伴随主角行为逻辑断裂 | 若偏移本身即触发弃读（而非仅伴随断裂时），需将卖点偏移纳入刚性约束 |\n| **B014平台侧责任不可控** | B014 | 平台广告/弹窗属于平台侧，创作侧只能通过钩子前移等被动应对 | 若平台广告插入位置无法预判，钩子前移策略可能失效 |\n| **B019剧透影响方向不确定** | B019 | 剧透可能转为赶进度核对答案，也可能导致回避或弃读，方向因读者而异 | 若剧透对特定读者群体（如重度剧透敏感者）的杀伤力远超预期，需额外设计防剧透机制 |\n| **B022读者临时状态不可控** | B022 | 读者睡眠不足/高压/情绪低落时的容忍阈值下降，创作侧无法实时感知 | 若读者临时状态频繁且持续，情绪喘息章可能不足以对冲 |\n| **B027平台外生触发依赖平台配合** | B027 | 推送时机、排序位置、评论区管理需平台侧协作 | 若平台不配合，该模块仅能部分生效 |\n| **B005钩子场景适配需读者行为数据** | B005 | 需了解读者主要阅读时段与场景，若数据不足则适配策略可能失准 | 若读者阅读场景高度随机且无法通过时段预测，钩子适配效果有限 |\n| **B024专名上限为经验阈值** | B024 | 5-7个为经验值，不同读者认知能力差异可能导致实际阈值不同 | 若目标读者群体为高认知能力人群，上限可放宽；反之需收紧 |\n| **B006三类读者目标不可兼得** | B006 | 需明确主服务对象，若试图同时满足三类读者可能导致均不满足 | 若读者结构高度混合且无法分层，差异化策略可能失效 |\n\n## 待补充信息\n\n1. **作品类型与连载阶段**：当前作品属于何种类型（玄幻/都市/悬疑/言情等）？处于连载前期（<50章）、中期（50-200章）还是后期（>200章）？不同阶段处方优先级需调整。\n2. **更新频率现状**：当前实际更新频率是多少？是否已建立稳定的更新节奏？\n3. **读者画像数据**：是否有读者阅读时段、设备使用、章节停留时长等行为数据？这直接影响钩子场景适配策略。\n4. **平台合作空间**：与当前连载平台的关系如何？能否推动更新提醒优化、进度同步保障、广告位置调整等平台侧改动？\n5. **历史弃读数据**：是否有过往弃读章节的定位数据（如具体在哪些章节附近流失率最高）？可用于验证方案优先级。\n6. **作者创作约束**：作者是否存在固定创作习惯（如大纲完整度、存稿量）？这影响承诺台账和更新SLA的可执行性。",
+  "createdAt": "2026-09-26T06:26:52.310Z",
+  "updatedAt": "2026-09-26T15:54:04.642Z"
+}
