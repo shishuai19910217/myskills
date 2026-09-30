@@ -3,11 +3,8 @@
 // 本模块只在真正写盘时求值，避免拿到过期引用。
 import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { fileURLToPath } from "node:url";
 import { CONFIDENCE_LABEL, } from "./types.js";
-const __dirname = fileURLToPath(new URL(".", import.meta.url));
-const PROJECT_ROOT = join(__dirname, "..");
-const MEETINGS_DIR = join(PROJECT_ROOT, "data", "meetings");
+import { MEETINGS_DIR } from "./runtime-paths.js";
 export const meetingsDir = MEETINGS_DIR;
 function ensureDir() {
     mkdirSync(MEETINGS_DIR, { recursive: true });

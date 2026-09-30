@@ -1,6 +1,6 @@
 import express from "express";
 import { randomUUID } from "crypto";
-import { readdirSync, statSync, unlinkSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync, statSync, unlinkSync } from "node:fs";
 import { join } from "node:path";
 import { exec } from "node:child_process";
 import { createRequire } from "node:module";
@@ -15,11 +15,13 @@ import {
 import type { ProviderInput, SeatAssignment } from "./config.js";
 import type { MeetingEvent, UserTurnResult, BoundaryType } from "./types.js";
 import { IS_SEA } from "./runtime-paths.js";
+import { loadSpecialties } from "./specialties.js";
 
 loadConfig(); // 启动即校验配置
 
 const app = express();
-app.use(express.json({ limit: "1mb" }));
+// 粘贴正文可能很长（百万字级仍建议走文件路径；此处放宽到 10MB 以支持直接粘贴长文）
+app.use(express.json({ limit: "10mb" }));
 
 // 静态页面：SEA 单文件模式从内嵌 asset 提供；普通 node 运行从 public/ 目录读盘
 let indexHtmlAsset: Buffer | null = null;
@@ -154,9 +156,67 @@ app.put("/api/config", (req, res) => {
   res.json({ ok: true, providers: getProviderViews(), seats: getSeatAssignments() });
 });
 
+/** 列出全部专项模板（前端选择器用） */
+app.get("/api/specialties", (_req, res) => {
+  res.json({ specialties: loadSpecialties() });
+});
+
+/**
+ * 输入解析：若 question 形似绝对/相对路径且文件存在，读全文替换为正文。
+ * - 阶段2 先全文传入（分段流水线在阶段3 才落地，百万字级全文会超 LLM 上下文）
+ * - 编码：默认 utf-8；若出现 replacement char（U+FFFD）兜底用 GB18030
+ * - 文件超大（>1MB）时返回 warning，由调用方提示用户
+ */
+function tryReadAsFilePath(raw: string): {
+  content: string;
+  path: string;
+  byteSize: number;
+} | null {
+  // 剥除首尾成对引号：用户常从资源管理器复制成 "D:\..." 或 “D:\...”
+  const s = raw.trim().replace(/^["'“”‘’]+|["'“”‘’]+$/g, "").trim();
+  if (!s) return null;
+  // 路径不会很长，也不会含换行
+  if (s.length > 500) return null;
+  if (/[\r\n]/.test(s)) return null;
+  // 必须以常见文本扩展名结尾
+  if (!/\.(txt|md|markdown)$/i.test(s)) return null;
+  // 必须形似绝对路径或显式相对路径（避免把正文片段误判为路径）
+  if (!/^(?:[A-Za-z]:[\\/]|[\\/]{1,2}|\.\.?[\\/])/.test(s)) return null;
+  if (!existsSync(s)) return null;
+  try {
+    const stat = statSync(s);
+    if (!stat.isFile()) return null;
+    const buf = readFileSync(s);
+    let text = buf.toString("utf-8");
+    // utf-8 解码出现 replacement char：尝试 GB18030（Node 18+ 内置支持）
+    if (/\uFFFD/.test(text) && buf.length > 0) {
+      try {
+        const decoded = new TextDecoder("gb18030").decode(buf);
+        if (!/\uFFFD/.test(decoded)) text = decoded;
+      } catch {
+        /* GB18030 不支持则保留 utf-8 */
+      }
+    }
+    return { content: text, path: s, byteSize: buf.length };
+  } catch {
+    return null;
+  }
+}
+
 app.post("/api/meetings", (req, res) => {
-  const question = String(req.body?.question ?? "").trim();
-  if (!question) return res.status(400).json({ error: "缺少 question" });
+  const rawQuestion = String(req.body?.question ?? "").trim();
+  if (!rawQuestion) return res.status(400).json({ error: "缺少 question" });
+
+  // 输入解析：文件路径 → 读全文；否则按正文片段处理
+  const fileParsed = tryReadAsFilePath(rawQuestion);
+  const question = fileParsed?.content ?? rawQuestion;
+  const inputSource = fileParsed ? "file" : "text";
+
+  // 校验 specialty：必须在已加载模板列表中；缺省或非法一律回退 "general"
+  const requestedSpecialty = String(req.body?.specialty ?? "").trim();
+  const knownSpecialties = loadSpecialties();
+  const knownIds = new Set(knownSpecialties.map((s) => s.id));
+  const specialty = requestedSpecialty && knownIds.has(requestedSpecialty) ? requestedSpecialty : "general";
 
   const id = `meeting-${Date.now()}-${randomUUID().slice(0, 8)}`;
   const meeting: ServerMeeting = {
@@ -172,19 +232,49 @@ app.post("/api/meetings", (req, res) => {
   };
   meetings.set(id, meeting);
 
+  // 路由判定：正文超过 BATCH_THRESHOLD 走分段流水线；短文本走单场圆桌
+  const BATCH_THRESHOLD = 8000;
+  const batchMode = question.length > BATCH_THRESHOLD;
+
+  if (fileParsed) {
+    broadcast(meeting, {
+      type: "notice",
+      level: "info",
+      message:
+        `已读取文件 ${fileParsed.path}（约 ${Math.round(fileParsed.byteSize / 1024)} KB，正文约 ${question.length} 字），` +
+        (batchMode ? "超过单场上限，将走分段流水线逐段诊断。" : "作为待诊断正文传入。"),
+    });
+  } else if (batchMode) {
+    broadcast(meeting, {
+      type: "notice",
+      level: "info",
+      message: `正文约 ${question.length} 字，超过单场上限（${BATCH_THRESHOLD} 字），将走分段流水线逐段诊断。`,
+    });
+  }
+
   // 后台异步运行勘探（HTTP 立即返回，前端走 SSE 订阅）
   void (async () => {
     try {
-      await orchestrator.runExploration({
-        meetingId: id,
-        question,
-        emit: (e) => broadcast(meeting, e),
-        beforeRound: () => {
-          const turns = meeting.pendingTurns;
-          meeting.pendingTurns = [];
-          return turns;
-        },
-      });
+      if (batchMode) {
+        await orchestrator.runBatchExploration({
+          meetingId: id,
+          question,
+          specialty,
+          emit: (e) => broadcast(meeting, e),
+        });
+      } else {
+        await orchestrator.runExploration({
+          meetingId: id,
+          question,
+          specialty,
+          emit: (e) => broadcast(meeting, e),
+          beforeRound: () => {
+            const turns = meeting.pendingTurns;
+            meeting.pendingTurns = [];
+            return turns;
+          },
+        });
+      }
     } catch (err) {
       broadcast(meeting, { type: "error", message: (err as Error).message });
     } finally {
@@ -193,7 +283,27 @@ app.post("/api/meetings", (req, res) => {
     }
   })();
 
-  res.json({ meetingId: id });
+  res.json({ meetingId: id, specialty, inputSource, batchMode });
+});
+
+/** 提前汇总 / 最终汇总：仅分段流水线会议；partial=true 基于已完成段出部分报告 */
+app.post("/api/meetings/:id/summarize", async (req, res) => {
+  const id = req.params.id;
+  const m = meetings.get(id) ?? rebindMeeting(id);
+  if (!m) return res.status(404).json({ error: "会议不存在" });
+  if (!m.finished && req.body?.partial !== true) {
+    return res.status(409).json({ error: "分段勘探尚未结束，请使用提前汇总（partial=true）" });
+  }
+  try {
+    const solution = await orchestrator.batchSummarize(
+      id,
+      req.body?.partial === true,
+      (e) => broadcast(m, e),
+    );
+    res.json({ ok: true, solution });
+  } catch (err) {
+    res.status(400).json({ error: (err as Error).message });
+  }
 });
 
 /** SSE：先回放历史事件（排除碎片 chunk），再订阅实时事件 */
@@ -328,6 +438,10 @@ app.get("/api/meetings/:id", (req, res) => {
 app.post("/api/meetings/:id/finalize", async (req, res) => {
   const m = rebindMeeting(req.params.id);
   if (!m) return res.status(404).json({ error: "会议不存在" });
+  // 分段会议的终局是汇总报告，必须走 /summarize（通用 final 模板不适用）
+  if (orchestrator.getMeeting(m.id)?.batch) {
+    return res.status(409).json({ error: "分段会议请使用「最终汇总」（/summarize）" });
+  }
   // m.finished 由异步包装器的 finally 置位，比 orchestrator 相位晚一个事件循环；
   // 相位已到 reviewing/finalized 即视为勘探结束，避免「页面已显示收敛但点击出方案 409」的竞态
   if (!m.finished) {

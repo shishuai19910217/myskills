@@ -9,9 +9,12 @@ import { createRequire } from "node:module";
 /** 是否运行在 SEA 单文件可执行程序中 */
 export function detectSea(): boolean {
   try {
-    // createRequire 同步探测，兼容 esbuild 打成 CJS 的 SEA 产物；非 SEA 环境 node:sea 返回 isSea=false
+    // Node v22+ 的 node:sea.isSea 是函数（返回布尔）；旧版本可能是布尔属性。
+    // 兼容两种形态：函数则调用，布尔则直接取。
     const require = createRequire(import.meta.url);
-    return !!(require("node:sea") as { isSea?: boolean }).isSea;
+    const sea = require("node:sea") as { isSea?: (() => boolean) | boolean };
+    const v = sea.isSea;
+    return typeof v === "function" ? !!v() : !!v;
   } catch {
     return false;
   }
@@ -29,6 +32,9 @@ export const CONFIG_PATH = process.env.RTA_CONFIG ?? join(DATA_ROOT, "providers.
 
 /** 会议快照/报告目录 */
 export const MEETINGS_DIR = join(DATA_ROOT, "data", "meetings");
+
+/** 专项模板配置文件路径（静态只读，随程序发布；node 模式从项目根 data/ 读，SEA 模式由构建脚本内嵌为 asset） */
+export const SPECIALTIES_PATH = join(DATA_ROOT, "data", "specialties.json");
 
 /** 首启默认配置：6 个席位全部绑定 free 通道（9r 本地服务），密钥留空由用户在配置页填写 */
 const DEFAULT_CONFIG = `{

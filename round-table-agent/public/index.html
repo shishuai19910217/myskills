@@ -20,6 +20,13 @@
   button.danger { color:#ff7b7b; border-color:#5a3a3a; }
   button:disabled { opacity:.4; cursor:not-allowed; }
   select { background:#0c0e12; color:var(--txt); border:1px solid var(--line); border-radius:6px; padding:6px 8px; font-size:13px; }
+.specialty-row { display:flex; gap:8px; margin-bottom:10px; flex-wrap:wrap; }
+.specialty-card { flex:1; min-width:180px; padding:10px 12px; background:var(--panel); border:1px solid var(--line); border-radius:8px; cursor:pointer; transition:border-color .15s,background .15s; }
+.specialty-card:hover { border-color:var(--acc); }
+.specialty-card.active { border-color:var(--acc); background:#16203a; }
+.specialty-card .sc-icon { font-size:22px; line-height:1; }
+.specialty-card .sc-name { font-weight:600; font-size:14px; margin-top:4px; }
+.specialty-card .sc-desc { font-size:12px; color:var(--dim); margin-top:2px; line-height:1.4; }
   #transcript { margin-top:16px; background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:14px; min-height:200px; font-size:14px; line-height:1.7; }
   .ev { margin:6px 0; padding:6px 10px; border-left:3px solid var(--line); border-radius:4px; white-space:normal; word-break:break-word; }
   .ev.opening { border-color:var(--acc); }
@@ -106,6 +113,12 @@
   #cfgWarn { font-size:12px; color:#e0a458; margin-top:8px; min-height:14px; }
   .pc-del { background:none; border:1px solid var(--line); color:#ff9b9b; border-radius:6px; padding:4px 10px; cursor:pointer; font-size:12px; }
   .mini-btn { background:none; border:1px dashed var(--line); color:var(--dim); border-radius:6px; padding:5px 12px; cursor:pointer; font-size:12px; }
+  /* 分段流水线进度块 */
+  .ev.batch { background:var(--panel); border:1px solid var(--line); }
+  .bp-bar { position:relative; height:18px; background:var(--bg); border-radius:9px; overflow:hidden; margin-bottom:6px; }
+  .bp-fill { position:absolute; left:0; top:0; bottom:0; background:linear-gradient(90deg,var(--ok),#7fd6c0); border-radius:9px; transition:width .3s ease; }
+  .bp-pct { position:absolute; right:8px; top:0; line-height:18px; font-size:11px; color:var(--dim); font-variant-numeric:tabular-nums; }
+  .ev.batch .bp-text { font-size:12px; color:var(--dim); line-height:1.6; }
 </style>
 </head>
 <body>
@@ -117,10 +130,12 @@
   <button id="listToggle" disabled>只看清单</button>
   <button id="downloadBtn" disabled>下载 MD 报告</button>
   <button id="finalizeBtn" class="primary" disabled>出最终方案</button>
+  <button id="summarizeBtn" disabled title="分段诊断会议专用：勘探中可基于已完成段提前汇总，结束后出最终汇总报告">提前汇总</button>
   <button id="cleanFilesBtn" class="danger" title="清理 data/meetings/ 下的历史快照与报告文件">清理历史文件</button>
 </header>
 
 <main>
+  <div id="specialtyPicker" class="specialty-row"></div>
   <textarea id="input" placeholder="输入一个边界不清晰的问题，例如：小说AI味表现哪些方面"></textarea>
   <div class="row">
     <button id="startBtn" class="primary">开始圆桌会议</button>
@@ -204,6 +219,49 @@ let meetingId = null;
 let es = null;
 let listOnly = false;
 let running = false;
+let currentSpecialty = "general";
+let specialtiesList = [];
+/** 当前会议是否为分段流水线（长文诊断）；仅分段会议启用「提前汇总」 */
+let batchMode = false;
+/** 分段会议的总段数（converged 文案用） */
+let batchTotal = 0;
+
+function setSpecialty(id) {
+  if (!specialtiesList.length) return;
+  const known = specialtiesList.some((s) => s.id === id);
+  currentSpecialty = known ? id : "general";
+  const tpl = specialtiesList.find((s) => s.id === currentSpecialty);
+  if (tpl) $("input").placeholder = tpl.placeholder || "";
+  document.querySelectorAll("#specialtyPicker .specialty-card").forEach((c) => {
+    c.classList.toggle("active", c.dataset.id === currentSpecialty);
+  });
+}
+
+// 加载专项模板并渲染选择器
+(async function loadSpecialtiesPicker() {
+  try {
+    const res = await fetch("/api/specialties");
+    const data = await res.json().catch(() => ({}));
+    specialtiesList = data.specialties || [];
+    if (!specialtiesList.length) return;
+    const picker = $("specialtyPicker");
+    picker.innerHTML = specialtiesList.map((s) => `
+      <div class="specialty-card${s.id === currentSpecialty ? " active" : ""}" data-id="${esc(s.id)}">
+        <div class="sc-icon">${s.icon || "🎯"}</div>
+        <div class="sc-name">${esc(s.name)}</div>
+        <div class="sc-desc">${esc(s.description || "")}</div>
+      </div>
+    `).join("");
+    picker.onclick = (e) => {
+      const card = e.target.closest(".specialty-card");
+      if (!card) return;
+      setSpecialty(card.dataset.id);
+    };
+    setSpecialty(currentSpecialty);
+  } catch {
+    /* 加载失败不影响默认通用勘探 */
+  }
+})();
 /** 当前流式发言块：key = round + '|' + seat */
 const streaming = new Map();
 
@@ -409,9 +467,29 @@ function render(event) {
     case "round":
       append(`〔第 ${event.round} 轮结束，本轮新增 ${event.newCount} 条，累计约 ${event.tokenEstimate} token 当量〕`, "round");
       break;
+    case "batch_progress": {
+      // 分段进度：同一会议复用一个进度块，实时更新
+      batchTotal = event.total;
+      let block = $("batchProgressBlock");
+      if (!block) {
+        block = append(`<div class="bp-bar"></div><div class="bp-text"></div>`, "batch");
+        block.id = "batchProgressBlock";
+      }
+      const done = Math.min(event.current, event.total);
+      const pct = event.total ? Math.round((done / event.total) * 100) : 0;
+      block.querySelector(".bp-bar").innerHTML =
+        `<div class="bp-fill" style="width:${pct}%"></div><span class="bp-pct">${done}/${event.total} · ${pct}%</span>`;
+      block.querySelector(".bp-text").innerHTML =
+        `${event.current < event.total ? "正在勘探" : "刚完成"}：${esc(event.segmentRange)}<br>已累积诊断条目 <b>${event.itemsSoFar}</b> 条${event.current < event.total ? " ｜ 可随时点「提前汇总」查看阶段报告" : ""}`;
+      break;
+    }
     case "converged":
       running = false;
-      append(`⏸ 勘探结束（${esc(CONVERGE_LABEL[event.reason] || event.reason)}，共 ${event.rounds} 轮）—— 裁决与清单生成中，稍候可继续补充或出最终方案`, "converged");
+      if (batchMode) {
+        append(`⏸ 分段勘探结束（${esc(CONVERGE_LABEL[event.reason] || event.reason)}，完成 ${event.rounds}/${batchTotal || event.rounds} 段）—— 逐段裁决已汇总，可点「最终汇总」出完整诊断报告`, "converged");
+      } else {
+        append(`⏸ 勘探结束（${esc(CONVERGE_LABEL[event.reason] || event.reason)}，共 ${event.rounds} 轮）—— 裁决与清单生成中，稍候可继续补充或出最终方案`, "converged");
+      }
       break;
     case "user_message":
       append(`<span class="tag u">你·${esc(KIND_LABEL[event.kind] || event.kind)}</span>${esc(event.content)}`, "user");
@@ -419,10 +497,25 @@ function render(event) {
     case "list":
       refreshList(event.list);
       $("listDownloadBtn").disabled = false;
-      // 清单到达 = 裁决完成、会议进入 reviewing，此时才允许出最终方案
-      $("finalizeBtn").disabled = false;
+      if (batchMode) {
+        // 分段会议：出方案走「最终汇总」，不走 /finalize
+        $("summarizeBtn").disabled = false;
+        $("summarizeBtn").textContent = "最终汇总";
+        $("finalizeBtn").disabled = true;
+      } else {
+        // 清单到达 = 裁决完成、会议进入 reviewing，此时才允许出最终方案
+        $("finalizeBtn").disabled = false;
+      }
       if (!listOnly) renderListEvent(event.list);
       break;
+    case "batch_summarized": {
+      const label = event.partial
+        ? `提前汇总（基于已完成的 ${event.current}/${event.total} 段，未完成段诊断未纳入）`
+        : "最终汇总";
+      append(`<b>【${label}】</b><div class="md">${markdown(event.solution)}</div>`, "final");
+      $("downloadBtn").disabled = false;
+      break;
+    }
     case "final":
       append(`<b>【最终解决方案】</b><div class="md">${markdown(event.solution)}</div>`, "final");
       $("downloadBtn").disabled = false;
@@ -506,10 +599,14 @@ $("startBtn").onclick = async () => {
   streaming.clear();
   $("startBtn").disabled = true;
   running = true;
+  batchMode = false;
+  batchTotal = 0;
+  $("summarizeBtn").disabled = true;
+  $("summarizeBtn").textContent = "提前汇总";
   const res = await fetch("/api/meetings", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ question: content }),
+    body: JSON.stringify({ question: content, specialty: currentSpecialty }),
   });
   if (!res.ok) {
     append(`启动失败：${esc(await res.text())}`, "error");
@@ -519,6 +616,9 @@ $("startBtn").onclick = async () => {
   }
   const data = await res.json();
   meetingId = data.meetingId;
+  batchMode = data.batchMode === true;
+  // 分段会议：勘探进行中即可提前汇总（需至少有已完成段；无段时点击由后端报错提示）
+  if (batchMode) $("summarizeBtn").disabled = false;
   $("controls").style.display = "block";
   $("listToggle").disabled = false;
   $("downloadBtn").disabled = true;
@@ -572,10 +672,21 @@ $("startBtn").onclick = async () => {
     document.getElementById("resumeBtn").onclick = () => {
       meetingId = meetingIdFromFile;
       $("input").value = snap.question;
+      setSpecialty(snap.specialty || "general");
+      batchMode = !!snap.batch;
+      batchTotal = snap.batch?.total ?? 0;
       $("controls").style.display = "block";
       $("listToggle").disabled = false;
       $("downloadBtn").disabled = !snap.finalSolution;
       $("listDownloadBtn").disabled = false;
+      if (batchMode) {
+        // 分段会议：按 finished 决定按钮语义，finalize 不用
+        $("summarizeBtn").disabled = false;
+        $("summarizeBtn").textContent = snap.batch.finished ? "最终汇总" : "提前汇总";
+        $("finalizeBtn").disabled = true;
+      } else {
+        $("summarizeBtn").disabled = true;
+      }
       $("boundaryList").style.display = "none";
       $("transcript").style.display = "block";
       $("meta").textContent = `议题：${snap.topic ?? snap.question}｜产出目标：${snap.objective ?? "（未识别）"}`;
@@ -652,6 +763,27 @@ $("finalizeBtn").onclick = async () => {
   if (!res.ok) {
     append(`⚠ 终局失败：${esc(data.error || res.statusText)}`, "error");
     $("finalizeBtn").disabled = false;
+  }
+};
+
+// 分段会议专用：勘探中提前汇总（partial=true），结束后最终汇总（partial=false）
+$("summarizeBtn").onclick = async () => {
+  if (!meetingId) return;
+  const partial = running; // 勘探进行中 → 部分段提前汇总；结束后 → 最终汇总
+  $("summarizeBtn").disabled = true;
+  try {
+    const res = await fetch(`/api/meetings/${meetingId}/summarize`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ partial }),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      append(`⚠ 汇总失败：${esc(data.error || res.statusText)}`, "error");
+    }
+  } finally {
+    // 进行中仍可再次提前汇总；结束后保留按钮以便重出最终汇总
+    if (batchMode) $("summarizeBtn").disabled = false;
   }
 };
 

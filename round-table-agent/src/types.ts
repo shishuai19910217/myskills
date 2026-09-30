@@ -46,6 +46,8 @@ export interface BoundaryItem {
   status: BoundaryStatus;
   /** 被合并进本条的其他条目 id */
   mergedFrom?: string[];
+  /** 分段流水线：条目所属段（1 基）；单场会议缺省 */
+  segment?: number;
 }
 
 export interface BoundaryList {
@@ -114,6 +116,10 @@ export type MeetingEvent =
   | { type: "converged"; reason: "auto" | "user_stop" | "max_rounds"; rounds: number }
   | { type: "list"; list: BoundaryList }
   | { type: "user_message"; content: string; kind: "new_boundary" | "supplement" | "stop" | "other" }
+  /** 分段流水线进度：current=已完成段数（0 基，事件在每段开始/结束时下发），total=总段数，segmentRange 形如「第 2 段（第三章 风起｜约4200字）/共 8 段」 */
+  | { type: "batch_progress"; current: number; total: number; segmentRange: string; itemsSoFar: number }
+  /** 提前汇总结果：partial=true 表示仅基于已完成的部分段 */
+  | { type: "batch_summarized"; solution: string; partial: boolean; current: number; total: number }
   | { type: "final"; solution: string }
   /** 非致命的流程降级提示（如统筹者输出无法解析、裁决重试后仍失败） */
   | { type: "notice"; level: "warn" | "info"; message: string; seat?: string }
@@ -133,6 +139,8 @@ export interface MeetingSnapshot {
   objective?: string;
   scope?: string;
   goalType?: GoalType;
+  /** 专项模板 id（"general" | "ai-flavor" | "reading-health" | ...）；缺省视为 "general" */
+  specialty?: string;
   state: MeetingState;
   items: BoundaryItem[];
   list: BoundaryList;
@@ -141,6 +149,18 @@ export interface MeetingSnapshot {
   rounds: number;
   tokenEstimate: number;
   finalSolution?: string;
+  /** 分段流水线上下文（仅批量诊断会议存在；用于重启后恢复进度展示） */
+  batch?: {
+    total: number;
+    /** 已完成段数 */
+    completed: number;
+    /** 各段范围描述（已完成的段） */
+    segmentRanges: string[];
+    /** 所有段是否已跑完（终局汇总可能尚未生成） */
+    finished: boolean;
+  };
+  /** 专项种子维度文本（终局命名依据；重启恢复后仍可出专项报告） */
+  seedDimensionsText?: string;
   createdAt: string;
   updatedAt: string;
 }

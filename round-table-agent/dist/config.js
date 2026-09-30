@@ -1,9 +1,6 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { fileURLToPath } from "node:url";
-const __dirname = fileURLToPath(new URL(".", import.meta.url));
-const PROJECT_ROOT = join(__dirname, "..");
-const CONFIG_PATH = process.env.RTA_CONFIG ?? join(PROJECT_ROOT, "providers.json");
+import { CONFIG_PATH, ensureDefaultConfig } from "./runtime-paths.js";
 let cached = null;
 export function configPath() {
     return CONFIG_PATH;
@@ -11,6 +8,7 @@ export function configPath() {
 export function loadConfig() {
     if (cached)
         return cached;
+    ensureDefaultConfig(); // SEA 首启自动生成默认配置；普通 node 运行为 no-op
     cached = JSON.parse(readFileSync(CONFIG_PATH, "utf-8"));
     return cached;
 }

@@ -1,5 +1,18 @@
+import { Agent } from "undici";
 import { getProvider, getAuthKey } from "./config.js";
 import type { ProviderConfig } from "./config.js";
+
+/**
+ * 共享 HTTP Agent：undici 自身的 headersTimeout / bodyTimeout 默认仅 300s，
+ * 对「大正文 + 推理模型 + 非流式」的慢首字节场景（如最终汇总）会先于业务
+ * timeoutMs 触发 UND_ERR_HEADERS_TIMEOUT。这里放宽到 10 分钟，业务层超时仍
+ * 由 combineSignal(opts.timeoutMs) 精确控制。
+ */
+const dispatcher = new Agent({
+  headersTimeout: 600_000,
+  bodyTimeout: 600_000,
+  connectTimeout: 30_000,
+});
 
 export interface ChatOptions {
   temperature?: number;
@@ -90,17 +103,20 @@ const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
  *  对瞬时网络错误 / 5xx / 429 自动退避重试 1 次。 */
 export async function chat(providerId: string, messages: ChatMessage[], opts: ChatOptions = {}): Promise<string> {
   const provider = getProvider(providerId);
-  const { signal, cancel } = combineSignal(opts.timeoutMs ?? 120_000, opts.signal);
+  const timeoutMs = opts.timeoutMs ?? 120_000;
   const maxAttempts = 2;
-  try {
-    for (let attempt = 1; attempt <= maxAttempts; attempt++) {
-      try {
-        const res = await fetch(endpoint(provider), {
-          method: "POST",
-          headers: await headers(provider),
-          body: JSON.stringify(await requestBody(provider, messages, opts, false)),
-          signal,
-        });
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    // 每次尝试独立计时：重试不应被上一次尝试已消耗的时间拖累
+    const { signal, cancel } = combineSignal(timeoutMs, opts.signal);
+    try {
+      const res = await fetch(endpoint(provider), {
+        method: "POST",
+        headers: await headers(provider),
+        body: JSON.stringify(await requestBody(provider, messages, opts, false)),
+        signal,
+        // @ts-expect-error undici Dispatcher（Node 全局 fetch 支持）
+        dispatcher,
+      });
         if (!res.ok) {
           const detail = await res.text().catch(() => "");
           if (attempt < maxAttempts && RETRYABLE_STATUS.has(res.status)) {
@@ -128,12 +144,11 @@ export async function chat(providerId: string, messages: ChatMessage[], opts: Ch
           throw new Error(`provider ${providerId} 网络连接失败（重试后仍失败）：上游服务不可用或中断了连接。${describeErrorChain(err)}`);
         }
         throw err;
+      } finally {
+        cancel();
       }
-    }
-    return "";
-  } finally {
-    cancel();
   }
+  return "";
 }
 
 /** 流式对话，逐 chunk 回调增量正文（reasoning 增量被忽略，不混入正文） */
@@ -151,6 +166,8 @@ export async function chatStream(
       headers: await headers(provider),
       body: JSON.stringify(await requestBody(provider, messages, opts, true)),
       signal,
+      // @ts-expect-error undici Dispatcher（Node 全局 fetch 支持）
+      dispatcher,
     });
     if (!res.ok) {
       const detail = await res.text().catch(() => "");

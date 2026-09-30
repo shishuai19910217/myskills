@@ -8,12 +8,14 @@ import {
   coordinatorConvergeUser,
   coordinatorAdjudicateUser,
   coordinatorSupplementUser,
-  coordinatorFinalUser,
+  coordinatorFinalTemplateUser,
+  SEGMENT_SECTIONS_MARKER,
   coordinatorClassifyUserTurnUser,
   seatSystemPrompt,
 } from "./prompts.js";
-import { persistSnapshot } from "./snapshot.js";
-import { readFileSync, readdirSync, statSync } from "node:fs";
+import { persistSnapshot, persistReport, meetingsDir } from "./snapshot.js";
+import { getSpecialty, renderSeedDimensions } from "./specialties.js";
+import { readFileSync, readdirSync, statSync, rmSync } from "node:fs";
 import { join } from "node:path";
 import type {
   BoundaryItem,
@@ -35,6 +37,8 @@ interface MeetingRecord {
   scope?: string;
   topic?: string;
   goalType: GoalType;
+  /** 专项模板 id（"general" | "ai-flavor" | "reading-health" | ...）；缺省视为 "general" */
+  specialty?: string;
   events: MeetingEvent[];
   items: BoundaryItem[];
   coordHistory: string[];
@@ -47,14 +51,40 @@ interface MeetingRecord {
   /** 本会议开跑时的配置快照：页面改配置不影响进行中的会议 */
   seats: SeatConfig[];
   config: RuntimeConfig;
+  /** 分段流水线：当前正在勘探的文本段（统筹者盘问与席位作答时据此看原文）；单场会议为空 */
+  activeSegment?: { range: string; text: string };
+  /** 分段流水线进度（仅批量会议，段间写回；供 snapshot 输出） */
+  batch?: NonNullable<MeetingSnapshot["batch"]>;
+  /** 本专项种子维度文本（开题注入的同款；终局/汇总时作为维度官方命名依据） */
+  seedDimensionsText?: string;
 }
 
 export interface ExplorationOptions {
   meetingId: string;
   question: string;
+  /** 专项模板 id；未提供时按 "general" 处理（由调用方归一化） */
+  specialty?: string;
   emit: (e: MeetingEvent) => void | Promise<void>;
   beforeRound?: () => UserTurnResult[];
   stream?: boolean;
+  /** 分段流水线：本段待诊断原文与范围描述（由 runBatchExploration 传入） */
+  activeSegment?: { range: string; text: string };
+}
+
+/** 章节边界（行首起始位置 + 标题文本） */
+export interface ChapterBoundary {
+  start: number;
+  end: number;
+  label: string;
+}
+
+/** 切分出的文本段 */
+export interface TextSegment {
+  text: string;
+  range: string;
+  /** 原文中的起止偏移（text 为 trim 后内容，偏移含被裁掉的空白） */
+  start: number;
+  end: number;
 }
 
 /** 括号平衡的 JSON 提取：从首个 { 或 [ 开始扫描，处理字符串与转义，返回首个平衡片段 */
@@ -95,6 +125,105 @@ export function extractJson(raw: string): unknown | null {
     }
   }
   return null;
+}
+
+/** 扫描章节边界：中文章节、Markdown 标题、Chapter N；首字符前视为「开头」边界 */
+export function findChapterBoundaries(text: string): ChapterBoundary[] {
+  const out: ChapterBoundary[] = [{ start: 0, end: text.length, label: "开头" }];
+  const headingRe = /(^|\n)[ \t]*(?:第[一二三四五六七八九十百千零0-9]+[章节回][^\n]{0,40}|#{1,3}[ \t]+[^\n]{1,40}|Chapter\s+\d+[^\n]{0,40})/gim;
+  let m: RegExpExecArray | null;
+  while ((m = headingRe.exec(text))) {
+    const lineStart = m.index + (m[1] ? m[1].length : 0);
+    if (lineStart === 0) {
+      out[0] = { start: 0, end: text.length, label: text.slice(0, 80).split("\n")[0].trim() };
+      continue;
+    }
+    const lineEnd = text.indexOf("\n", lineStart);
+    out.push({
+      start: lineStart,
+      end: lineEnd === -1 ? text.length : lineEnd,
+      label: text.slice(lineStart, lineEnd === -1 ? undefined : lineEnd).trim().replace(/^#{1,3}[ \t]+/, ""),
+    });
+  }
+  out.sort((a, b) => a.start - b.start);
+  // 去重（同一行可能多正则命中）
+  return out.filter((b, i) => i === 0 || b.start !== out[i - 1].start);
+}
+
+/**
+ * 单段切出（章节边界优先）：从 cursor 起，以 targetChars 为目标，
+ * 先找不超过 maxChars 的最近章节边界；无边界则硬切（回退到标点/换行）。
+ * targetChars 可在调用间调整（首段试探后降档）。
+ */
+export function cutSegment(
+  text: string,
+  heads: ChapterBoundary[],
+  cursor: number,
+  opts: { targetChars?: number; maxChars?: number } = {},
+): { text: string; start: number; end: number; label?: string } {
+  const target = opts.targetChars ?? 4000;
+  const max = opts.maxChars ?? 6000;
+  const hardEnd = Math.min(cursor + max, text.length);
+  // 段标签取「本段起始处所属章节」（cursor 之前最近的标题），而非段尾切到的下一章
+  let startHead: ChapterBoundary | undefined;
+  for (const h of heads) {
+    if (h.start <= cursor) startHead = h;
+    else break;
+  }
+  // 候选章节起点：(cursor, hardEnd] 之间的边界
+  const candidates = heads.filter((h) => h.start > cursor && h.start <= hardEnd);
+  let end = -1;
+  if (candidates.length) {
+    // 优先取最接近 cursor+target 的边界（在 max 内）
+    let best = candidates[0];
+    let bestDist = Infinity;
+    for (const c of candidates) {
+      const d = Math.abs(c.start - (cursor + target));
+      if (d < bestDist) {
+        bestDist = d;
+        best = c;
+      }
+    }
+    end = best.start;
+  }
+  let label = startHead?.label;
+  if (end === -1 || end - cursor < 200) {
+    // 无章节边界或段过短：硬切到 target（不超过 max）
+    let cut = Math.min(cursor + target, text.length);
+    if (cut < text.length) {
+      const window = text.slice(cursor, hardEnd);
+      const rel = window.lastIndexOf("\n\n");
+      if (rel >= target * 0.5) cut = cursor + rel;
+      else {
+        const tail = window.slice(0, Math.min(target, window.length));
+        const punct = Math.max(tail.lastIndexOf("。"), tail.lastIndexOf("\n"), tail.lastIndexOf("！"), tail.lastIndexOf("？"));
+        if (punct >= target * 0.5) cut = cursor + punct + 1;
+      }
+    }
+    end = cut;
+  }
+  return { text: text.slice(cursor, end).trim(), start: cursor, end, label };
+}
+
+/** 全文一次性分段（range 补全为「第 N 段（标签｜约 X 字）」）；供预检/测试使用 */
+export function segmentText(
+  text: string,
+  opts: { targetChars?: number; maxChars?: number } = {},
+): TextSegment[] {
+  const heads = findChapterBoundaries(text);
+  const raw: Array<Omit<TextSegment, "range"> & { label?: string }> = [];
+  let cursor = 0;
+  while (cursor < text.length) {
+    const seg = cutSegment(text, heads, cursor, opts);
+    if (seg.text) raw.push(seg);
+    cursor = seg.end;
+  }
+  return raw.map((s, i) => ({
+    text: s.text,
+    start: s.start,
+    end: s.end,
+    range: `第 ${i + 1} 段（${s.label ? s.label.slice(0, 30) : "无标题段落"}｜约${s.text.length}字）`,
+  }));
 }
 
 function normalizeConfidence(v: unknown): Confidence {
@@ -325,6 +454,7 @@ export class Orchestrator {
         objective: snap.objective,
         scope: snap.scope,
         goalType: snap.goalType ?? "other",
+        specialty: snap.specialty,
         // 愈合：丢弃空方案的 final 事件（旧版本空返回也会落事件，回放会显示空的「最终解决方案」块）
         events: (snap.events ?? []).filter((e) => e.type !== "final" || !!(e as { solution?: string }).solution?.trim()),
         items: snap.items ?? [],
@@ -334,6 +464,8 @@ export class Orchestrator {
         rounds: snap.rounds,
         tokenEstimate: snap.tokenEstimate ?? 0,
         finalSolution: snap.finalSolution,
+        batch: snap.batch,
+        seedDimensionsText: snap.seedDimensionsText,
         pendingTurns: [],
         seats: getSeatConfigs(),
         config: getRuntime(),
@@ -352,6 +484,8 @@ export class Orchestrator {
       if (phase === "finalizing" || (phase === "finalized" && !snap.finalSolution?.trim())) {
         phase = "reviewing";
       }
+      // 分段流水线中途重启无法续跑：归一到 reviewing，用户可基于已完成段提前汇总
+      if (snap.batch && !snap.batch.finished) phase = "reviewing";
       this.setState(phase, snap.rounds);
       this.startedAt = snap.state?.startedAt;
       this.finishedAt = snap.state?.finishedAt;
@@ -464,6 +598,7 @@ export class Orchestrator {
   /** R0 开题 */
   async runExploration(opts: ExplorationOptions): Promise<BoundaryList> {
     const { meetingId, question, emit, beforeRound } = opts;
+    const specialty = opts.specialty || "general";
     this.runController = new AbortController();
     this.stopRequested = false;
     this.tokensUsed = 0;
@@ -473,6 +608,7 @@ export class Orchestrator {
       meetingId,
       question,
       goalType: "other",
+      specialty,
       events: [],
       items: [],
       coordHistory: [],
@@ -483,6 +619,7 @@ export class Orchestrator {
       pendingTurns: [],
       seats: getSeatConfigs(),
       config: getRuntime(),
+      activeSegment: opts.activeSegment,
     };
     this.meetings.set(meetingId, meeting);
     this.setState("interrogating", 0);
@@ -493,12 +630,45 @@ export class Orchestrator {
     };
 
     try {
+      // 专项模板加载 + 种子维度渲染（红队项5：token 预算控制）
+      // 阶段2 用硬编码上下文窗口预估值 32000；阶段3 改为从 providers.json.runtime 读取
+      const CONTEXT_WINDOW_ESTIMATE = 32000;
+      const tpl = specialty === "general" ? undefined : getSpecialty(specialty);
+      let seedDimensionsText = tpl ? renderSeedDimensions(tpl) : "";
+      const openingHint = tpl?.openingHint;
+      if (seedDimensionsText) {
+        // 粗略 token 估算：1 token ≈ 1.5 字符（CJK 主导）
+        const sysLen = coordinatorSystemPrompt().length;
+        const totalChars = sysLen + question.length + seedDimensionsText.length;
+        const estTokens = Math.ceil(totalChars / 1.5);
+        if (estTokens / CONTEXT_WINDOW_ESTIMATE > 0.6) {
+          // 压缩为维度名列表（保留分类标签，去掉 aspect/signal 详描）
+          const dimNames = tpl!.seedDimensions
+            .map((d) => `- ${d.name}${d.category ? `（${d.category}）` : ""}`)
+            .join("\n");
+          await localEmit({
+            type: "notice",
+            level: "info",
+            message: `种子维度注入超过上下文预算 60%（约 ${estTokens} / ${CONTEXT_WINDOW_ESTIMATE} tokens），已压缩为维度名列表（${tpl!.seedDimensions.length} 维）。`,
+          });
+          seedDimensionsText = dimNames;
+        }
+      }
+      meeting.seedDimensionsText = seedDimensionsText || undefined;
+
       // 统筹者开题（首次）
       let openingRaw = await this.coordChat(
         meeting,
         [
           { role: "system", content: coordinatorSystemPrompt() },
-          { role: "user", content: coordinatorOpeningUser({ question }) },
+          {
+            role: "user",
+            content: coordinatorOpeningUser({
+              question,
+              seedDimensionsText: seedDimensionsText || undefined,
+              openingHint,
+            }),
+          },
         ],
         { temperature: 0.2, maxTokens: 15000, timeoutMs: 300_000 },
       );
@@ -514,7 +684,11 @@ export class Orchestrator {
             {
               role: "user",
               content:
-                coordinatorOpeningUser({ question }) +
+                coordinatorOpeningUser({
+                  question,
+                  seedDimensionsText: seedDimensionsText || undefined,
+                  openingHint,
+                }) +
                 '\n\n上一次输出无法解析为 JSON。请严格只输出 JSON 对象本身：{"topic":"...","objective":"...","goalType":"enumerate|judge|design|diagnose|other","scope":"..."}，不要 Markdown 代码块、不要任何解释文字。',
             },
           ],
@@ -655,6 +829,312 @@ export class Orchestrator {
     }
   }
 
+  // ============ 分段流水线 ============
+
+  /**
+   * 长文分段诊断流水线：
+   * 动态分段（首段 4000 字试探 → 弱响应降档 3000 → 上限 6000，章节边界优先）；
+   * 每段是一场独立子会议（MeetingId 为 `${outerId}#${n}`），段结束后：
+   * 裁决保留的条目重编全局 ID、打上 segment 归属，累积到外层会议 BatchContext，
+   * 随后释放子会议记录与临时快照。外层 events 只留 batch_progress（供 SSE 回放）。
+   */
+  async runBatchExploration(opts: ExplorationOptions): Promise<BoundaryList> {
+    const { meetingId, question, emit } = opts;
+    const specialty = opts.specialty || "general";
+    const text = question.trim();
+    this.runController = new AbortController();
+    this.stopRequested = false;
+    this.tokensUsed = 0;
+    let globalSeq = 0;
+
+    // 预检：按初始 4000 目标估算总段数（实际段长按试探结果动态调整）
+    const total = Math.max(1, segmentText(text, { targetChars: 4000, maxChars: 6000 }).length);
+
+    const tpl0 = specialty === "general" ? undefined : getSpecialty(specialty);
+    const seedText0 = tpl0 ? renderSeedDimensions(tpl0) : "";
+    const outer: MeetingRecord = {
+      meetingId,
+      question,
+      topic: text.slice(0, 60).replace(/\s+/g, " "),
+      objective: "分段诊断：产出逐段问题清单、全局共性问题与修改优先级（只诊断不改写）",
+      scope: `全文约 ${text.length} 字，预估 ${total} 段`,
+      goalType: "diagnose",
+      specialty,
+      events: [],
+      items: [],
+      coordHistory: [],
+      newPerRound: [],
+      convergence: null,
+      rounds: 0,
+      tokenEstimate: 0,
+      pendingTurns: [],
+      seats: getSeatConfigs(),
+      config: getRuntime(),
+      batch: { total, completed: 0, segmentRanges: [], finished: false },
+      seedDimensionsText: seedText0 || undefined,
+    };
+    this.meetings.set(meetingId, outer);
+    this.setState("interrogating", 0);
+
+    const outerEmit = async (e: MeetingEvent) => {
+      outer.events.push(e);
+      await emit(e);
+    };
+
+    const heads = findChapterBoundaries(text);
+    let cursor = 0;
+    let target = 4000;
+    let segNo = 0;
+
+    try {
+      while (cursor < text.length) {
+        if (this.stopRequested) break;
+        const seg = cutSegment(text, heads, cursor, { targetChars: target, maxChars: 6000 });
+        if (!seg.text) {
+          cursor = seg.end;
+          continue;
+        }
+        segNo += 1;
+        const range = `第 ${segNo} 段（${seg.label ? seg.label.slice(0, 30) : "无标题段落"}｜约${seg.text.length}字）/共 ${total} 段`;
+        const subId = `${meetingId}#${segNo}`;
+
+        await outerEmit({
+          type: "batch_progress",
+          current: segNo - 1,
+          total,
+          segmentRange: range,
+          itemsSoFar: outer.items.length,
+        });
+
+        // 子会议：独立 MeetingRecord，从空池起步（全局编号在段结束时统一重排）
+        let weakSignals = 0;
+        try {
+          await this.runExploration({
+            meetingId: subId,
+            question: `请诊断以下文本段（${range}）：\n\n${seg.text}`,
+            specialty,
+            stream: this.stream,
+            activeSegment: { range, text: seg.text },
+            emit: async (e) => {
+              // 弱响应信号：截断挽救 / 非 JSON 挽救 / 空返回重试
+              if (
+                e.type === "notice" &&
+                e.level === "warn" &&
+                /截断|挽救|空返回|无法解析/.test(e.message)
+              ) {
+                weakSignals++;
+              }
+              // 子会议级生命周期事件不下发外层：开题/收敛/清单由分段流水线统一给出，
+              // 避免直播流与 SSE 回放（只保留 batch_progress/外层事件）不一致
+              if (e.type === "opening" || e.type === "converged" || e.type === "list") return;
+              await emit(e);
+            },
+          });
+        } catch (err) {
+          if (this.stopRequested) break;
+          await outerEmit({
+            type: "notice",
+            level: "warn",
+            message: `${range} 勘探失败（${(err as Error).message}），该段跳过，可在最终报告后针对该段重跑。`,
+          });
+          cursor = seg.end;
+          continue;
+        }
+
+        // 累积裁决保留条目：全局重编号 + 段归属
+        const sub = this.meetings.get(subId);
+        if (sub) {
+          for (const it of sub.items) {
+            if (it.status.kind !== "kept") continue;
+            globalSeq += 1;
+            outer.items.push({
+              ...it,
+              id: `B${String(globalSeq).padStart(3, "0")}`,
+              segment: segNo,
+              status: { kind: "kept" },
+            });
+          }
+        }
+        // 释放子会议与临时快照（段间内存控制）
+        this.meetings.delete(subId);
+        try {
+          rmSync(join(meetingsDir, `${subId}-snapshot.json`), { force: true });
+        } catch {
+          /* 忽略 */
+        }
+
+        outer.batch!.completed = segNo;
+        outer.batch!.segmentRanges.push(range);
+        cursor = seg.end;
+
+        // 首段试探：出现弱响应信号则后续降档到 3000
+        if (segNo === 1 && weakSignals > 0 && target > 3000) {
+          target = 3000;
+          await outerEmit({
+            type: "notice",
+            level: "info",
+            message: "首段勘探出现截断/格式挽救信号，后续段落目标长度降档为 3000 字。",
+          });
+        }
+
+        outer.tokenEstimate = this.tokensUsed;
+        this.saveSnapshot(meetingId);
+        await outerEmit({
+          type: "batch_progress",
+          current: segNo,
+          total,
+          segmentRange: range,
+          itemsSoFar: outer.items.length,
+        });
+      }
+
+      outer.batch!.finished = true;
+      outer.convergence = this.stopRequested ? "user_stop" : "auto";
+      await outerEmit({
+        type: "converged",
+        reason: outer.convergence ?? "auto",
+        rounds: outer.batch!.completed,
+      });
+      const outerList = this.regenerateList(outer);
+      await outerEmit({ type: "list", list: outerList });
+      this.setState("reviewing", 0);
+      this.saveSnapshot(meetingId);
+      return outerList;
+    } catch (err) {
+      this.setState("error", 0);
+      await outerEmit({ type: "error", message: `分段流水线失败：${(err as Error).message}` });
+      throw err;
+    } finally {
+      this.runController = null;
+    }
+  }
+
+  /** 提前汇总/最终汇总：partial=true 仅基于已完成段；规模过大时自动拆分（代码生成逐段清单） */
+  async batchSummarize(
+    meetingId: string,
+    partial = false,
+    emit?: (e: MeetingEvent) => void | Promise<void>,
+  ): Promise<string> {
+    const m = this.meetings.get(meetingId);
+    if (!m?.batch) throw new Error("会议不存在或非分段会议");
+    if (!m.batch.finished && partial === false) {
+      throw new Error("分段勘探尚未结束，请使用「提前汇总」");
+    }
+    const completed = m.batch.completed;
+    const total = m.batch.total;
+
+    // 规模阈值：条目文本超过约 4 万字则拆分为「LLM 归并共性 + 代码生成逐段清单」
+    const itemsText = m.items.map((b) => b.description).join("");
+    const splitMode = itemsText.length > 40000;
+
+    let llmItems: BoundaryItem[] = m.items;
+    if (splitMode) {
+      // 按 dedupKey 跨段归并；描述前缀【第N段】标注首个出现位置，每类保留一条代表
+      const groups = new Map<string, BoundaryItem>();
+      for (const it of m.items) {
+        const key = this.dedupKey(it.description);
+        if (!groups.has(key)) {
+          groups.set(key, {
+            ...it,
+            description: `【第${it.segment ?? 1}段】${it.description}`,
+          });
+        }
+      }
+      llmItems = [...groups.values()].slice(0, 300);
+    }
+
+    const tpl = getSpecialty(m.specialty ?? "general") ?? getSpecialty("general")!;
+    const user = coordinatorFinalTemplateUser({
+      topic: m.topic ?? "",
+      objective: m.objective ?? "",
+      template: this.buildFinalTemplate(m, tpl.finalTemplate, { partial, splitMode }),
+      list: llmItems,
+      partial,
+      completed,
+      total,
+      splitMode,
+      seedDimensionsText: m.seedDimensionsText,
+    });
+
+    let content = (
+      await this.coordChat(
+        m,
+        [
+          { role: "system", content: coordinatorSystemPrompt() },
+          { role: "user", content: user },
+        ],
+        { temperature: 0.5, maxTokens: 81920, timeoutMs: 600_000 },
+      )
+    ).trim();
+    if (!content) {
+      content = (
+        await this.coordChat(
+          m,
+          [
+            { role: "system", content: coordinatorSystemPrompt() },
+            {
+              role: "user",
+              content:
+                user +
+                "\n\n上一次返回内容为空。请不要进行长段思考，依据报告模板骨架直接输出完整 Markdown 正文，并替换其中全部占位符。",
+            },
+          ],
+          { temperature: 0.5, maxTokens: 81920, timeoutMs: 600_000 },
+        )
+      ).trim();
+    }
+    if (!content) throw new Error("汇总模型连续两次空返回，请稍后重试或更换统筹者模型");
+
+    if (splitMode) {
+      const sections = this.renderSegmentSections(m, partial ? completed : undefined);
+      if (content.includes(SEGMENT_SECTIONS_MARKER)) {
+        content = content.replace(SEGMENT_SECTIONS_MARKER, sections.trim());
+      } else {
+        // LLM 未保留标记：兜底追加
+        content = `${content.trim()}\n\n${sections.trim()}`;
+      }
+    }
+
+    // 最终汇总落 final 事件；提前汇总走独立事件（可被后续 final 覆盖）
+    let ev: MeetingEvent;
+    if (!partial) {
+      m.finalSolution = content;
+      ev = { type: "final", solution: content };
+      m.events.push(ev);
+      this.setState("finalized", m.rounds);
+    } else {
+      ev = { type: "batch_summarized", solution: content, partial: true, current: completed, total };
+      m.events.push(ev);
+    }
+    if (emit) await emit(ev);
+    this.saveSnapshot(meetingId);
+    try {
+      persistReport(meetingId, () => this.snapshot(meetingId)!);
+    } catch {
+      /* 忽略报告落盘失败 */
+    }
+    return content;
+  }
+
+  /** 代码生成「逐段问题清单」章节（拆分模式；条目描述已含定位与建议）；limit 限定只渲染前 N 段（提前汇总） */
+  private renderSegmentSections(m: MeetingRecord, limit?: number): string {
+    const lines: string[] = ["## 逐段问题清单"];
+    const ranges = m.batch!.segmentRanges;
+    const maxN = limit ?? ranges.length;
+    for (let n = 1; n <= maxN; n++) {
+      const segItems = m.items.filter((b) => b.segment === n);
+      lines.push("", `### ${ranges[n - 1] ?? `第 ${n} 段`}`);
+      if (segItems.length === 0) {
+        lines.push("", "（本段未产生裁决保留的诊断条目）");
+        continue;
+      }
+      for (const it of segItems) {
+        lines.push("", `- **${it.id}｜${it.type}**（可信度：${it.confidence}）：${it.description}`);
+      }
+    }
+    return lines.join("\n");
+  }
+
   /** 单轮：统筹者对每席生成问题 → 席位回答 → 入池。用户停止时立即中断。 */
   private async runRound(
     meeting: MeetingRecord,
@@ -771,7 +1251,9 @@ export class Orchestrator {
       goalType: meeting.goalType,
       pool: this.poolDescription(meeting),
       coordHistory: meeting.coordHistory,
-    });
+    }) + (meeting.activeSegment
+      ? `\n\n本次只诊断以下文本段（范围：${meeting.activeSegment.range}），提问必须针对该段原文中的具体问题，不要问段外内容：\n-----\n${meeting.activeSegment.text}\n-----`
+      : this.sourceTextBlock(meeting));
     let raw = await this.coordChat(
       meeting,
       [
@@ -846,36 +1328,42 @@ export class Orchestrator {
     emit: (e: MeetingEvent) => Promise<void>,
     remind = false,
   ): Promise<string> {
+    // 专项注入：席位 prompt 主体不变，仅追加 seatHint；segmentRange 阶段2 全填"全文"
+    const seatSpecialty = meeting.specialty && meeting.specialty !== "general"
+      ? getSpecialty(meeting.specialty)
+      : undefined;
     const messages = [
-      { role: "system" as const, content: seatSystemPrompt(seat, meeting.goalType) },
+      {
+        role: "system" as const,
+        content: seatSystemPrompt(seat, meeting.goalType, {
+          seatHint: seatSpecialty?.seatHint,
+          segmentRange: meeting.activeSegment?.range ?? "全文",
+        }),
+      },
       {
         role: "user" as const,
         content:
           `议题：${meeting.topic}\n范围：${meeting.scope}\n第${round}轮，统筹者向你提问：${question}\n请严格按输出协议作答。` +
+          (meeting.activeSegment
+            ? `\n\n本次只诊断以下文本段（范围：${meeting.activeSegment.range}），只针对该段原文作答，不要涉及段外内容：\n-----\n${meeting.activeSegment.text}\n-----`
+            : this.sourceTextBlock(meeting)) +
           (remind
             ? '\n\n上一次输出无法解析为 JSON。本次必须只输出 JSON 对象本身：{"description":"一句话边界描述","confidence":"high|medium|low"}，不要 Markdown 代码块、不要任何解释文字。'
             : ""),
       },
     ];
-    if (this.stream && !remind) {
-      // 累计原始输出，仅把 description 字段的明文增量推给前端（不裸渲 JSON）
-      let raw = "";
-      let emitted = "";
-      return this.chatStream(
-        seat.provider,
-        messages,
-        (delta) => {
-          raw += delta;
-          const plain = scanDescriptionPrefix(raw);
-          if (plain.length > emitted.length) {
-            void emit({ type: "reply_chunk", round, seat: seat.id, delta: plain.slice(emitted.length) });
-            emitted = plain;
-          }
-        },
-        { temperature: 0.2, maxTokens: 30000, model: seat.model, timeoutMs: 300_000 },
-      );
-    }
+    // 席位统一走非流式：部分上游代理（如 free 通道）的 SSE 会间歇挂起或只吐 [DONE]，
+    // 非流式稳定可靠；发言内容仍通过 reply 事件整体下发，前端无逐字增量但结果一致。
     return this.chat(seat.provider, messages, { temperature: 0.2, maxTokens: 30000, model: seat.model, timeoutMs: 300_000 });
+  }
+
+  /**
+   * 单场专项诊断（非分段、非 general）时，把待诊断原文整体注入席位/统筹者上下文。
+   * 分段场景由 activeSegment 注入；general 议题没有待诊断原文。
+   */
+  private sourceTextBlock(meeting: MeetingRecord): string {
+    if (meeting.activeSegment || !meeting.specialty || meeting.specialty === "general") return "";
+    return `\n\n以下是待诊断的完整原文，所有提问与作答必须针对原文中的具体内容，禁止声称原文未提供：\n-----\n${meeting.question}\n-----`;
   }
 
   private addBoundary(meeting: MeetingRecord, b: Omit<BoundaryItem, "id" | "status">): BoundaryItem | null {
@@ -1188,21 +1676,94 @@ export class Orchestrator {
     return list;
   }
 
+  /**
+   * 代码预填 finalTemplate：把代码可算的占位符（范围/轮数/统计/拆分章节标记等）先替换掉，
+   * 其余 {{xxx}} 留给终局 LLM。partial=true 时范围按已完成段收敛。
+   */
+  private buildFinalTemplate(
+    m: MeetingRecord,
+    template: string,
+    opts: { partial: boolean; splitMode?: boolean },
+  ): string {
+    const totalItems = m.items.length;
+    let keptCount = 0;
+    let mergedCount = 0;
+    let rejectedCount = 0;
+    let coveredSeg: number | undefined;
+    for (const it of m.items) {
+      if (opts.partial && it.segment != null) {
+        if (coveredSeg == null || it.segment > coveredSeg) coveredSeg = it.segment;
+      }
+      if (it.status.kind === "kept") keptCount++;
+      else if (it.status.kind === "merged") mergedCount++;
+      else rejectedCount++;
+    }
+
+    // 范围描述：分段会议拼接已完成段范围，单场会议用勘探 scope
+    let scope: string;
+    let segmentRange: string;
+    if (m.batch) {
+      const n = opts.partial ? coveredSeg ?? m.batch.completed : m.batch.segmentRanges.length;
+      const ranges = m.batch.segmentRanges.slice(0, n);
+      scope = opts.partial
+        ? `已完成 ${n}/${m.batch.total} 段`
+        : `全文 ${m.batch.total} 段（约 ${m.question.length} 字）`;
+      segmentRange = ranges.length
+        ? ranges.map((r, i) => `${i + 1}. ${r}`).join("\n")
+        : "（暂无已完成段）";
+    } else {
+      scope = m.scope ?? m.question.slice(0, 80);
+      segmentRange = "全文";
+    }
+
+    const values: Record<string, string> = {
+      topic: m.topic ?? "",
+      objective: m.objective ?? "",
+      scope,
+      segmentRange,
+      rounds: String(m.rounds),
+      totalItems: String(totalItems),
+      keptCount: String(keptCount),
+      mergedCount: String(mergedCount),
+      rejectedCount: String(rejectedCount),
+    };
+
+    let out = template.replace(/\{\{(\w+)\}\}/g, (whole, key: string) =>
+      key in values ? values[key] : whole,
+    );
+
+    // 拆分模式：逐段/逐章清单由代码生成，占位为稳定标记
+    if (opts.splitMode) {
+      let replaced = false;
+      out = out.replace(/\{\{(?:chapterIssues|highRiskSegments)\}\}/g, () => {
+        replaced = true;
+        return SEGMENT_SECTIONS_MARKER;
+      });
+      // 模板中没有对应占位符时，追加到末尾
+      if (!replaced) out = `${out.trimEnd()}\n\n${SEGMENT_SECTIONS_MARKER}\n`;
+    }
+    return out;
+  }
+
   /** R5 终局：只把裁决保留（kept）的边界喂给终局，否决/合并不作为依据 */
   async finalSolution(meetingId: string): Promise<string> {
     const m = this.meetings.get(meetingId);
     if (!m) throw new Error("会议不存在");
     this.setState("finalizing", m.rounds);
     const kept = m.items.filter((b) => b.status.kind === "kept");
+    const tpl = getSpecialty(m.specialty ?? "general") ?? getSpecialty("general")!;
     const baseMessages = [
       { role: "system" as const, content: coordinatorSystemPrompt() },
       {
         role: "user" as const,
-        content: coordinatorFinalUser({
+        content: coordinatorFinalTemplateUser({
           topic: m.topic ?? "",
           objective: m.objective ?? "",
-          scope: m.scope ?? "",
+          template: this.buildFinalTemplate(m, tpl.finalTemplate, { partial: false }),
           list: kept,
+          sourceText:
+            !m.batch && m.specialty && m.specialty !== "general" ? m.question : undefined,
+          seedDimensionsText: m.seedDimensionsText,
         }),
       },
     ];
@@ -1224,7 +1785,7 @@ export class Orchestrator {
               {
                 role: "user",
                 content:
-                  "上一次返回内容为空（可能思考过程耗尽了输出额度）。请不要再进行长段思考，直接输出完整的 Markdown 方案正文，立即从「## 方案概述」开始。",
+                  "上一次返回内容为空（可能思考过程耗尽了输出额度）。请不要再进行长段思考，依据报告模板骨架直接输出完整的 Markdown 报告正文，并替换其中全部占位符。",
               },
             ],
             { temperature: 0.5, maxTokens: 81920, timeoutMs: 600_000 },
@@ -1259,14 +1820,18 @@ export class Orchestrator {
       objective: m.objective,
       scope: m.scope,
       goalType: m.goalType,
+      specialty: m.specialty,
       state: this.state,
       items: m.items,
       list: this.regenerateList(m),
       events: m.events,
       convergence: m.convergence,
       rounds: m.rounds,
-      tokenEstimate: this.tokensUsed,
+      // 分段会议：子会议勘探会重置 tokensUsed，快照须取会议自身累计值
+      tokenEstimate: m.batch ? m.tokenEstimate : this.tokensUsed,
       finalSolution: m.finalSolution,
+      batch: m.batch,
+      seedDimensionsText: m.seedDimensionsText,
       createdAt: this.state.startedAt ?? new Date().toISOString(),
       updatedAt: this.state.updatedAt || new Date().toISOString(),
     };

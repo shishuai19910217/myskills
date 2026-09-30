@@ -21,7 +21,7 @@ export function coordinatorSystemPrompt() {
 }
 // ============ R0 开题 ============
 export function coordinatorOpeningUser(params) {
-    return `用户输入如下（可能是文本/附件/链接内容）：
+    let base = `用户输入如下（可能是文本/附件/链接内容）：
 -----
 ${params.question}
 -----
@@ -32,6 +32,14 @@ ${params.question}
 4) 圈定勘探范围（明确"什么是本题边界""什么超出范围"）。
 输出严格 JSON（不要 Markdown 代码块）：
 {"topic":"一句话议题","objective":"产出目标","goalType":"enumerate|judge|design|diagnose|other","scope":"勘探范围"}`;
+    // 专项追加（仅当非 general 时）：先 hint，再种子维度
+    if (params.openingHint)
+        base += `\n\n${params.openingHint}`;
+    if (params.seedDimensionsText) {
+        base += `\n\n已预置的种子维度（已知值得勘探的方向，作为开题参考；请勿重复列出种子本身，应聚焦该信号在文本中的具体证据 + 维度归属 + 修改建议方向）：
+${params.seedDimensionsText}`;
+    }
+    return base;
 }
 // ============ R1 盘问 ============
 export function coordinatorQuestionUser(params) {
@@ -72,9 +80,9 @@ const ENUMERATE_HINT = {
     反例: "本题要枚举方面清单：先用半句话给出反例，再明确写出它所排除或修正的那个方面（形如'因此 X 不能单独作为判据'），方面必须出现在描述里。",
     前提: "本题要枚举方面清单：写出该隐含假设所指向的、可被观察的具体方面（形如'默认 X 总是……'），不要停留在纯抽象假设。",
 };
-export function seatSystemPrompt(seat, goalType = "other") {
+export function seatSystemPrompt(seat, goalType = "other", opts) {
     const enumerateRule = goalType === "enumerate" ? ENUMERATE_HINT[seat.type] : undefined;
-    return `你是圆桌会议中的「${seat.name}」，负责勘探「${seat.type}」类边界。
+    let prompt = `你是圆桌会议中的「${seat.name}」，负责勘探「${seat.type}」类边界。
 规则：
 - 每轮只输出 1 条当前最值得补充的「${seat.type}」边界；确实没有新内容时输出 {"description":""}；
 - 不得重复已有边界；
@@ -86,6 +94,14 @@ export function seatSystemPrompt(seat, goalType = "other") {
 - 思考与分析只在内部完成、不要写入回复；最终回复中只包含一个 JSON 对象，不要 Markdown 代码块、不要 Description: 这类标注、不要任何前后缀解释文字：
   {"description":"一句话边界描述","confidence":"high|medium|low"}
 confidence 只能取 high / medium / low 三个英文值之一。`;
+    // 专项追加（仅当非 general 时）：席位 prompt 主体不变，仅追加专项要求；
+    // segmentRange 占位符在阶段2 全部填"全文"，阶段3 分段流水线落地后填真实章节定位
+    if (opts?.seatHint) {
+        const segmentRange = opts.segmentRange ?? "全文";
+        const hint = opts.seatHint.replace(/\{\{segmentRange\}\}/g, segmentRange);
+        prompt += `\n\n${hint}`;
+    }
+    return prompt;
 }
 // ============ R3 收敛判定 ============
 export function coordinatorConvergeUser(params) {
@@ -126,31 +142,64 @@ ${params.supplement}
 请把补充信息并入勘探范围（必要时修正边界），输出严格 JSON：
 {"scope":"合并后的完整勘探范围","note":"一句话说明补充如何改变勘探方向"}`;
 }
-// ============ R5 终局 ============
-export function coordinatorFinalUser(params) {
+// ============ R5 终局（模板驱动：单场会议与分段流水线共用） ============
+/** 代码预填后仍由 LLM 填充的占位符形如 {{xxx}}；拆分模式下逐段清单用该标记占位 */
+export const SEGMENT_SECTIONS_MARKER = "<!--SEGMENT_SECTIONS-->";
+/**
+ * 终局/汇总统一提示词：以专项 finalTemplate 为骨架。
+ * - params.template 已由编排器完成代码可算占位符的预填（范围/轮数/统计等），
+ *   剩余 {{xxx}} 占位符全部由 LLM 依据证据条目填充；
+ * - splitMode 下逐段章节由代码生成，模板对应位置已替换为 SEGMENT_SECTIONS_MARKER，
+ *   LLM 必须原样保留该标记且不要自行输出逐段清单；
+ * - partial（提前汇总）时只能使用已完成段的证据，禁止对未诊断段下判断。
+ */
+export function coordinatorFinalTemplateUser(params) {
     const itemsText = params.list.length === 0
-        ? "（清单为空，请直接基于议题与产出目标给出方案）"
+        ? "（证据清单为空）"
         : params.list
-            .map((b) => `- ${b.id} [${b.type}] ${b.description}（可信度：${b.confidence}；来源：${b.sourceModel}）`)
+            .map((b) => {
+            const seg = b.segment != null ? `【第${b.segment}段】` : "";
+            return `- ${b.id} [${b.type}] ${seg}${b.description}（可信度：${b.confidence}；来源：${b.sourceModel}）`;
+        })
             .join("\n");
+    const split = !!params.splitMode;
+    const partial = !!params.partial;
+    const sourceBlock = params.sourceText
+        ? `待诊断原文（完整全文，以下证据条目均出自它；禁止声称正文未提供/未呈现）：
+----- BEGIN SOURCE TEXT -----
+${params.sourceText}
+----- END SOURCE TEXT -----
+
+`
+        : "";
+    const seedBlock = params.seedDimensionsText
+        ? `本专项的维度编号与官方命名（报告中所有维度名称必须与此逐字一致，禁止自造名称或写「名称以体系表为准」）：
+----- BEGIN DIMENSIONS -----
+${params.seedDimensionsText}
+----- END DIMENSIONS -----
+
+`
+        : "";
     return `议题：${params.topic}
 产出目标：${params.objective}
-勘探范围：${params.scope}
-经裁决保留的边界约束清单：
+${sourceBlock}${seedBlock}${partial ? `本次为【提前汇总】，仅覆盖已完成的 ${params.completed} / ${params.total} 段，结论可能随后续段改变。` : ""}
+经裁决保留的证据条目：
 ${itemsText}
 
-请围绕【产出目标】，基于这份清单，产出最终解决方案。硬性要求：
-1. 输出必须是标准 Markdown（GFM），且只输出 Markdown 正文，不要输出代码块围栏包裹整篇、不要任何前后缀解释；
-2. 至少包含以下二级标题（##），并按产出目标取舍增删：
-   ## 方案概述（2-4 句话给结论）
-   ## 关键结论（用列表给出，每条后用括号标注依据的边界 ID，如（依据 B1、B3））
-   ## 落地方案（分步骤或分模块，用编号列表；每步写清「做什么 / 怎么做 / 验收标准」）
-   ## 风险与前提（逐条标注对应边界 ID；明确哪些前提不成立会导致方案失效）
-   ## 待补充信息（清单信息不足时列出需要用户补充的具体问题；没有则写「无」）
-3. 涉及对比/维度对照时使用 Markdown 表格；关键术语可用 **加粗**；
-4. 逐条回应每条保留状态的边界（至少在「关键结论」或「风险与前提」中标注其 ID 一次）；
-5. 方案必须可执行、可验收，直接服务于用户的产出目标，禁止空话套话；
-6. 清单为空时，在「方案概述」中明确说明信息不足，其余章节按需要补充的内容展开。
+下方是本专项的【报告模板骨架】，部分位置已由系统预填。请严格依据上面的证据条目完成报告：
+----- BEGIN TEMPLATE -----
+${params.template}
+----- END TEMPLATE -----
+
+硬性要求：
+1. 输出必须是标准 Markdown（GFM），且只输出最终报告正文，不要代码块围栏包裹整篇、不要前后缀解释、不要重复输出 BEGIN/END TEMPLATE 标记；
+2. 完整保留模板的标题层级、表格结构与字段顺序，不得删改已预填内容；把骨架中每一个 {{占位符}} 替换为依据证据得出的实质内容；模板没有的章节不要新增，模板要求的章节不得缺失；
+3. 所有结论必须可追溯到证据条目：引用具体证据时在句末用括号标注条目 ID（如（依据 B001、B003））；定位信息（章节/段落）与证据原文片段必须保留，不得泛化；
+4. 评分规则：模板中每一个评分项/维度都必须给出具体分数与一句话依据，严禁整项留空、严禁以「证据不足」「正文未呈现」为由拒评——原文已在上方完整提供；某维度在原文中确实缺少对应内容时，按「无此类问题（表现良好）」或中性分处理并注明依据，而不是拒评；只有原文被外部截断、确实无法看到相关段落时，才允许标注「证据不足」；禁止编造原文中不存在的细节；
+${split ? `5. 骨架中的 ${SEGMENT_SECTIONS_MARKER} 标记必须【原样、单独成行】保留，该章节由系统另行生成插入；你不要自行输出逐段/逐章清单，也不要删除或改动该标记；` : ""}
+${partial ? `${split ? "6" : "5"}. 只能使用已完成段的证据，禁止对未诊断段下任何判断；并在报告开头一句话注明「本报告为提前汇总，仅覆盖前 ${params.completed} / ${params.total} 段」。` : ""}
+${split || partial ? "" : "5. "}专项为文本诊断时只诊断不改写：可给出修改方向与建议，但不要直接代写改写后的正文；
+6. 占位符全部替换完成后，输出中不得残留任何 {{}} 或未替换的占位符（${SEGMENT_SECTIONS_MARKER} 除外）。
 ${LANGUAGE_RULE}`;
 }
 // ============ 用户插话分类 ============
