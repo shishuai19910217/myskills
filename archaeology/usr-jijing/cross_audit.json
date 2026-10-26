@@ -1,0 +1,3933 @@
+{
+ "A": [
+  "qrtz_cron_triggers",
+  "qrtz_job_details",
+  "qrtz_triggers",
+  "t_agent_menu",
+  "t_agent_menu_auth",
+  "t_agent_role",
+  "t_agent_role_menu",
+  "t_agent_user_role",
+  "t_api",
+  "t_iot_agent",
+  "t_iot_agent_equip_renew_order",
+  "t_iot_agent_mobile_menu",
+  "t_iot_agent_mobile_menu_auth",
+  "t_iot_agent_mobile_role",
+  "t_iot_agent_notice",
+  "t_iot_alipay_app_info",
+  "t_iot_alipay_config",
+  "t_iot_alipay_mini_code_current_ver",
+  "t_iot_alipay_mini_code_extjson",
+  "t_iot_b2b_rank_related",
+  "t_iot_bill_farm",
+  "t_iot_charge_bill",
+  "t_iot_charge_bill_arc_",
+  "t_iot_charge_bill_merch_row",
+  "t_iot_charge_bill_merch_row_arc_",
+  "t_iot_charge_bill_profit_row",
+  "t_iot_charge_bill_profit_row_arc_",
+  "t_iot_consumer",
+  "t_iot_consumer_account_fund",
+  "t_iot_consumer_feedback_message_pusher",
+  "t_iot_consumer_fund_his",
+  "t_iot_consumer_machine_recharge_his",
+  "t_iot_consumer_vip_card",
+  "t_iot_cooperative_factory",
+  "t_iot_equip_auth",
+  "t_iot_equip_bind",
+  "t_iot_equip_farm_param",
+  "t_iot_equip_lora",
+  "t_iot_equip_lora_check",
+  "t_iot_equip_outdated",
+  "t_iot_equip_stock_dtl",
+  "t_iot_equip_stockin_bill",
+  "t_iot_equipment_component",
+  "t_iot_equipment_status",
+  "t_iot_farm_builder_equip",
+  "t_iot_farm_consumer_equip_use",
+  "t_iot_farm_equip_manager_assign",
+  "t_iot_farm_extra_cctv_device",
+  "t_iot_farm_extra_cctv_event",
+  "t_iot_farm_extra_cctv_link",
+  "t_iot_farm_fault_report",
+  "t_iot_farm_inspection_order",
+  "t_iot_fertigation_area",
+  "t_iot_fertigation_area_valve",
+  "t_iot_fertigation_block",
+  "t_iot_fertigation_equip_component",
+  "t_iot_fertigation_equip_operation_record",
+  "t_iot_fertigation_equip_user_relation",
+  "t_iot_fertigation_equip_valve_control",
+  "t_iot_fertigation_factory_system_config",
+  "t_iot_fertigation_factory_system_config_template",
+  "t_iot_fertigation_factory_terminal_analog_quantity",
+  "t_iot_fertigation_factory_terminal_analog_quantity_template",
+  "t_iot_fertigation_factory_terminal_communication",
+  "t_iot_fertigation_factory_terminal_communication_devices",
+  "t_iot_fertigation_factory_terminal_communication_devices_temp",
+  "t_iot_fertigation_factory_terminal_communication_template",
+  "t_iot_fertigation_factory_terminal_mixer",
+  "t_iot_fertigation_factory_terminal_mixer_template",
+  "t_iot_fertigation_factory_terminal_relay",
+  "t_iot_fertigation_factory_terminal_relay_protect",
+  "t_iot_fertigation_factory_terminal_relay_protect_template",
+  "t_iot_fertigation_factory_terminal_relay_template",
+  "t_iot_fertigation_factory_terminal_valve_control",
+  "t_iot_fertigation_factory_terminal_valve_control_template",
+  "t_iot_fertigation_project",
+  "t_iot_fertigation_template",
+  "t_iot_hardware_version",
+  "t_iot_hf_settle_account",
+  "t_iot_icon",
+  "t_iot_industry",
+  "t_iot_industry_agent_auth",
+  "t_iot_industry_agent_mobile_auth",
+  "t_iot_industry_merchant_auth",
+  "t_iot_industry_message_params",
+  "t_iot_menu_auth",
+  "t_iot_merchant",
+  "t_iot_merchant_agent_assig",
+  "t_iot_merchant_agent_menu",
+  "t_iot_merchant_agent_mobile_menu",
+  "t_iot_merchant_base_equip_type",
+  "t_iot_merchant_equip_type",
+  "t_iot_merchant_equipment",
+  "t_iot_merchant_equipment_recharge",
+  "t_iot_merchant_industry",
+  "t_iot_merchant_mall_banner",
+  "t_iot_merchant_menu",
+  "t_iot_merchant_notice",
+  "t_iot_merchant_place",
+  "t_iot_merchant_service_type",
+  "t_iot_merchant_transfer_param",
+  "t_iot_merchant_user_place",
+  "t_iot_notice",
+  "t_iot_place_profit",
+  "t_iot_rpt_agent_turnover_total",
+  "t_iot_rpt_merchant_equip_total",
+  "t_iot_sim_card_provider",
+  "t_iot_sim_card_stock_detail",
+  "t_iot_source_stock",
+  "t_iot_source_type",
+  "t_iot_trans_order",
+  "t_iot_transfer_bill",
+  "t_iot_transfer_bill_history",
+  "t_iot_worm_crop",
+  "t_iot_worm_crop_pests",
+  "t_iot_worm_equip_param",
+  "t_iot_worm_equip_photo_details",
+  "t_iot_worm_equip_photo_task",
+  "t_iot_wx_mch_config",
+  "t_iot_wx_mini_code_current_ver",
+  "t_iot_wx_mini_code_extjson",
+  "t_iot_wx_mp_config",
+  "t_iot_wx_public_number",
+  "t_iot_wx_third_plat_ticket",
+  "t_merchant_param",
+  "t_merchant_param_library",
+  "t_merchant_role",
+  "t_merchant_role_model",
+  "t_merchant_user",
+  "t_merchant_user_role",
+  "t_ota_equip",
+  "t_ota_gray",
+  "t_ota_m25_bootstrap",
+  "t_ota_m25_bootstrap_big",
+  "t_ota_mb_task_equip",
+  "t_pomission",
+  "t_region",
+  "t_role",
+  "t_role_mode",
+  "t_role_pomission",
+  "t_sys_sequence",
+  "t_user",
+  "t_user_role"
+ ],
+ "B": [
+  "information_schema",
+  "private",
+  "qrtz_cron_triggers",
+  "qrtz_job_details",
+  "qrtz_triggers",
+  "t_agent_menu",
+  "t_agent_menu_auth",
+  "t_agent_role",
+  "t_agent_role_menu",
+  "t_agent_user_role",
+  "t_api",
+  "t_iot_agent",
+  "t_iot_agent_equip_renew_order",
+  "t_iot_agent_mobile_menu",
+  "t_iot_agent_mobile_menu_auth",
+  "t_iot_agent_mobile_role",
+  "t_iot_agent_notice",
+  "t_iot_alipay_app_info",
+  "t_iot_alipay_config",
+  "t_iot_alipay_mini_code_current_ver",
+  "t_iot_alipay_mini_code_extjson",
+  "t_iot_b2b_rank_related",
+  "t_iot_bill_farm",
+  "t_iot_charge_bill",
+  "t_iot_charge_bill_arc_",
+  "t_iot_charge_bill_merch_row",
+  "t_iot_charge_bill_merch_row_arc_",
+  "t_iot_charge_bill_profit_row",
+  "t_iot_charge_bill_profit_row_arc_",
+  "t_iot_consumer",
+  "t_iot_consumer_account_fund",
+  "t_iot_consumer_feedback_message_pusher",
+  "t_iot_consumer_fund_his",
+  "t_iot_consumer_machine_recharge_his",
+  "t_iot_consumer_vip_card",
+  "t_iot_cooperative_factory",
+  "t_iot_equip_auth",
+  "t_iot_equip_bind",
+  "t_iot_equip_farm_param",
+  "t_iot_equip_lora",
+  "t_iot_equip_lora_check",
+  "t_iot_equip_outdated",
+  "t_iot_equip_stock_dtl",
+  "t_iot_equip_stockin_bill",
+  "t_iot_equipment_component",
+  "t_iot_equipment_status",
+  "t_iot_farm_builder_equip",
+  "t_iot_farm_consumer_equip_use",
+  "t_iot_farm_equip_manager_assign",
+  "t_iot_farm_extra_cctv_device",
+  "t_iot_farm_extra_cctv_event",
+  "t_iot_farm_extra_cctv_link",
+  "t_iot_farm_fault_report",
+  "t_iot_farm_inspection_order",
+  "t_iot_fertigation_area",
+  "t_iot_fertigation_area_valve",
+  "t_iot_fertigation_block",
+  "t_iot_fertigation_equip_component",
+  "t_iot_fertigation_equip_operation_record",
+  "t_iot_fertigation_equip_user_relation",
+  "t_iot_fertigation_equip_valve_control",
+  "t_iot_fertigation_factory_system_config",
+  "t_iot_fertigation_factory_system_config_template",
+  "t_iot_fertigation_factory_terminal_analog_quantity",
+  "t_iot_fertigation_factory_terminal_analog_quantity_template",
+  "t_iot_fertigation_factory_terminal_communication",
+  "t_iot_fertigation_factory_terminal_communication_devices",
+  "t_iot_fertigation_factory_terminal_communication_devices_temp",
+  "t_iot_fertigation_factory_terminal_communication_template",
+  "t_iot_fertigation_factory_terminal_mixer",
+  "t_iot_fertigation_factory_terminal_mixer_template",
+  "t_iot_fertigation_factory_terminal_relay",
+  "t_iot_fertigation_factory_terminal_relay_protect",
+  "t_iot_fertigation_factory_terminal_relay_protect_template",
+  "t_iot_fertigation_factory_terminal_relay_template",
+  "t_iot_fertigation_factory_terminal_valve_control",
+  "t_iot_fertigation_factory_terminal_valve_control_template",
+  "t_iot_fertigation_project",
+  "t_iot_fertigation_template",
+  "t_iot_hardware_version",
+  "t_iot_hf_settle_account",
+  "t_iot_icon",
+  "t_iot_industry",
+  "t_iot_industry_agent_auth",
+  "t_iot_industry_agent_mobile_auth",
+  "t_iot_industry_merchant_auth",
+  "t_iot_industry_message_params",
+  "t_iot_menu_auth",
+  "t_iot_merchant",
+  "t_iot_merchant_agent_assig",
+  "t_iot_merchant_agent_menu",
+  "t_iot_merchant_agent_mobile_menu",
+  "t_iot_merchant_base_equip_type",
+  "t_iot_merchant_equip_type",
+  "t_iot_merchant_equipment",
+  "t_iot_merchant_equipment_recharge",
+  "t_iot_merchant_industry",
+  "t_iot_merchant_mall_banner",
+  "t_iot_merchant_menu",
+  "t_iot_merchant_notice",
+  "t_iot_merchant_place",
+  "t_iot_merchant_service_type",
+  "t_iot_merchant_transfer_param",
+  "t_iot_merchant_user_place",
+  "t_iot_notice",
+  "t_iot_pay_wxpay_funds_flow_dtl_",
+  "t_iot_place_profit",
+  "t_iot_rpt_agent_turnover_total",
+  "t_iot_rpt_merchant_equip_day",
+  "t_iot_rpt_merchant_equip_day_archive",
+  "t_iot_rpt_merchant_equip_month",
+  "t_iot_rpt_merchant_equip_total",
+  "t_iot_rpt_merchant_place_day",
+  "t_iot_rpt_merchant_place_month",
+  "t_iot_rpt_merchant_turnover_day",
+  "t_iot_rpt_merchant_turnover_month",
+  "t_iot_sim_card_provider",
+  "t_iot_sim_card_renew_bill_history",
+  "t_iot_sim_card_stock_detail",
+  "t_iot_source_stock",
+  "t_iot_source_type",
+  "t_iot_test_excel",
+  "t_iot_test_sim_card",
+  "t_iot_trans_order",
+  "t_iot_trans_order_archive",
+  "t_iot_transfer_bill",
+  "t_iot_transfer_bill_arc_",
+  "t_iot_transfer_bill_history",
+  "t_iot_worm_crop",
+  "t_iot_worm_crop_pests",
+  "t_iot_worm_equip_param",
+  "t_iot_worm_equip_photo_details",
+  "t_iot_worm_equip_photo_task",
+  "t_iot_wx_mch_config",
+  "t_iot_wx_mini_code_current_ver",
+  "t_iot_wx_mini_code_extjson",
+  "t_iot_wx_mp_config",
+  "t_iot_wx_public_number",
+  "t_iot_wx_third_plat_ticket",
+  "t_merchant_param",
+  "t_merchant_param_library",
+  "t_merchant_role",
+  "t_merchant_role_model",
+  "t_merchant_user",
+  "t_merchant_user_role",
+  "t_ota_equip",
+  "t_ota_firmware",
+  "t_ota_gray",
+  "t_ota_m25_bootstrap",
+  "t_ota_m25_bootstrap_big",
+  "t_ota_m25_equip",
+  "t_ota_m25_package",
+  "t_ota_m25_package_big",
+  "t_ota_mb_task",
+  "t_ota_mb_task_equip",
+  "t_ota_platform",
+  "t_ota_project",
+  "t_pomission",
+  "t_region",
+  "t_role",
+  "t_role_mode",
+  "t_role_pomission",
+  "t_sys_sequence",
+  "t_user",
+  "t_user_role",
+  "test"
+ ],
+ "only_A": [],
+ "only_B": [
+  "information_schema",
+  "private",
+  "t_iot_pay_wxpay_funds_flow_dtl_",
+  "t_iot_rpt_merchant_equip_day",
+  "t_iot_rpt_merchant_equip_day_archive",
+  "t_iot_rpt_merchant_equip_month",
+  "t_iot_rpt_merchant_place_day",
+  "t_iot_rpt_merchant_place_month",
+  "t_iot_rpt_merchant_turnover_day",
+  "t_iot_rpt_merchant_turnover_month",
+  "t_iot_sim_card_renew_bill_history",
+  "t_iot_test_excel",
+  "t_iot_test_sim_card",
+  "t_iot_trans_order_archive",
+  "t_iot_transfer_bill_arc_",
+  "t_ota_firmware",
+  "t_ota_m25_equip",
+  "t_ota_m25_package",
+  "t_ota_m25_package_big",
+  "t_ota_mb_task",
+  "t_ota_platform",
+  "t_ota_project",
+  "test"
+ ],
+ "tables": [
+  {
+   "table": "information_schema",
+   "write_xml": [],
+   "read_xml": [
+    "TestDBTblMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "TestDBTblServiceImpl"
+    ]
+   },
+   "in_A": false
+  },
+  {
+   "table": "private",
+   "write_xml": [],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [
+    "CodeGenerator.java"
+   ],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": []
+   },
+   "in_A": false
+  },
+  {
+   "table": "qrtz_cron_triggers",
+   "write_xml": [
+    "QuartzCroTriggerMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "QuartzCroTriggerServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "qrtz_job_details",
+   "write_xml": [
+    "QuartzCroTriggerMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "QuartzCroTriggerServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "qrtz_triggers",
+   "write_xml": [
+    "QuartzCroTriggerMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "QuartzCroTriggerServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_agent_menu",
+   "write_xml": [
+    "AgentMenuMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "AgentMenuServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_agent_menu_auth",
+   "write_xml": [
+    "AgentMenuAuthMapper.xml",
+    "AgentMenuMapper.xml",
+    "AgentRoleMapper.xml",
+    "MerchantAgentMenuMapper.xml"
+   ],
+   "read_xml": [
+    "AgentIndustryAuthMapper.xml",
+    "MerchantIndustryAuthMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "AgentIndustryAuthServiceImpl",
+     "AgentMenuAuthServiceImpl",
+     "AgentMenuServiceImpl",
+     "AgentRoleServiceImpl",
+     "MerchantAgentMenuServiceImpl",
+     "MerchantIndustryAuthServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_agent_role",
+   "write_xml": [
+    "AgentRoleMapper.xml"
+   ],
+   "read_xml": [
+    "AgentMobileRoleMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "AgentMobileRoleServiceImpl",
+     "AgentRoleServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_agent_role_menu",
+   "write_xml": [
+    "AgentMenuMapper.xml",
+    "AgentRoleMapper.xml",
+    "MerchantAgentMenuMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "AgentMenuServiceImpl",
+     "AgentRoleServiceImpl",
+     "MerchantAgentMenuServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_agent_user_role",
+   "write_xml": [
+    "AgentRoleMapper.xml"
+   ],
+   "read_xml": [
+    "AgentUserRoleMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "AgentRoleServiceImpl",
+     "AgentUserRoleServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_api",
+   "write_xml": [
+    "ApiMerchantMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "ApiMerchantServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_agent",
+   "write_xml": [
+    "AgentAssigMapper.xml",
+    "AgentEquipRenewOrderMapper.xml",
+    "AgentNoticeMapper.xml",
+    "ConsumerRechargeBillMapper.xml",
+    "EquipmentMapper.xml",
+    "FarmPlaceProfitMapper.xml",
+    "PlaceProfitMapper.xml",
+    "SettleMapper.xml",
+    "TransferBillMapper.xml"
+   ],
+   "read_xml": [
+    "AgentMapper.xml",
+    "FarmPlaceProfitMapper.xml",
+    "RechargeBillMapper.xml",
+    "TransferBillMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "AgentAssigServiceImpl",
+     "AgentEquipRenewOrderServiceImpl",
+     "AgentNoticeServiceImpl",
+     "AgentServiceImpl",
+     "ConsumerRechargeBillServiceImpl",
+     "EquipServiceImpl",
+     "EquipmentCacheService",
+     "EquipmentMapper",
+     "EquipmentServiceImpl",
+     "FarmPlaceProfitMapper",
+     "FarmPlaceProfitServiceImpl",
+     "PlaceProfitMapper",
+     "PlaceProfitServiceImpl",
+     "RechargeBillServiceImpl",
+     "SettleMapper",
+     "SettleService",
+     "TransferBillMapper",
+     "TransferBillServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_agent_equip_renew_order",
+   "write_xml": [
+    "AgentEquipRenewOrderMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "AgentEquipRenewOrderServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_agent_mobile_menu",
+   "write_xml": [],
+   "read_xml": [
+    "AgentMobileRoleMapper.xml",
+    "AgentMobileRoleMenuMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "AgentMobileRoleMenuServiceImpl",
+     "AgentMobileRoleServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_agent_mobile_menu_auth",
+   "write_xml": [
+    "AgentMobileMenuAuthMapper.xml",
+    "MerchantAgentMobileMenuMapper.xml"
+   ],
+   "read_xml": [
+    "AgentMobileIndustryAuthMapper.xml",
+    "AgentMobileRoleMapper.xml",
+    "AgentMobileRoleMenuMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "AgentMobileIndustryAuthServiceImpl",
+     "AgentMobileMenuAuthServiceImpl",
+     "AgentMobileRoleMenuServiceImpl",
+     "AgentMobileRoleServiceImpl",
+     "MerchantAgentMobileMenuServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_agent_mobile_role",
+   "write_xml": [],
+   "read_xml": [
+    "AgentMobileRoleMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "AgentMobileRoleServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_agent_notice",
+   "write_xml": [
+    "AgentNoticeMapper.xml",
+    "NoticeMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "AgentNoticeServiceImpl",
+     "NoticeServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_alipay_app_info",
+   "write_xml": [
+    "AlipayMINICodeCurrentVerMapper.xml",
+    "AlipayMINICodeTemplateMapper.xml",
+    "AlipayMINICodeUpgradeTaskDtlMapper.xml",
+    "AlipayMINICodeUpgradeTaskMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "AlipayMINICodeCurrentVerServiceImpl",
+     "AlipayMINICodeTemplateServiceImpl",
+     "AlipayMINICodeUpgradeTaskDtlServiceImpl",
+     "AlipayMINICodeUpgradeTaskServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_alipay_config",
+   "write_xml": [
+    "AlipayMINICodeUpgradeTaskMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "AlipayMINICodeUpgradeTaskServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_alipay_mini_code_current_ver",
+   "write_xml": [
+    "AlipayMINICodeCurrentVerMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "AlipayMINICodeCurrentVerServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_alipay_mini_code_extjson",
+   "write_xml": [
+    "AlipayMINICodeUpgradeTaskMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "AlipayMINICodeUpgradeTaskServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_b2b_rank_related",
+   "write_xml": [
+    "MerchantMapper.xml"
+   ],
+   "read_xml": [
+    "AgentMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "AgentServiceImpl",
+     "MerchantServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_bill_farm",
+   "write_xml": [
+    "FarmBillMerchMapper.xml"
+   ],
+   "read_xml": [
+    "BillMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "ExcelExportJobHelper",
+     "FarmBillServiceImpl",
+     "FarmOrderServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_charge_bill",
+   "write_xml": [
+    "ChargeBillArchiveMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "ChargeBillArchiveServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_charge_bill_arc_",
+   "write_xml": [
+    "ChargeBillArchiveMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "ChargeBillArchiveServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_charge_bill_merch_row",
+   "write_xml": [
+    "ChargeBillMerchArchiveMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "ChargeBillMerchArchiveServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_charge_bill_merch_row_arc_",
+   "write_xml": [
+    "ChargeBillMerchArchiveMapper.xml",
+    "ChargeBillProfitArchiveMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "ChargeBillMerchArchiveServiceImpl",
+     "ChargeBillProfitArchiveServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_charge_bill_profit_row",
+   "write_xml": [
+    "ChargeBillProfitArchiveMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "ChargeBillProfitArchiveServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_charge_bill_profit_row_arc_",
+   "write_xml": [
+    "ChargeBillProfitArchiveMapper.xml",
+    "ChargeSettleMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "ChargeBillProfitArchiveServiceImpl",
+     "ChargeNoBindSettleService",
+     "ChargeSettleService"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_consumer",
+   "write_xml": [
+    "ConsumerAccountFundMapper.xml",
+    "ConsumerMapper.xml",
+    "ConsumerRechargeBillMapper.xml",
+    "ConsumerVipCardMapper.xml"
+   ],
+   "read_xml": [
+    "ConsumerMapper.xml",
+    "RechargeBillMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "ConsumerAccountFundServiceImpl",
+     "ConsumerMapper",
+     "ConsumerRechargeBillServiceImpl",
+     "ConsumerServiceImpl",
+     "ConsumerVipCardServiceImpl",
+     "RechargeBillServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_consumer_account_fund",
+   "write_xml": [
+    "ConsumerAccountFundMapper.xml",
+    "ConsumerMapper.xml",
+    "ConsumerVipCardMapper.xml"
+   ],
+   "read_xml": [
+    "ConsumerMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "ConsumerAccountFundServiceImpl",
+     "ConsumerMapper",
+     "ConsumerServiceImpl",
+     "ConsumerVipCardServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_consumer_feedback_message_pusher",
+   "write_xml": [
+    "ConsumerFeedbackMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "ConsumerFeedbackServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_consumer_fund_his",
+   "write_xml": [],
+   "read_xml": [
+    "FarmEquipmentRechargeMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "FarmEquipmentRechargeServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_consumer_machine_recharge_his",
+   "write_xml": [
+    "ConsumerFundHisMapper.xml",
+    "FarmEquipmentMapper.xml"
+   ],
+   "read_xml": [
+    "FarmEquipmentRechargeMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "ConsumerFundHisServiceImpl",
+     "FarmEquipmentRechargeServiceImpl",
+     "FarmEquipmentServiceImpl",
+     "FertigationProjectServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_consumer_vip_card",
+   "write_xml": [
+    "ConsumerFundHisMapper.xml",
+    "ConsumerRechargeBillMapper.xml"
+   ],
+   "read_xml": [
+    "RechargeBillMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "ConsumerFundHisServiceImpl",
+     "ConsumerRechargeBillServiceImpl",
+     "RechargeBillServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_cooperative_factory",
+   "write_xml": [
+    "EquipStockInBillMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "EquipLoraInBillServiceImpl",
+     "EquipStockInBillServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_equip_auth",
+   "write_xml": [
+    "EquipAuthMapper.xml",
+    "EquipStatusMapper.xml",
+    "EquipmentMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "EquipAuthMapper",
+     "EquipAuthServiceImpl",
+     "EquipServiceImpl",
+     "EquipStatusServiceImpl",
+     "EquipmentCacheService",
+     "EquipmentMapper",
+     "EquipmentServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_equip_bind",
+   "write_xml": [],
+   "read_xml": [
+    "EquipBindMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "EquipBindServiceImpl",
+     "GWSecurityEquipServiceImpl",
+     "SlaveEquipServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_equip_farm_param",
+   "write_xml": [
+    "FarmEquipmentMapper.xml"
+   ],
+   "read_xml": [
+    "FarmEquipmentParamMapper.xml",
+    "FarmEquipmentRechargeMapper.xml",
+    "FarmWaterLevelRecordMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "ExecuteEquipParamMapper",
+     "FarmEquipmentParamServiceImpl",
+     "FarmEquipmentRechargeServiceImpl",
+     "FarmEquipmentServiceImpl",
+     "FarmWaterLevelRecordServiceImpl",
+     "FertigationProjectServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_equip_lora",
+   "write_xml": [
+    "EquipStockDtlMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "EquipStockDtlServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_equip_lora_check",
+   "write_xml": [
+    "EquipStockInBillMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "EquipLoraInBillServiceImpl",
+     "EquipStockInBillServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_equip_outdated",
+   "write_xml": [
+    "EquipmentMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "EquipServiceImpl",
+     "EquipmentCacheService",
+     "EquipmentMapper",
+     "EquipmentServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_equip_stock_dtl",
+   "write_xml": [
+    "EquipmentMapper.xml",
+    "FarmEquipmentMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "EquipServiceImpl",
+     "EquipmentCacheService",
+     "EquipmentMapper",
+     "EquipmentServiceImpl",
+     "FarmEquipmentServiceImpl",
+     "FertigationProjectServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_equip_stockin_bill",
+   "write_xml": [
+    "EquipStockDtlMapper.xml",
+    "EquipmentMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "EquipServiceImpl",
+     "EquipStockDtlServiceImpl",
+     "EquipmentCacheService",
+     "EquipmentMapper",
+     "EquipmentServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_equipment_component",
+   "write_xml": [
+    "EquipmentMapper.xml",
+    "FarmEquipmentMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "EquipServiceImpl",
+     "EquipmentCacheService",
+     "EquipmentMapper",
+     "EquipmentServiceImpl",
+     "FarmEquipmentServiceImpl",
+     "FertigationProjectServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_equipment_status",
+   "write_xml": [
+    "EquipStatusMapper.xml",
+    "EquipmentMapper.xml",
+    "FarmEquipmentMapper.xml",
+    "MainboardTaskEquipMapper.xml",
+    "OTAEquipMapper.xml"
+   ],
+   "read_xml": [
+    "EquipBindMapper.xml",
+    "FarmEquipmentRechargeMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [
+     "OTAEquipFirmwareEventListener",
+     "UDPServerUpgradeBootstrapBigHandler",
+     "UDPServerUpgradeBootstrapHandler"
+    ],
+    "other": [
+     "EquipBindServiceImpl",
+     "EquipServiceImpl",
+     "EquipStatusServiceImpl",
+     "EquipmentCacheService",
+     "EquipmentMapper",
+     "EquipmentServiceImpl",
+     "FarmEquipmentRechargeServiceImpl",
+     "FarmEquipmentServiceImpl",
+     "FertigationProjectServiceImpl",
+     "GWSecurityEquipServiceImpl",
+     "M25UpgradeUtils",
+     "MainboardTaskEquipServiceImpl",
+     "MainboardTaskHelper",
+     "OTAEquipServiceImpl",
+     "OTAFirmwareHelper",
+     "OTAGateway",
+     "OTAM25EquipMapper",
+     "SlaveEquipServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_farm_builder_equip",
+   "write_xml": [
+    "FarmEquipmentMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "FarmEquipmentServiceImpl",
+     "FertigationProjectServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_farm_consumer_equip_use",
+   "write_xml": [
+    "FarmEquipmentMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [
+    "FarmConsumerEquipUseMapper.java"
+   ],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "FarmEquipmentServiceImpl",
+     "FertigationProjectServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_farm_equip_manager_assign",
+   "write_xml": [
+    "FarmEquipmentMapper.xml"
+   ],
+   "read_xml": [
+    "FertigationAreaMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "FarmEquipmentServiceImpl",
+     "FertigationAreaServiceImpl",
+     "FertigationProjectServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_farm_extra_cctv_device",
+   "write_xml": [],
+   "read_xml": [
+    "ExtraCctvEventMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "ExtraCctvEventServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_farm_extra_cctv_event",
+   "write_xml": [
+    "ExtraCctvDeviceMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "ExtraCctvCallbackImpl",
+     "ExtraCctvDeviceServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_farm_extra_cctv_link",
+   "write_xml": [
+    "ExtraCctvDeviceMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "ExtraCctvCallbackImpl",
+     "ExtraCctvDeviceServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_farm_fault_report",
+   "write_xml": [],
+   "read_xml": [
+    "FarmFaultReportMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "FarmFaultReportServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_farm_inspection_order",
+   "write_xml": [],
+   "read_xml": [
+    "FarmInspectionOrderDetailMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "FarmInspectionOrderDetailServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_fertigation_area",
+   "write_xml": [],
+   "read_xml": [
+    "FertigationAreaMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "FertigationAreaServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_fertigation_area_valve",
+   "write_xml": [],
+   "read_xml": [
+    "FertigationAreaMapper.xml",
+    "FertigationAreaValveMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "FertigationAreaServiceImpl",
+     "FertigationAreaValveServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_fertigation_block",
+   "write_xml": [
+    "FertigationBlockMapper.xml",
+    "FertigationEquipValveControlMapper.xml"
+   ],
+   "read_xml": [
+    "ExecuteEquipParamMapper.xml",
+    "FertigationEquipComponentMapper.xml",
+    "FertigationProjectMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "FertigationBlockServiceImpl",
+     "FertigationEquipComponentServiceImpl",
+     "FertigationEquipValveControlServiceImpl",
+     "FertigationProjectServiceImpl",
+     "FilmRollingEquipParamServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_fertigation_equip_component",
+   "write_xml": [
+    "FertigationBlockMapper.xml"
+   ],
+   "read_xml": [
+    "FertigationEquipComponentMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "FertigationBlockServiceImpl",
+     "FertigationEquipComponentServiceImpl",
+     "FertigationProjectServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_fertigation_equip_operation_record",
+   "write_xml": [],
+   "read_xml": [
+    "FertigationEquipOperationRecordMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "FertigationEquipOperationRecordServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_fertigation_equip_user_relation",
+   "write_xml": [
+    "FarmEquipmentMapper.xml",
+    "FertigationBlockMapper.xml",
+    "FertigationEquipValveControlMapper.xml"
+   ],
+   "read_xml": [
+    "FertigationEquipComponentMapper.xml",
+    "FertigationProjectMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "FarmEquipmentServiceImpl",
+     "FertigationBlockServiceImpl",
+     "FertigationEquipComponentServiceImpl",
+     "FertigationEquipValveControlServiceImpl",
+     "FertigationProjectServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_fertigation_equip_valve_control",
+   "write_xml": [
+    "FarmEquipmentMapper.xml",
+    "FertigationBlockMapper.xml",
+    "FertigationEquipValveControlMapper.xml"
+   ],
+   "read_xml": [
+    "FertigationProjectMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "FarmEquipmentServiceImpl",
+     "FertigationBlockServiceImpl",
+     "FertigationEquipValveControlServiceImpl",
+     "FertigationProjectServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_fertigation_factory_system_config",
+   "write_xml": [
+    "FertigationEquipFactoryConfigMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "FertigationEquipFactoryConfigServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_fertigation_factory_system_config_template",
+   "write_xml": [
+    "FerConfigTemplateMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "FerConfigTemplateServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_fertigation_factory_terminal_analog_quantity",
+   "write_xml": [
+    "FertigationEquipFactoryConfigMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "FertigationEquipFactoryConfigServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_fertigation_factory_terminal_analog_quantity_template",
+   "write_xml": [
+    "FerConfigTemplateMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "FerConfigTemplateServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_fertigation_factory_terminal_communication",
+   "write_xml": [
+    "FertigationEquipFactoryConfigMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "FertigationEquipFactoryConfigServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_fertigation_factory_terminal_communication_devices",
+   "write_xml": [
+    "FertigationEquipFactoryConfigMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "FertigationEquipFactoryConfigServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_fertigation_factory_terminal_communication_devices_temp",
+   "write_xml": [
+    "FerConfigTemplateMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "FerConfigTemplateServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_fertigation_factory_terminal_communication_template",
+   "write_xml": [
+    "FerConfigTemplateMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "FerConfigTemplateServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_fertigation_factory_terminal_mixer",
+   "write_xml": [
+    "FertigationEquipFactoryConfigMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "FertigationEquipFactoryConfigServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_fertigation_factory_terminal_mixer_template",
+   "write_xml": [
+    "FerConfigTemplateMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "FerConfigTemplateServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_fertigation_factory_terminal_relay",
+   "write_xml": [
+    "FertigationEquipFactoryConfigMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "FertigationEquipFactoryConfigServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_fertigation_factory_terminal_relay_protect",
+   "write_xml": [
+    "FertigationEquipFactoryConfigMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "FertigationEquipFactoryConfigServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_fertigation_factory_terminal_relay_protect_template",
+   "write_xml": [
+    "FerConfigTemplateMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "FerConfigTemplateServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_fertigation_factory_terminal_relay_template",
+   "write_xml": [
+    "FerConfigTemplateMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "FerConfigTemplateServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_fertigation_factory_terminal_valve_control",
+   "write_xml": [
+    "FertigationEquipFactoryConfigMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "FertigationEquipFactoryConfigServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_fertigation_factory_terminal_valve_control_template",
+   "write_xml": [
+    "FerConfigTemplateMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "FerConfigTemplateServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_fertigation_project",
+   "write_xml": [
+    "FarmEquipmentMapper.xml"
+   ],
+   "read_xml": [
+    "FertigationEquipComponentMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "FarmEquipmentServiceImpl",
+     "FertigationEquipComponentServiceImpl",
+     "FertigationProjectServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_fertigation_template",
+   "write_xml": [],
+   "read_xml": [
+    "FertigationTemplateMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "FertigationBlockMapper",
+     "FertigationProjectMapper",
+     "FertigationRecordMapper",
+     "FertigationTemplateServiceImpl",
+     "FertilizerControlTemplateMapper",
+     "FertilizerControlWarnMapper"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_hardware_version",
+   "write_xml": [
+    "EquipLoraCheckMapper.xml",
+    "EquipStockInBillMapper.xml",
+    "FerConfigTemplateMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "EquipLoraCheckServiceImpl",
+     "EquipLoraInBillServiceImpl",
+     "EquipStockInBillServiceImpl",
+     "FerConfigTemplateServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_hf_settle_account",
+   "write_xml": [],
+   "read_xml": [
+    "HFMemberInfoMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "HFMemberInfoServiceImpl",
+     "HFSettleAccountMapper"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_icon",
+   "write_xml": [
+    "AgentMenuAuthMapper.xml",
+    "AgentMenuMapper.xml",
+    "AgentMobileMenuAuthMapper.xml",
+    "MerchantAgentMenuMapper.xml",
+    "MerchantMenuPersonaliseMapper.xml"
+   ],
+   "read_xml": [
+    "AgentMobileRoleMenuMapper.xml",
+    "IconMapper.xml",
+    "MerchantIndustryAuthMapper.xml",
+    "MerchantRoleModelMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "AgentMenuAuthServiceImpl",
+     "AgentMenuServiceImpl",
+     "AgentMobileMenuAuthServiceImpl",
+     "AgentMobileRoleMenuServiceImpl",
+     "IconMapper",
+     "IconServiceImpl",
+     "MerchantAgentMenuServiceImpl",
+     "MerchantIndustryAuthServiceImpl",
+     "MerchantMenuPersonaliseServiceImpl",
+     "MerchantRoleModelServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_industry",
+   "write_xml": [],
+   "read_xml": [
+    "PlatIndustryMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "PlatIndustryServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_industry_agent_auth",
+   "write_xml": [
+    "AgentMenuMapper.xml",
+    "MerchantAgentMenuMapper.xml"
+   ],
+   "read_xml": [
+    "AgentIndustryAuthMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "AgentIndustryAuthServiceImpl",
+     "AgentMenuServiceImpl",
+     "MerchantAgentMenuServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_industry_agent_mobile_auth",
+   "write_xml": [],
+   "read_xml": [
+    "AgentMobileIndustryAuthMapper.xml",
+    "AgentMobileRoleMapper.xml",
+    "AgentMobileRoleMenuMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "AgentMobileIndustryAuthServiceImpl",
+     "AgentMobileRoleMenuServiceImpl",
+     "AgentMobileRoleServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_industry_merchant_auth",
+   "write_xml": [
+    "MerchantMenuAuthMapper.xml",
+    "MerchantMenuPersonaliseMapper.xml"
+   ],
+   "read_xml": [
+    "MerchantIndustryAuthMapper.xml",
+    "MerchantRoleModelMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "MerchantIndustryAuthServiceImpl",
+     "MerchantMenuAuthServiceImpl",
+     "MerchantMenuPersonaliseServiceImpl",
+     "MerchantRoleModelServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_industry_message_params",
+   "write_xml": [],
+   "read_xml": [
+    "SmsTemplateMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "SmsTemplateServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_menu_auth",
+   "write_xml": [
+    "MerchantMenuAuthMapper.xml",
+    "MerchantMenuPersonaliseMapper.xml",
+    "MerchantUserMapper.xml"
+   ],
+   "read_xml": [
+    "MerchantIndustryAuthMapper.xml",
+    "MerchantRoleModelMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "MerchantIndustryAuthServiceImpl",
+     "MerchantMenuAuthServiceImpl",
+     "MerchantMenuPersonaliseServiceImpl",
+     "MerchantRoleModelServiceImpl",
+     "MerchantUserRoleServiceImpl",
+     "MerchantUserServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_merchant",
+   "write_xml": [
+    "AgentAssigMapper.xml",
+    "AgentNoticeMapper.xml",
+    "AlipayConfigMapper.xml",
+    "ApiMerchantMapper.xml",
+    "ConsumerAccountFundMapper.xml",
+    "ConsumerMapper.xml",
+    "EquipAuthMapper.xml",
+    "EquipmentMapper.xml",
+    "MainboardTaskEquipMapper.xml",
+    "MerchantMapper.xml",
+    "MerchantNoticeMapper.xml",
+    "OTAEquipMapper.xml",
+    "TransferBillDayStatsTaskMapper.xml",
+    "TransferBillMapper.xml"
+   ],
+   "read_xml": [
+    "AgentMapper.xml",
+    "MerchantParamMapper.xml",
+    "TransferBillMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [
+     "OTAEquipFirmwareEventListener",
+     "UDPServerUpgradeBootstrapBigHandler",
+     "UDPServerUpgradeBootstrapHandler"
+    ],
+    "other": [
+     "AgentAssigServiceImpl",
+     "AgentNoticeServiceImpl",
+     "AgentServiceImpl",
+     "AlipayConfigServiceImpl",
+     "ApiMerchantServiceImpl",
+     "ConsumerAccountFundServiceImpl",
+     "ConsumerMapper",
+     "ConsumerServiceImpl",
+     "EquipAuthMapper",
+     "EquipAuthServiceImpl",
+     "EquipServiceImpl",
+     "EquipmentCacheService",
+     "EquipmentMapper",
+     "EquipmentServiceImpl",
+     "M25UpgradeUtils",
+     "MainboardTaskEquipServiceImpl",
+     "MainboardTaskHelper",
+     "MerchantNoticeServiceImpl",
+     "MerchantParamServiceImpl",
+     "MerchantServiceImpl",
+     "OTAEquipServiceImpl",
+     "OTAFirmwareHelper",
+     "OTAGateway",
+     "OTAM25EquipMapper",
+     "SettleMapper",
+     "TransferBillDayStatsTaskServiceImpl",
+     "TransferBillMapper",
+     "TransferBillServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_merchant_agent_assig",
+   "write_xml": [
+    "AgentAssigMapper.xml",
+    "AgentNoticeMapper.xml",
+    "AgentRoleMapper.xml",
+    "MerchantAgentMenuMapper.xml",
+    "MerchantMapper.xml",
+    "PlaceProfitMapper.xml",
+    "SettleMapper.xml"
+   ],
+   "read_xml": [
+    "AgentIndustryAuthMapper.xml",
+    "AgentMapper.xml",
+    "AgentMobileRoleMapper.xml",
+    "AgentUserRoleMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "AgentAssigServiceImpl",
+     "AgentIndustryAuthServiceImpl",
+     "AgentMobileRoleServiceImpl",
+     "AgentNoticeServiceImpl",
+     "AgentRoleServiceImpl",
+     "AgentServiceImpl",
+     "AgentUserRoleServiceImpl",
+     "MerchantAgentMenuServiceImpl",
+     "MerchantServiceImpl",
+     "PlaceProfitMapper",
+     "PlaceProfitServiceImpl",
+     "SettleService"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_merchant_agent_menu",
+   "write_xml": [
+    "AgentMenuMapper.xml",
+    "MerchantAgentMenuMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "AgentMenuServiceImpl",
+     "MerchantAgentMenuServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_merchant_agent_mobile_menu",
+   "write_xml": [
+    "MerchantAgentMobileMenuMapper.xml"
+   ],
+   "read_xml": [
+    "AgentMobileRoleMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "AgentMobileRoleServiceImpl",
+     "MerchantAgentMobileMenuServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_merchant_base_equip_type",
+   "write_xml": [
+    "SettleMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "SettleService"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_merchant_equip_type",
+   "write_xml": [
+    "FarmEquipmentMapper.xml"
+   ],
+   "read_xml": [
+    "EquipTypeMapper.xml",
+    "MCHEquipTypeMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "EquipTypeServiceImpl",
+     "FarmEquipmentServiceImpl",
+     "FertigationProjectServiceImpl",
+     "MCHEquipTypeServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_merchant_equipment",
+   "write_xml": [
+    "EquipStatusMapper.xml",
+    "EquipmentMapper.xml",
+    "ExtraCctvDeviceMapper.xml",
+    "FertigationEquipValveControlMapper.xml",
+    "MainboardTaskEquipMapper.xml",
+    "OTAEquipMapper.xml",
+    "OTAGrayMapper.xml",
+    "PlaceProfitMapper.xml",
+    "SimCardStockDetailMapper.xml",
+    "WormEquipParamMapper.xml"
+   ],
+   "read_xml": [
+    "EquipBindMapper.xml",
+    "ExcelExportTmpMapper.xml",
+    "FarmEquipmentParamMapper.xml",
+    "FarmEquipmentRechargeMapper.xml",
+    "FertigationEquipComponentMapper.xml",
+    "FertigationProjectMapper.xml",
+    "MCHEquipMapper.xml",
+    "MCHEquipTypeMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [
+     "WormEquipParamController"
+    ],
+    "job": [],
+    "listener": [
+     "OTAEquipFirmwareEventListener",
+     "UDPServerUpgradeBootstrapBigHandler",
+     "UDPServerUpgradeBootstrapHandler"
+    ],
+    "other": [
+     "EquipBindServiceImpl",
+     "EquipServiceImpl",
+     "EquipStatusServiceImpl",
+     "EquipmentCacheService",
+     "EquipmentMapper",
+     "EquipmentServiceImpl",
+     "ExcelExportTmpServiceImpl",
+     "ExecuteEquipParamMapper",
+     "ExtraCctvCallbackImpl",
+     "ExtraCctvDeviceServiceImpl",
+     "FarmEquipmentParamServiceImpl",
+     "FarmEquipmentRechargeServiceImpl",
+     "FertigationEquipComponentServiceImpl",
+     "FertigationEquipValveControlServiceImpl",
+     "FertigationProjectServiceImpl",
+     "GWSecurityEquipServiceImpl",
+     "M25UpgradeUtils",
+     "MCHEquipServiceImpl",
+     "MCHEquipTypeServiceImpl",
+     "MainboardTaskEquipServiceImpl",
+     "MainboardTaskHelper",
+     "OTAEquipServiceImpl",
+     "OTAFirmwareHelper",
+     "OTAGateway",
+     "OTAGrayServiceImpl",
+     "OTAM25EquipMapper",
+     "PlaceProfitMapper",
+     "PlaceProfitServiceImpl",
+     "SimCardStockDetailServiceImpl",
+     "SlaveEquipServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_merchant_equipment_recharge",
+   "write_xml": [
+    "FarmEquipmentMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "FarmEquipmentServiceImpl",
+     "FertigationProjectServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_merchant_industry",
+   "write_xml": [
+    "AgentMenuMapper.xml",
+    "MerchantAgentMenuMapper.xml",
+    "MerchantMapper.xml",
+    "MerchantMenuAuthMapper.xml",
+    "MerchantMenuPersonaliseMapper.xml"
+   ],
+   "read_xml": [
+    "AgentIndustryAuthMapper.xml",
+    "AgentMobileIndustryAuthMapper.xml",
+    "AgentMobileRoleMapper.xml",
+    "AgentMobileRoleMenuMapper.xml",
+    "MerchantIndustryAuthMapper.xml",
+    "MerchantRoleModelMapper.xml",
+    "PlatIndustryMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "AgentIndustryAuthServiceImpl",
+     "AgentMenuServiceImpl",
+     "AgentMobileIndustryAuthServiceImpl",
+     "AgentMobileRoleMenuServiceImpl",
+     "AgentMobileRoleServiceImpl",
+     "MerchantAgentMenuServiceImpl",
+     "MerchantIndustryAuthServiceImpl",
+     "MerchantMenuAuthServiceImpl",
+     "MerchantMenuPersonaliseServiceImpl",
+     "MerchantRoleModelServiceImpl",
+     "MerchantServiceImpl",
+     "PlatIndustryServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_merchant_mall_banner",
+   "write_xml": [
+    "MerchantMallBannerMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "MerchantMallBannerServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_merchant_menu",
+   "write_xml": [
+    "MerchantMenuPersonaliseMapper.xml"
+   ],
+   "read_xml": [
+    "MerchantRoleModelMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "MerchantMenuPersonaliseServiceImpl",
+     "MerchantRoleModelServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_merchant_notice",
+   "write_xml": [
+    "MerchantNoticeMapper.xml",
+    "NoticeMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "MerchantNoticeServiceImpl",
+     "NoticeServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_merchant_place",
+   "write_xml": [
+    "EquipmentMapper.xml",
+    "ExtraCctvDeviceMapper.xml",
+    "FarmEquipmentMapper.xml",
+    "RptMerchantPlaceDayMapper.xml",
+    "RptMerchantPlaceProcessMapper.xml"
+   ],
+   "read_xml": [
+    "FarmEquipmentRechargeMapper.xml",
+    "FarmFaultReportMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "EquipServiceImpl",
+     "EquipmentCacheService",
+     "EquipmentMapper",
+     "EquipmentServiceImpl",
+     "ExtraCctvCallbackImpl",
+     "ExtraCctvDeviceServiceImpl",
+     "FarmEquipmentRechargeServiceImpl",
+     "FarmEquipmentServiceImpl",
+     "FarmFaultReportServiceImpl",
+     "FertigationProjectServiceImpl",
+     "RptMerchantPlaceDayServiceImpl",
+     "RptMerchantPlaceInitProcessServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_merchant_service_type",
+   "write_xml": [],
+   "read_xml": [
+    "MerchantServiceTypeMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "MerchantServiceTypeServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_merchant_transfer_param",
+   "write_xml": [
+    "SettleMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "SettleService"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_merchant_user_place",
+   "write_xml": [
+    "FarmPlaceMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "FarmPlaceServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_notice",
+   "write_xml": [
+    "AgentNoticeMapper.xml",
+    "MerchantNoticeMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "AgentNoticeServiceImpl",
+     "MerchantNoticeServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_pay_wxpay_funds_flow_dtl_",
+   "write_xml": [
+    "FundsFlowDtlMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": []
+   },
+   "in_A": false
+  },
+  {
+   "table": "t_iot_place_profit",
+   "write_xml": [
+    "EquipmentMapper.xml",
+    "PlaceProfitMapper.xml"
+   ],
+   "read_xml": [
+    "AgentMapper.xml",
+    "MCHEquipMapper.xml",
+    "MCHEquipTypeMapper.xml",
+    "TransferBillMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "AgentServiceImpl",
+     "EquipServiceImpl",
+     "EquipmentCacheService",
+     "EquipmentMapper",
+     "EquipmentServiceImpl",
+     "MCHEquipServiceImpl",
+     "MCHEquipTypeServiceImpl",
+     "PlaceProfitMapper",
+     "PlaceProfitServiceImpl",
+     "SettleMapper",
+     "TransferBillMapper",
+     "TransferBillServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_rpt_agent_turnover_total",
+   "write_xml": [
+    "RptAgentTurnoverTotalMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "RptAgentTurnoverTotalServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_rpt_merchant_equip_day",
+   "write_xml": [],
+   "read_xml": [
+    "RptMerchantMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "ExcelExportJobHelper"
+    ]
+   },
+   "in_A": false
+  },
+  {
+   "table": "t_iot_rpt_merchant_equip_day_archive",
+   "write_xml": [],
+   "read_xml": [
+    "RptMerchantMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "ExcelExportJobHelper"
+    ]
+   },
+   "in_A": false
+  },
+  {
+   "table": "t_iot_rpt_merchant_equip_month",
+   "write_xml": [],
+   "read_xml": [
+    "RptMerchantMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "ExcelExportJobHelper"
+    ]
+   },
+   "in_A": false
+  },
+  {
+   "table": "t_iot_rpt_merchant_equip_total",
+   "write_xml": [
+    "EquipmentMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "EquipServiceImpl",
+     "EquipmentCacheService",
+     "EquipmentMapper",
+     "EquipmentServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_rpt_merchant_place_day",
+   "write_xml": [],
+   "read_xml": [
+    "RptMerchantMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "ExcelExportJobHelper"
+    ]
+   },
+   "in_A": false
+  },
+  {
+   "table": "t_iot_rpt_merchant_place_month",
+   "write_xml": [],
+   "read_xml": [
+    "RptMerchantMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "ExcelExportJobHelper"
+    ]
+   },
+   "in_A": false
+  },
+  {
+   "table": "t_iot_rpt_merchant_turnover_day",
+   "write_xml": [],
+   "read_xml": [
+    "RptMerchantMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "ExcelExportJobHelper"
+    ]
+   },
+   "in_A": false
+  },
+  {
+   "table": "t_iot_rpt_merchant_turnover_month",
+   "write_xml": [],
+   "read_xml": [
+    "RptMerchantMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "ExcelExportJobHelper"
+    ]
+   },
+   "in_A": false
+  },
+  {
+   "table": "t_iot_sim_card_provider",
+   "write_xml": [
+    "SimCardStockDetailMapper.xml",
+    "SimCardStockInMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "SimCardStockDetailServiceImpl",
+     "SimCardStockInServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_sim_card_renew_bill_history",
+   "write_xml": [],
+   "read_xml": [
+    "ExcelExportTmpMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "ExcelExportTmpServiceImpl"
+    ]
+   },
+   "in_A": false
+  },
+  {
+   "table": "t_iot_sim_card_stock_detail",
+   "write_xml": [
+    "EquipmentMapper.xml",
+    "SimCardRenewInitTmpMapper.xml"
+   ],
+   "read_xml": [
+    "EquipImeiSimIccidMapper.xml",
+    "ExcelExportTmpMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "EquipImeiSimIccidServiceImpl",
+     "EquipServiceImpl",
+     "EquipmentCacheService",
+     "EquipmentMapper",
+     "EquipmentServiceImpl",
+     "ExcelExportTmpServiceImpl",
+     "SimCardRenewInitTmpServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_source_stock",
+   "write_xml": [
+    "SourceStockMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "SourceTypeServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_source_type",
+   "write_xml": [
+    "SourceStockMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "SourceTypeServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_test_excel",
+   "write_xml": [],
+   "read_xml": [
+    "ExcelExportMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "TestExcelExportServiceImpl"
+    ]
+   },
+   "in_A": false
+  },
+  {
+   "table": "t_iot_test_sim_card",
+   "write_xml": [
+    "TestSimCardMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "TestSimCardSyncServiceImpl"
+    ]
+   },
+   "in_A": false
+  },
+  {
+   "table": "t_iot_trans_order",
+   "write_xml": [
+    "TransOrderArchiveMapper.xml",
+    "TransOrderMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "TransOrderArchiveServiceImpl",
+     "TransOrderServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_trans_order_archive",
+   "write_xml": [
+    "TransOrderArchiveMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "TransOrderArchiveServiceImpl"
+    ]
+   },
+   "in_A": false
+  },
+  {
+   "table": "t_iot_transfer_bill",
+   "write_xml": [
+    "RptAgentTransferDayMapper.xml",
+    "TransferBillArchiveMapper.xml",
+    "TransferBillMapper.xml"
+   ],
+   "read_xml": [
+    "TransferBillMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "RptAgentTransferDayServiceImpl",
+     "SettleMapper",
+     "TransferBillArchiveServiceImpl",
+     "TransferBillMapper",
+     "TransferBillServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_transfer_bill_arc_",
+   "write_xml": [
+    "TransferBillArchiveMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "TransferBillArchiveServiceImpl"
+    ]
+   },
+   "in_A": false
+  },
+  {
+   "table": "t_iot_transfer_bill_history",
+   "write_xml": [
+    "TransferBillMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "SettleMapper",
+     "TransferBillMapper",
+     "TransferBillServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_worm_crop",
+   "write_xml": [
+    "WormEquipParamMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [
+     "WormEquipParamController"
+    ],
+    "job": [],
+    "listener": [],
+    "other": []
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_worm_crop_pests",
+   "write_xml": [
+    "FarmEquipmentMapper.xml",
+    "WormEquipParamMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [
+     "WormEquipParamController"
+    ],
+    "job": [],
+    "listener": [],
+    "other": [
+     "FarmEquipmentServiceImpl",
+     "FertigationProjectServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_worm_equip_param",
+   "write_xml": [
+    "FarmEquipmentMapper.xml",
+    "WormEquipParamMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [
+     "WormEquipParamController"
+    ],
+    "job": [],
+    "listener": [],
+    "other": [
+     "FarmEquipmentServiceImpl",
+     "FertigationProjectServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_worm_equip_photo_details",
+   "write_xml": [],
+   "read_xml": [
+    "WormEquipPhotoDetailsMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [
+     "WormEquipPhotoDetailsController"
+    ],
+    "job": [],
+    "listener": [],
+    "other": []
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_worm_equip_photo_task",
+   "write_xml": [],
+   "read_xml": [
+    "WormEquipPhotoDetailsMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [
+     "WormEquipPhotoDetailsController"
+    ],
+    "job": [],
+    "listener": [],
+    "other": []
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_wx_mch_config",
+   "write_xml": [
+    "WXMCHConfigMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "WXMCHConfigServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_wx_mini_code_current_ver",
+   "write_xml": [
+    "WXMINICodeCurrentVerMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "AlipayMINICodeCurrentVerMapper",
+     "AlipayTestServiceImpl",
+     "WXMINICodeCurrentVerServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_wx_mini_code_extjson",
+   "write_xml": [
+    "WXMINICodeUpgradeTaskMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "AlipayTestServiceImpl",
+     "WXMINICodeUpgradeTaskServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_wx_mp_config",
+   "write_xml": [
+    "WXMINICodeUpgradeTaskMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "AlipayTestServiceImpl",
+     "WXMINICodeUpgradeTaskServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_wx_public_number",
+   "write_xml": [
+    "WXMINICodeCurrentVerMapper.xml",
+    "WXMINICodeUpgradeTaskDtlMapper.xml",
+    "WXMINICodeUpgradeTaskMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "AlipayMINICodeCurrentVerMapper",
+     "AlipayTestServiceImpl",
+     "WXMINICodeCurrentVerServiceImpl",
+     "WXMINICodeUpgradeTaskDtlServiceImpl",
+     "WXMINICodeUpgradeTaskServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_iot_wx_third_plat_ticket",
+   "write_xml": [
+    "WX3RDTicketMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "AlipayTestServiceImpl",
+     "WX3RDTicketServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_merchant_param",
+   "write_xml": [],
+   "read_xml": [
+    "MerchantParamLibraryMapper.xml",
+    "MerchantParamMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "MerchantParamLibraryServiceImpl",
+     "MerchantParamServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_merchant_param_library",
+   "write_xml": [],
+   "read_xml": [
+    "MerchantParamMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "MerchantParamServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_merchant_role",
+   "write_xml": [],
+   "read_xml": [
+    "MerchantUserRoleMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "MerchantUserRoleServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_merchant_role_model",
+   "write_xml": [
+    "MerchantUserMapper.xml"
+   ],
+   "read_xml": [
+    "MerchantRoleModelMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "MerchantRoleModelServiceImpl",
+     "MerchantUserRoleServiceImpl",
+     "MerchantUserServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_merchant_user",
+   "write_xml": [],
+   "read_xml": [
+    "MerchantRoleMapper.xml",
+    "MerchantRoleModelMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "MerchantRoleModelServiceImpl",
+     "MerchantRoleServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_merchant_user_role",
+   "write_xml": [
+    "MerchantUserMapper.xml"
+   ],
+   "read_xml": [
+    "MerchantRoleMapper.xml",
+    "MerchantRoleModelMapper.xml",
+    "MerchantUserRoleMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "MerchantRoleModelServiceImpl",
+     "MerchantRoleServiceImpl",
+     "MerchantUserRoleServiceImpl",
+     "MerchantUserServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_ota_equip",
+   "write_xml": [
+    "OTAEquipMapper.xml",
+    "OTAGrayMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [
+    "OTAEquipMapper.java"
+   ],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [
+     "OTAEquipFirmwareEventListener",
+     "UDPServerUpgradeBootstrapBigHandler",
+     "UDPServerUpgradeBootstrapHandler"
+    ],
+    "other": [
+     "M25UpgradeUtils",
+     "OTAEquipServiceImpl",
+     "OTAFirmwareHelper",
+     "OTAGateway",
+     "OTAGrayServiceImpl",
+     "OTAM25EquipMapper"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_ota_firmware",
+   "write_xml": [],
+   "read_xml": [],
+   "ann_write": [
+    "OTAFirmwareMapper.java"
+   ],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": []
+   },
+   "in_A": false
+  },
+  {
+   "table": "t_ota_gray",
+   "write_xml": [
+    "OTAGrayMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [
+    "OTAGrayMapper.java"
+   ],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "OTAFirmwareHelper",
+     "OTAGrayServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_ota_m25_bootstrap",
+   "write_xml": [
+    "OTAM25BootstrapMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [
+    "OTAM25BootstrapMapper.java"
+   ],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [
+     "OTAM25FirmwareEventListener",
+     "UDPServerUpgradeBootstrapHandler"
+    ],
+    "other": [
+     "M25UpgradeUtils",
+     "OTAM25BootstrapBigMapper",
+     "OTAM25PackageDataBigMapper",
+     "OTAM25PackageDataMapper"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_ota_m25_bootstrap_big",
+   "write_xml": [
+    "OTAM25BootstrapBigMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [
+    "OTAM25BootstrapBigMapper.java"
+   ],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [
+     "OTAM25FirmwareEventListener",
+     "UDPServerUpgradeBootstrapBigHandler"
+    ],
+    "other": [
+     "M25UpgradeUtils"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_ota_m25_equip",
+   "write_xml": [],
+   "read_xml": [],
+   "ann_write": [
+    "OTAM25EquipMapper.java"
+   ],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": []
+   },
+   "in_A": false
+  },
+  {
+   "table": "t_ota_m25_package",
+   "write_xml": [],
+   "read_xml": [],
+   "ann_write": [
+    "OTAM25PackageDataMapper.java"
+   ],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": []
+   },
+   "in_A": false
+  },
+  {
+   "table": "t_ota_m25_package_big",
+   "write_xml": [],
+   "read_xml": [],
+   "ann_write": [
+    "OTAM25PackageDataBigMapper.java"
+   ],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": []
+   },
+   "in_A": false
+  },
+  {
+   "table": "t_ota_mb_task",
+   "write_xml": [],
+   "read_xml": [],
+   "ann_write": [
+    "MainboardTaskMapper.java"
+   ],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": []
+   },
+   "in_A": false
+  },
+  {
+   "table": "t_ota_mb_task_equip",
+   "write_xml": [
+    "MainboardTaskEquipMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [
+    "MainboardTaskEquipMapper.java"
+   ],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "MainboardTaskEquipServiceImpl",
+     "MainboardTaskHelper"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_ota_platform",
+   "write_xml": [],
+   "read_xml": [],
+   "ann_write": [
+    "OTAPlatformMapper.java"
+   ],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": []
+   },
+   "in_A": false
+  },
+  {
+   "table": "t_ota_project",
+   "write_xml": [],
+   "read_xml": [],
+   "ann_write": [
+    "OTAProjectMapper.java"
+   ],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": []
+   },
+   "in_A": false
+  },
+  {
+   "table": "t_pomission",
+   "write_xml": [],
+   "read_xml": [
+    "AdminUserMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "AdminModeMapper",
+     "AdminPermissionMapper",
+     "AdminRoleMapper",
+     "AdminRoleModeMapper",
+     "AdminRolePermissionMapper",
+     "AdminUserRoleMapper",
+     "AdminUserServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_region",
+   "write_xml": [
+    "RegionMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "AreaMapper",
+     "RegionServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_role",
+   "write_xml": [
+    "AdminUserRoleMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "AdminUserRoleServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_role_mode",
+   "write_xml": [],
+   "read_xml": [
+    "AdminPermissionMapper.xml",
+    "AdminRoleModeMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "AdminPermissionServiceImpl",
+     "AdminRoleModeServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_role_pomission",
+   "write_xml": [],
+   "read_xml": [
+    "AdminUserMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "AdminModeMapper",
+     "AdminPermissionMapper",
+     "AdminRoleMapper",
+     "AdminRoleModeMapper",
+     "AdminRolePermissionMapper",
+     "AdminUserRoleMapper",
+     "AdminUserServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_sys_sequence",
+   "write_xml": [
+    "SysSequenceMapper.xml"
+   ],
+   "read_xml": [],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "SysSequenceServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_user",
+   "write_xml": [
+    "SimCardStockInMapper.xml"
+   ],
+   "read_xml": [
+    "AdminPermissionMapper.xml",
+    "AdminRoleMapper.xml",
+    "AdminUserMapper.xml",
+    "SimCardStockOutMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "AdminModeMapper",
+     "AdminPermissionMapper",
+     "AdminPermissionServiceImpl",
+     "AdminRoleMapper",
+     "AdminRoleModeMapper",
+     "AdminRolePermissionMapper",
+     "AdminRoleServiceImpl",
+     "AdminUserRoleMapper",
+     "AdminUserServiceImpl",
+     "SimCardStockInServiceImpl",
+     "SimCardStockOutServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "t_user_role",
+   "write_xml": [
+    "AdminUserRoleMapper.xml"
+   ],
+   "read_xml": [
+    "AdminPermissionMapper.xml",
+    "AdminRoleMapper.xml",
+    "AdminUserMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [],
+    "job": [],
+    "listener": [],
+    "other": [
+     "AdminModeMapper",
+     "AdminPermissionMapper",
+     "AdminPermissionServiceImpl",
+     "AdminRoleMapper",
+     "AdminRoleModeMapper",
+     "AdminRolePermissionMapper",
+     "AdminRoleServiceImpl",
+     "AdminUserRoleMapper",
+     "AdminUserRoleServiceImpl",
+     "AdminUserServiceImpl"
+    ]
+   },
+   "in_A": true
+  },
+  {
+   "table": "test",
+   "write_xml": [
+    "WeatherMapper.xml"
+   ],
+   "read_xml": [
+    "TestMapper.xml"
+   ],
+   "ann_write": [],
+   "jdb": [],
+   "owners": {
+    "controller": [
+     "WeatherController"
+    ],
+    "job": [],
+    "listener": [],
+    "other": [
+     "TestMapper",
+     "TestServiceImpl"
+    ]
+   },
+   "in_A": false
+  }
+ ]
+}

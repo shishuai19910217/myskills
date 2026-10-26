@@ -1,5 +1,5 @@
 ---
-name: "webnovel-deai-lint"
+name: webnovel-deai-lint
 description: "Detects AI-flavor patterns in 番茄/七猫 web novels, outputs diagnosis suggestions only (no rewriting). Invoke when user asks for 去AI味, AI味检查, 润色建议, or 文笔诊断."
 ---
 

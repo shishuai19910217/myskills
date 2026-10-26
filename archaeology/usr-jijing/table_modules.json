@@ -1,0 +1,651 @@
+{
+ "tbl_main": {
+  "qrtz_cron_triggers": "old-svc/service-quartz-sync",
+  "qrtz_job_details": "old-svc/service-quartz-sync",
+  "qrtz_triggers": "old-svc/service-quartz-sync",
+  "t_agent_menu": "new/poseidon-service",
+  "t_agent_menu_auth": "new/poseidon-service",
+  "t_agent_role": "new/poseidon-service",
+  "t_agent_role_menu": "new/poseidon-service",
+  "t_agent_user_role": "new/poseidon-service",
+  "t_api": "old-svc/service-user-sync",
+  "t_iot_agent": "old-svc/service-user-sync",
+  "t_iot_agent_equip_renew_order": "old-svc/service-user-sync",
+  "t_iot_agent_mobile_menu": "new/poseidon-service",
+  "t_iot_agent_mobile_menu_auth": "new/poseidon-service",
+  "t_iot_agent_mobile_role": "new/poseidon-service",
+  "t_iot_agent_notice": "old-svc/service-user-sync",
+  "t_iot_alipay_app_info": "new/poseidon-service",
+  "t_iot_alipay_config": "new/poseidon-service",
+  "t_iot_alipay_mini_code_current_ver": "new/poseidon-service",
+  "t_iot_alipay_mini_code_extjson": "new/poseidon-service",
+  "t_iot_b2b_rank_related": "new/poseidon-service",
+  "t_iot_bill_farm": "old-svc/service-user-sync",
+  "t_iot_charge_bill": "old-svc/service-user-sync",
+  "t_iot_charge_bill_arc_": "old-svc/service-user-sync",
+  "t_iot_charge_bill_merch_row": "old-svc/service-user-sync",
+  "t_iot_charge_bill_merch_row_arc_": "old-svc/service-user-sync",
+  "t_iot_charge_bill_profit_row": "old-svc/service-user-sync",
+  "t_iot_charge_bill_profit_row_arc_": "old-svc/service-user-sync",
+  "t_iot_consumer": "old-svc/service-user-sync",
+  "t_iot_consumer_account_fund": "old-svc/service-user-sync",
+  "t_iot_consumer_feedback_message_pusher": "old-svc/service-user-sync",
+  "t_iot_consumer_fund_his": "new/poseidon-service",
+  "t_iot_consumer_machine_recharge_his": "new/poseidon-service",
+  "t_iot_consumer_vip_card": "old-svc/service-user-sync",
+  "t_iot_cooperative_factory": "old-svc/service-user-sync",
+  "t_iot_equip_auth": "old-svc/service-user-sync",
+  "t_iot_equip_bind": "new/poseidon-service",
+  "t_iot_equip_farm_param": "new/poseidon-service",
+  "t_iot_equip_lora": "old-svc/service-user-sync",
+  "t_iot_equip_lora_check": "old-svc/service-user-sync",
+  "t_iot_equip_outdated": "old-svc/service-user-sync",
+  "t_iot_equip_stock_dtl": "new/poseidon-service",
+  "t_iot_equip_stockin_bill": "old-svc/service-user-sync",
+  "t_iot_equipment_component": "new/poseidon-service",
+  "t_iot_equipment_status": "new/poseidon-service",
+  "t_iot_farm_builder_equip": "new/poseidon-service",
+  "t_iot_farm_consumer_equip_use": "new/poseidon-service",
+  "t_iot_farm_equip_manager_assign": "new/poseidon-service",
+  "t_iot_farm_extra_cctv_device": "new/poseidon-service",
+  "t_iot_farm_extra_cctv_event": "new/poseidon-service",
+  "t_iot_farm_extra_cctv_link": "new/poseidon-service",
+  "t_iot_farm_fault_report": "new/poseidon-service",
+  "t_iot_farm_inspection_order": "new/poseidon-service",
+  "t_iot_fertigation_area": "new/poseidon-service",
+  "t_iot_fertigation_area_valve": "new/poseidon-service",
+  "t_iot_fertigation_block": "new/poseidon-service",
+  "t_iot_fertigation_equip_component": "new/poseidon-service",
+  "t_iot_fertigation_equip_operation_record": "new/poseidon-service",
+  "t_iot_fertigation_equip_user_relation": "new/poseidon-service",
+  "t_iot_fertigation_equip_valve_control": "new/poseidon-service",
+  "t_iot_fertigation_factory_system_config": "new/poseidon-service",
+  "t_iot_fertigation_factory_system_config_template": "new/poseidon-service",
+  "t_iot_fertigation_factory_terminal_analog_quantity": "new/poseidon-service",
+  "t_iot_fertigation_factory_terminal_analog_quantity_template": "new/poseidon-service",
+  "t_iot_fertigation_factory_terminal_communication": "new/poseidon-service",
+  "t_iot_fertigation_factory_terminal_communication_devices": "new/poseidon-service",
+  "t_iot_fertigation_factory_terminal_communication_devices_temp": "new/poseidon-service",
+  "t_iot_fertigation_factory_terminal_communication_template": "new/poseidon-service",
+  "t_iot_fertigation_factory_terminal_mixer": "new/poseidon-service",
+  "t_iot_fertigation_factory_terminal_mixer_template": "new/poseidon-service",
+  "t_iot_fertigation_factory_terminal_relay": "new/poseidon-service",
+  "t_iot_fertigation_factory_terminal_relay_protect": "new/poseidon-service",
+  "t_iot_fertigation_factory_terminal_relay_protect_template": "new/poseidon-service",
+  "t_iot_fertigation_factory_terminal_relay_template": "new/poseidon-service",
+  "t_iot_fertigation_factory_terminal_valve_control": "new/poseidon-service",
+  "t_iot_fertigation_factory_terminal_valve_control_template": "new/poseidon-service",
+  "t_iot_fertigation_project": "new/poseidon-service",
+  "t_iot_fertigation_template": "new/poseidon-service",
+  "t_iot_hardware_version": "old-svc/service-user-sync",
+  "t_iot_hf_settle_account": "new/poseidon-service",
+  "t_iot_icon": "new/poseidon-service",
+  "t_iot_industry": "new/poseidon-service",
+  "t_iot_industry_agent_auth": "new/poseidon-service",
+  "t_iot_industry_agent_mobile_auth": "new/poseidon-service",
+  "t_iot_industry_merchant_auth": "new/poseidon-service",
+  "t_iot_industry_message_params": "new/poseidon-service",
+  "t_iot_menu_auth": "new/poseidon-service",
+  "t_iot_merchant": "old-svc/service-user-sync",
+  "t_iot_merchant_agent_assig": "new/poseidon-service",
+  "t_iot_merchant_agent_menu": "new/poseidon-service",
+  "t_iot_merchant_agent_mobile_menu": "new/poseidon-service",
+  "t_iot_merchant_base_equip_type": "old-svc/service-user-async",
+  "t_iot_merchant_equip_type": "new/poseidon-service",
+  "t_iot_merchant_equipment": "new/poseidon-service",
+  "t_iot_merchant_equipment_recharge": "new/poseidon-service",
+  "t_iot_merchant_industry": "new/poseidon-service",
+  "t_iot_merchant_mall_banner": "old-svc/service-user-sync",
+  "t_iot_merchant_menu": "new/poseidon-service",
+  "t_iot_merchant_notice": "old-svc/service-user-sync",
+  "t_iot_merchant_place": "new/poseidon-service",
+  "t_iot_merchant_service_type": "new/poseidon-service",
+  "t_iot_merchant_transfer_param": "old-svc/service-user-async",
+  "t_iot_merchant_user_place": "new/poseidon-service",
+  "t_iot_notice": "old-svc/service-user-sync",
+  "t_iot_pay_wxpay_funds_flow_dtl_": "new/poseidon-service",
+  "t_iot_place_profit": "old-svc/service-user-sync",
+  "t_iot_rpt_agent_turnover_total": "old-svc/service-user-sync",
+  "t_iot_rpt_merchant_equip_day": "new/poseidon-service",
+  "t_iot_rpt_merchant_equip_day_archive": "new/poseidon-service",
+  "t_iot_rpt_merchant_equip_month": "new/poseidon-service",
+  "t_iot_rpt_merchant_equip_total": "old-svc/service-user-sync",
+  "t_iot_rpt_merchant_place_day": "new/poseidon-service",
+  "t_iot_rpt_merchant_place_month": "new/poseidon-service",
+  "t_iot_rpt_merchant_turnover_day": "new/poseidon-service",
+  "t_iot_rpt_merchant_turnover_month": "new/poseidon-service",
+  "t_iot_sim_card_provider": "new/poseidon-service",
+  "t_iot_sim_card_renew_bill_history": "old-svc/service-user-sync",
+  "t_iot_sim_card_stock_detail": "old-svc/service-user-sync",
+  "t_iot_source_stock": "old-svc/service-user-sync",
+  "t_iot_source_type": "old-svc/service-user-sync",
+  "t_iot_test_excel": "old-svc/service-user-sync",
+  "t_iot_test_sim_card": "old-svc/service-user-sync",
+  "t_iot_trans_order": "old-svc/service-user-sync",
+  "t_iot_trans_order_archive": "old-svc/service-user-sync",
+  "t_iot_transfer_bill": "old-svc/service-user-sync",
+  "t_iot_transfer_bill_arc_": "old-svc/service-user-sync",
+  "t_iot_transfer_bill_history": "old-svc/service-user-sync",
+  "t_iot_worm_crop": "new/poseidon-service",
+  "t_iot_worm_crop_pests": "new/poseidon-service",
+  "t_iot_worm_equip_param": "new/poseidon-service",
+  "t_iot_worm_equip_photo_details": "new/poseidon-service",
+  "t_iot_worm_equip_photo_task": "new/poseidon-service",
+  "t_iot_wx_mch_config": "new/poseidon-service",
+  "t_iot_wx_mini_code_current_ver": "new/poseidon-service",
+  "t_iot_wx_mini_code_extjson": "new/poseidon-service",
+  "t_iot_wx_mp_config": "new/poseidon-service",
+  "t_iot_wx_public_number": "new/poseidon-service",
+  "t_iot_wx_third_plat_ticket": "new/poseidon-service",
+  "t_merchant_param": "new/poseidon-service",
+  "t_merchant_param_library": "new/poseidon-service",
+  "t_merchant_role": "new/poseidon-service",
+  "t_merchant_role_model": "new/poseidon-service",
+  "t_merchant_user": "new/poseidon-service",
+  "t_merchant_user_role": "new/poseidon-service",
+  "t_ota_equip": "new/poseidon-service",
+  "t_ota_gray": "new/poseidon-service",
+  "t_ota_m25_bootstrap": "new/poseidon-service",
+  "t_ota_m25_bootstrap_big": "new/poseidon-service",
+  "t_ota_mb_task_equip": "new/poseidon-service",
+  "t_pomission": "new/poseidon-service",
+  "t_region": "old-svc/service-user-sync",
+  "t_role": "new/poseidon-service",
+  "t_role_mode": "new/poseidon-service",
+  "t_role_pomission": "new/poseidon-service",
+  "t_sys_sequence": "old-svc/service-user-sync",
+  "t_user": "new/poseidon-service",
+  "t_user_role": "new/poseidon-service"
+ },
+ "tbl_all_mods": {
+  "t_iot_merchant_equipment": {
+   "new/poseidon-service": 37,
+   "old-svc/service-user-sync": 27
+  },
+  "t_iot_place_profit": {
+   "new/poseidon-service": 4,
+   "old-svc/service-user-sync": 6
+  },
+  "t_iot_sim_card_stock_detail": {
+   "new/poseidon-service": 3,
+   "old-svc/service-user-sync": 4
+  },
+  "t_iot_merchant_equip_type": {
+   "new/poseidon-service": 4
+  },
+  "t_merchant_param": {
+   "new/poseidon-service": 3
+  },
+  "t_merchant_param_library": {
+   "new/poseidon-service": 1
+  },
+  "t_iot_merchant": {
+   "new/poseidon-service": 29,
+   "old-svc/service-user-sync": 33
+  },
+  "t_iot_agent": {
+   "new/poseidon-service": 8,
+   "old-svc/service-user-async": 1,
+   "old-svc/service-user-sync": 24
+  },
+  "t_iot_consumer_vip_card": {
+   "new/poseidon-service": 1,
+   "old-svc/service-user-sync": 5
+  },
+  "t_iot_consumer": {
+   "new/poseidon-service": 2,
+   "old-svc/service-user-sync": 19
+  },
+  "t_iot_sim_card_provider": {
+   "new/poseidon-service": 4
+  },
+  "t_user": {
+   "new/poseidon-service": 10
+  },
+  "t_iot_industry_message_params": {
+   "new/poseidon-service": 1
+  },
+  "t_iot_transfer_bill": {
+   "new/poseidon-service": 2,
+   "old-svc/service-user-sync": 14
+  },
+  "t_iot_fertigation_area": {
+   "new/poseidon-service": 8
+  },
+  "t_iot_fertigation_area_valve": {
+   "new/poseidon-service": 9
+  },
+  "t_iot_farm_equip_manager_assign": {
+   "new/poseidon-service": 2
+  },
+  "t_iot_equip_bind": {
+   "new/poseidon-service": 6
+  },
+  "t_iot_equipment_status": {
+   "new/poseidon-service": 24,
+   "old-svc/service-user-sync": 17
+  },
+  "t_iot_fertigation_block": {
+   "new/poseidon-service": 27
+  },
+  "t_iot_equip_stock_dtl": {
+   "new/poseidon-service": 3,
+   "old-svc/service-user-sync": 1
+  },
+  "t_iot_merchant_place": {
+   "new/poseidon-service": 8,
+   "old-svc/service-user-sync": 6
+  },
+  "t_iot_equip_farm_param": {
+   "new/poseidon-service": 9
+  },
+  "t_iot_farm_consumer_equip_use": {
+   "new/poseidon-service": 1
+  },
+  "t_iot_farm_builder_equip": {
+   "new/poseidon-service": 1
+  },
+  "t_iot_fertigation_project": {
+   "new/poseidon-service": 10
+  },
+  "t_iot_merchant_equipment_recharge": {
+   "new/poseidon-service": 2
+  },
+  "t_iot_consumer_machine_recharge_his": {
+   "new/poseidon-service": 2,
+   "old-svc/service-user-sync": 1
+  },
+  "t_iot_equipment_component": {
+   "new/poseidon-service": 5,
+   "old-svc/service-user-sync": 1
+  },
+  "t_iot_fertigation_equip_valve_control": {
+   "new/poseidon-service": 9
+  },
+  "t_iot_fertigation_equip_user_relation": {
+   "new/poseidon-service": 17
+  },
+  "t_iot_worm_equip_param": {
+   "new/poseidon-service": 5
+  },
+  "t_iot_worm_crop_pests": {
+   "new/poseidon-service": 3
+  },
+  "t_iot_consumer_fund_his": {
+   "new/poseidon-service": 1
+  },
+  "t_iot_fertigation_equip_component": {
+   "new/poseidon-service": 5
+  },
+  "t_iot_fertigation_factory_system_config": {
+   "new/poseidon-service": 1
+  },
+  "t_iot_fertigation_factory_terminal_analog_quantity": {
+   "new/poseidon-service": 1
+  },
+  "t_iot_fertigation_factory_terminal_communication": {
+   "new/poseidon-service": 1
+  },
+  "t_iot_fertigation_factory_terminal_communication_devices": {
+   "new/poseidon-service": 1
+  },
+  "t_iot_fertigation_factory_terminal_mixer": {
+   "new/poseidon-service": 1
+  },
+  "t_iot_fertigation_factory_terminal_relay": {
+   "new/poseidon-service": 1
+  },
+  "t_iot_fertigation_factory_terminal_relay_protect": {
+   "new/poseidon-service": 1
+  },
+  "t_iot_fertigation_factory_terminal_valve_control": {
+   "new/poseidon-service": 1
+  },
+  "t_iot_hardware_version": {
+   "new/poseidon-service": 2,
+   "old-svc/service-user-sync": 5
+  },
+  "t_iot_fertigation_factory_system_config_template": {
+   "new/poseidon-service": 1
+  },
+  "t_iot_fertigation_factory_terminal_valve_control_template": {
+   "new/poseidon-service": 2
+  },
+  "t_iot_fertigation_factory_terminal_communication_template": {
+   "new/poseidon-service": 2
+  },
+  "t_iot_fertigation_factory_terminal_communication_devices_temp": {
+   "new/poseidon-service": 2
+  },
+  "t_iot_fertigation_factory_terminal_analog_quantity_template": {
+   "new/poseidon-service": 2
+  },
+  "t_iot_fertigation_factory_terminal_relay_template": {
+   "new/poseidon-service": 2
+  },
+  "t_iot_fertigation_factory_terminal_relay_protect_template": {
+   "new/poseidon-service": 2
+  },
+  "t_iot_fertigation_factory_terminal_mixer_template": {
+   "new/poseidon-service": 2
+  },
+  "t_iot_farm_extra_cctv_link": {
+   "new/poseidon-service": 6
+  },
+  "t_iot_farm_extra_cctv_event": {
+   "new/poseidon-service": 3
+  },
+  "t_iot_farm_extra_cctv_device": {
+   "new/poseidon-service": 1
+  },
+  "t_iot_farm_fault_report": {
+   "new/poseidon-service": 3
+  },
+  "t_iot_farm_inspection_order": {
+   "new/poseidon-service": 1
+  },
+  "t_iot_merchant_user_place": {
+   "new/poseidon-service": 1
+  },
+  "t_iot_fertigation_equip_operation_record": {
+   "new/poseidon-service": 1
+  },
+  "t_iot_fertigation_template": {
+   "new/poseidon-service": 1
+  },
+  "t_iot_worm_crop": {
+   "new/poseidon-service": 1
+  },
+  "t_iot_worm_equip_photo_task": {
+   "new/poseidon-service": 1
+  },
+  "t_iot_worm_equip_photo_details": {
+   "new/poseidon-service": 1
+  },
+  "t_iot_alipay_mini_code_current_ver": {
+   "new/poseidon-service": 1
+  },
+  "t_iot_alipay_app_info": {
+   "new/poseidon-service": 6
+  },
+  "t_iot_alipay_config": {
+   "new/poseidon-service": 2
+  },
+  "t_iot_alipay_mini_code_extjson": {
+   "new/poseidon-service": 1
+  },
+  "t_iot_hf_settle_account": {
+   "new/poseidon-service": 1
+  },
+  "t_iot_pay_wxpay_funds_flow_dtl_": {
+   "new/poseidon-service": 1
+  },
+  "t_iot_wx_mch_config": {
+   "new/poseidon-service": 1
+  },
+  "t_iot_wx_mini_code_current_ver": {
+   "new/poseidon-service": 1
+  },
+  "t_iot_wx_public_number": {
+   "new/poseidon-service": 4
+  },
+  "t_iot_wx_mp_config": {
+   "new/poseidon-service": 2
+  },
+  "t_iot_wx_mini_code_extjson": {
+   "new/poseidon-service": 1
+  },
+  "t_iot_wx_third_plat_ticket": {
+   "new/poseidon-service": 4
+  },
+  "t_iot_bill_farm": {
+   "new/poseidon-service": 1,
+   "old-svc/service-user-sync": 3
+  },
+  "t_iot_rpt_merchant_turnover_day": {
+   "new/poseidon-service": 1
+  },
+  "t_iot_rpt_merchant_turnover_month": {
+   "new/poseidon-service": 2
+  },
+  "t_iot_rpt_merchant_equip_day": {
+   "new/poseidon-service": 1
+  },
+  "t_iot_rpt_merchant_equip_day_archive": {
+   "new/poseidon-service": 1
+  },
+  "t_iot_rpt_merchant_equip_month": {
+   "new/poseidon-service": 2
+  },
+  "t_iot_rpt_merchant_place_day": {
+   "new/poseidon-service": 1
+  },
+  "t_iot_rpt_merchant_place_month": {
+   "new/poseidon-service": 2
+  },
+  "t_ota_mb_task_equip": {
+   "new/poseidon-service": 1
+  },
+  "t_ota_equip": {
+   "new/poseidon-service": 4
+  },
+  "t_ota_gray": {
+   "new/poseidon-service": 1
+  },
+  "t_ota_m25_bootstrap_big": {
+   "new/poseidon-service": 1
+  },
+  "t_ota_m25_bootstrap": {
+   "new/poseidon-service": 1
+  },
+  "t_role_mode": {
+   "new/poseidon-service": 2
+  },
+  "t_user_role": {
+   "new/poseidon-service": 7
+  },
+  "t_role_pomission": {
+   "new/poseidon-service": 1
+  },
+  "t_pomission": {
+   "new/poseidon-service": 1
+  },
+  "t_role": {
+   "new/poseidon-service": 1
+  },
+  "t_iot_agent_mobile_menu_auth": {
+   "new/poseidon-service": 16
+  },
+  "t_iot_industry_agent_mobile_auth": {
+   "new/poseidon-service": 4
+  },
+  "t_iot_merchant_industry": {
+   "new/poseidon-service": 17
+  },
+  "t_iot_icon": {
+   "new/poseidon-service": 13,
+   "old-svc/service-user-sync": 2
+  },
+  "t_iot_merchant_agent_assig": {
+   "new/poseidon-service": 20,
+   "old-svc/service-user-async": 4,
+   "old-svc/service-user-sync": 2
+  },
+  "t_iot_agent_mobile_role": {
+   "new/poseidon-service": 1
+  },
+  "t_iot_agent_mobile_menu": {
+   "new/poseidon-service": 4
+  },
+  "t_agent_role": {
+   "new/poseidon-service": 4
+  },
+  "t_iot_merchant_agent_mobile_menu": {
+   "new/poseidon-service": 2
+  },
+  "t_agent_menu_auth": {
+   "new/poseidon-service": 22
+  },
+  "t_iot_industry_agent_auth": {
+   "new/poseidon-service": 6
+  },
+  "t_iot_b2b_rank_related": {
+   "new/poseidon-service": 4
+  },
+  "t_agent_role_menu": {
+   "new/poseidon-service": 4
+  },
+  "t_iot_merchant_agent_menu": {
+   "new/poseidon-service": 3
+  },
+  "t_agent_menu": {
+   "new/poseidon-service": 1
+  },
+  "t_agent_user_role": {
+   "new/poseidon-service": 2
+  },
+  "t_iot_consumer_account_fund": {
+   "new/poseidon-service": 1,
+   "old-svc/service-user-sync": 11
+  },
+  "t_iot_industry_merchant_auth": {
+   "new/poseidon-service": 9
+  },
+  "t_iot_menu_auth": {
+   "new/poseidon-service": 21
+  },
+  "t_iot_merchant_menu": {
+   "new/poseidon-service": 4
+  },
+  "t_merchant_user_role": {
+   "new/poseidon-service": 5
+  },
+  "t_merchant_user": {
+   "new/poseidon-service": 3
+  },
+  "t_merchant_role_model": {
+   "new/poseidon-service": 3
+  },
+  "t_iot_merchant_service_type": {
+   "new/poseidon-service": 3
+  },
+  "t_merchant_role": {
+   "new/poseidon-service": 1
+  },
+  "t_iot_industry": {
+   "new/poseidon-service": 3
+  },
+  "qrtz_job_details": {
+   "old-svc/service-quartz-sync": 2
+  },
+  "qrtz_triggers": {
+   "old-svc/service-quartz-sync": 5
+  },
+  "qrtz_cron_triggers": {
+   "old-svc/service-quartz-sync": 4
+  },
+  "t_iot_charge_bill_profit_row_arc_": {
+   "old-svc/service-user-async": 2,
+   "old-svc/service-user-sync": 5
+  },
+  "t_iot_merchant_base_equip_type": {
+   "old-svc/service-user-async": 4
+  },
+  "t_iot_merchant_transfer_param": {
+   "old-svc/service-user-async": 1
+  },
+  "t_iot_agent_notice": {
+   "old-svc/service-user-sync": 2
+  },
+  "t_iot_notice": {
+   "old-svc/service-user-sync": 8
+  },
+  "t_iot_equip_lora": {
+   "old-svc/service-user-sync": 1
+  },
+  "t_iot_equip_stockin_bill": {
+   "old-svc/service-user-sync": 2
+  },
+  "t_iot_cooperative_factory": {
+   "old-svc/service-user-sync": 2
+  },
+  "t_iot_equip_lora_check": {
+   "old-svc/service-user-sync": 2
+  },
+  "t_iot_merchant_notice": {
+   "old-svc/service-user-sync": 3
+  },
+  "t_region": {
+   "old-svc/service-user-sync": 4
+  },
+  "t_iot_test_sim_card": {
+   "old-svc/service-user-sync": 2
+  },
+  "t_iot_source_stock": {
+   "old-svc/service-user-sync": 3
+  },
+  "t_iot_source_type": {
+   "old-svc/service-user-sync": 1
+  },
+  "t_sys_sequence": {
+   "old-svc/service-user-sync": 7
+  },
+  "t_iot_transfer_bill_history": {
+   "old-svc/service-user-sync": 2
+  },
+  "t_iot_agent_equip_renew_order": {
+   "old-svc/service-user-sync": 1
+  },
+  "t_api": {
+   "old-svc/service-user-sync": 3
+  },
+  "t_iot_charge_bill_arc_": {
+   "old-svc/service-user-sync": 2
+  },
+  "t_iot_charge_bill": {
+   "old-svc/service-user-sync": 1
+  },
+  "t_iot_charge_bill_merch_row_arc_": {
+   "old-svc/service-user-sync": 3
+  },
+  "t_iot_charge_bill_merch_row": {
+   "old-svc/service-user-sync": 1
+  },
+  "t_iot_charge_bill_profit_row": {
+   "old-svc/service-user-sync": 1
+  },
+  "t_iot_transfer_bill_arc_": {
+   "old-svc/service-user-sync": 2
+  },
+  "t_iot_consumer_feedback_message_pusher": {
+   "old-svc/service-user-sync": 5
+  },
+  "t_iot_sim_card_renew_bill_history": {
+   "old-svc/service-user-sync": 1
+  },
+  "t_iot_equip_auth": {
+   "old-svc/service-user-sync": 10
+  },
+  "t_iot_equip_outdated": {
+   "old-svc/service-user-sync": 2
+  },
+  "t_iot_rpt_merchant_equip_total": {
+   "old-svc/service-user-sync": 1
+  },
+  "t_iot_merchant_mall_banner": {
+   "old-svc/service-user-sync": 1
+  },
+  "t_iot_trans_order_archive": {
+   "old-svc/service-user-sync": 1
+  },
+  "t_iot_trans_order": {
+   "old-svc/service-user-sync": 10
+  },
+  "t_iot_rpt_agent_turnover_total": {
+   "old-svc/service-user-sync": 1
+  },
+  "t_iot_test_excel": {
+   "old-svc/service-user-sync": 1
+  }
+ }
+}

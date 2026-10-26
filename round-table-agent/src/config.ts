@@ -42,6 +42,8 @@ interface RuntimeFile {
   convergenceThreshold?: number;
   temperature?: number;
   maxTokens?: number;
+  /** 席位并行度：1=串行（等同改前），5=全部并行（默认） */
+  seatConcurrency?: number;
 }
 
 export interface RuntimeConfig {
@@ -58,6 +60,8 @@ export interface RuntimeConfig {
    * 取值 >=1 按旧版「绝对条数」解释，运行时自动换算为比率。
    */
   convergenceThreshold: number;
+  /** 席位并行度：1=串行，5=全并行（默认 5） */
+  seatConcurrency: number;
 }
 
 interface AppConfigFile {
@@ -144,6 +148,7 @@ function resolveRuntime(cfg: AppConfigFile): RuntimeConfig {
     extraRounds: r.extraRounds ?? 2,
     convergenceWindowN: r.convergenceWindowN ?? r.convergenceN ?? 2,
     convergenceThreshold: r.convergenceThreshold ?? 0.34,
+    seatConcurrency: r.seatConcurrency ?? 5,
   };
 }
 

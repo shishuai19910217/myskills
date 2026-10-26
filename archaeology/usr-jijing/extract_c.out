@@ -1,0 +1,55 @@
+=== Controller 按组 ===
+   1  new/poseidon-network
+ 337  new/poseidon-service
+  91  old-web/web-admin
+   8  old-web/web-api
+   8  old-web/web-auth
+  85  old-web/web-merchant
+  12  old-web/web-monitor
+ 153  old-web/web-wechart
+合计 695
+
+=== 活跃 @Scheduled (排除注释) ===
+line   42  0 5 1 * * ?                CronTask
+line   41  0 5 1 * * ?                SfCronTask
+line   36  0 3 0 */1 * ?              FarmJob
+line   54  0 */5 * * * ?              RenKeJob
+line   83  0 0 8 * * ?                RenKeJob
+line   55  0 */2 * * * ?              RenKeLiquanJob
+line  118  0 */30 * * * ?             RenKeLiquanJob
+line   28  0/3 * * * * *              EquipOnlineDailyReportJob
+line   29  fixedDelay=3000            EquipOnlineDailyReportJob
+line   30  fixedRate=3000             EquipOnlineDailyReportJob
+line   50  0 1 0 * * ?                EquipOnlineDailyReportJob
+line   37  0 0 2 * * ?                OfflineDailyReportJob
+
+=== Quartz Job 类 (93) 按目录分组 ===
+ 18  
+ 14  rpt/bill/statistics
+  8  transferBill
+  7  transferBill/reset
+  5  mini/alipay/code
+  4  mini/wx/code
+  4  simcard/renew/bill
+  4  transferBill/v3
+  3  charge/refund
+  3  equip/imeiiccid
+  3  mch/wx/subapply
+  3  monitor/electric
+  2  farm
+  2  fertilizerControl/equip
+  1  archive/table/create/bill
+  1  archive/table/create/record
+  1  charge/bill/arch/del
+  1  charge/bill/finish
+  1  excel
+  1  fertilizerControl/record
+  1  fertilizerControl/template
+  1  monitor/water
+  1  monitor/worm
+  1  simcard/renew/tmp
+  1  transferBill/exp/handler
+  1  transferBill/status/confirm
+  1  wxapiv3
+
+full lists written

@@ -1,0 +1,27 @@
+=== 表 -> 模块 (归属取最多的模块) ===
+ 109  new/poseidon-service
+   3  old-svc/service-quartz-sync
+   2  old-svc/service-user-async
+  42  old-svc/service-user-sync
+
+=== 隐藏机制计数 ===
+ 379  @Transactional  (涉及 379 文件)
+ 342  Redis/缓存  (涉及 342 文件)
+ 283  Hessian/Feign  (涉及 283 文件)
+ 225  @EventListener  (涉及 225 文件)
+  98  @Async  (涉及 98 文件)
+  85  全局日志切面注解  (涉及 85 文件)
+  17  反射  (涉及 17 文件)
+   6  ControllerAdvice  (涉及 6 文件)
+   4  @Aspect  (涉及 4 文件)
+   4  @Around  (涉及 4 文件)
+   4  Filter实现  (涉及 4 文件)
+   3  HandlerInterceptor  (涉及 3 文件)
+
+@Log 注解使用点(老框架 LogAspect 切面): 269
+
+=== RocketMQ Topic/SendTo 定义 ===
+Topic 常量: 1
+   poseidong
+
+written table_modules.json

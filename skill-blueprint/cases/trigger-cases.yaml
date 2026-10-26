@@ -1,0 +1,49 @@
+# skill-blueprint 行为验收案例（供 t5 reviewer 使用）
+# 正例必须命中本技能；反例不得误触到本技能。
+skill: skill-blueprint
+cases:
+  - id: pos-01
+    type: positive
+    utterance: 帮我设计一个新技能
+    expect: skill-blueprint
+  - id: pos-02
+    type: positive
+    utterance: 我想新建一个 Agent Skill，先出设计简报
+    expect: skill-blueprint
+  - id: pos-03
+    type: positive
+    utterance: SKILL.md 怎么写？给我骨架
+    expect: skill-blueprint
+  - id: pos-04
+    type: positive
+    utterance: 用 skill-blueprint 出一个技能蓝图
+    expect: skill-blueprint
+  - id: pos-05
+    type: positive
+    utterance: 需要升级某个现有技能，先做设计
+    expect: skill-blueprint
+  - id: neg-01
+    type: negative
+    utterance: 帮我选个思维模型
+    expect_not: skill-blueprint
+    reason: 命中 model-selector
+  - id: neg-02
+    type: negative
+    utterance: 开个圆桌勘探一下边界
+    expect_not: skill-blueprint
+    reason: 命中 round-table-skill
+  - id: neg-03
+    type: negative
+    utterance: 这篇小说做个追读体检
+    expect_not: skill-blueprint
+    reason: 命中 webnovel-reading-health-check-v2
+  - id: neg-04
+    type: negative
+    utterance: 扫描一下这段文字的 AI 味
+    expect_not: skill-blueprint
+    reason: 命中 novel-ai-flavor-scan-v4 / webnovel-deai-lint
+  - id: neg-05
+    type: negative
+    utterance: 帮我读懂这个代码仓库
+    expect_not: skill-blueprint
+    reason: 命中 codebase-onboarding

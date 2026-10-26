@@ -1,0 +1,528 @@
+============================================================
+1. CONTROLLER 清单
+============================================================
+RestController 类数: 483
+Controller 类数: 213
+含方法级 mapping 的 Controller 数: 483
+按 web 模块分组: {'usr-demeter-all/...': 339, 'web-api': 1, 'web-merchant': 80, 'web-monitor': 4, 'web-wechart': 59}
+
+前 15 个 Controller 样例:
+  MqttClientController  base=/mqtt/client  usr-demeter-all\poseidon-network\poseidon-network-mqtt\poseidon-network-mqtt-provider\src\main\java\com\dongjun\iot\poseidon\network\mqtt\controller\MqttClientController.java
+    REQUEST /mqtt/client   (line 14)
+    GET    /publish   (line 22)
+    GET    /sub   (line 28)
+  BrandServiceImpl  base=/mic/bizbasedata/common/brand  usr-demeter-all\poseidon-service\poseidon-service-bizbasedata\poseidon-service-bizbasedata-provider\src\main\java\com\dongjun\iot\service\bizbasedata\common\service\brand\BrandServiceImpl.java
+    REQUEST /mic/bizbasedata/common/brand   (line 39)
+    POST   /saveOrUpdateByMerchant   (line 47)
+    GET    /findItemByIdMerchantId   (line 78)
+  MCHEquipComServiceImpl  base=/mic/bizbasedata/common/equip/com  usr-demeter-all\poseidon-service\poseidon-service-bizbasedata\poseidon-service-bizbasedata-provider\src\main\java\com\dongjun\iot\service\bizbasedata\common\service\equip\MCHEquipComServiceImpl.java
+    REQUEST /mic/bizbasedata/common/equip/com   (line 40)
+    POST   /findPageWithSubMerchant   (line 47)
+    POST   /findPageByAgent   (line 66)
+  MCHEquipServiceImpl  base=/mic/bizbasedata/common/equip  usr-demeter-all\poseidon-service\poseidon-service-bizbasedata\poseidon-service-bizbasedata-provider\src\main\java\com\dongjun\iot\service\bizbasedata\common\service\equip\MCHEquipServiceImpl.java
+    REQUEST /mic/bizbasedata/common/equip   (line 42)
+    POST   /findPage   (line 46)
+    POST   /findPageWithSubMerchant   (line 55)
+  EquipAuthServiceImpl  base=/mic/bizbasedata/common/equipauth  usr-demeter-all\poseidon-service\poseidon-service-bizbasedata\poseidon-service-bizbasedata-provider\src\main\java\com\dongjun\iot\service\bizbasedata\common\service\equipauth\EquipAuthServiceImpl.java
+    REQUEST /mic/bizbasedata/common/equipauth   (line 29)
+    POST   /processInsert   (line 35)
+    GET    /findItemDOByUK   (line 49)
+  EquipGrantQuantityOrderComServiceImpl  base=/mic/bizbasedata/common/equipgrant/order/com  usr-demeter-all\poseidon-service\poseidon-service-bizbasedata\poseidon-service-bizbasedata-provider\src\main\java\com\dongjun\iot\service\bizbasedata\common\service\equipgrant\EquipGrantQuantityOrderComServiceImpl.java
+    REQUEST /mic/bizbasedata/common/equipgrant/order/com   (line 57)
+    POST   /findPageByMerchantForHistory   (line 77)
+    POST   /findPageByMerchantForDtl   (line 83)
+  EquipGrantQuantityOrderServiceImpl  base=/mic/bizbasedata/common/equipgrant/order  usr-demeter-all\poseidon-service\poseidon-service-bizbasedata\poseidon-service-bizbasedata-provider\src\main\java\com\dongjun\iot\service\bizbasedata\common\service\equipgrant\EquipGrantQuantityOrderServiceImpl.java
+    REQUEST /mic/bizbasedata/common/equipgrant/order   (line 41)
+    POST   /findPageByMerchantForHistory   (line 46)
+    POST   /findPageByMerchantForDtl   (line 74)
+  EquipGrantQuantityServiceImpl  base=/mic/bizbasedata/common/equipgrant  usr-demeter-all\poseidon-service\poseidon-service-bizbasedata\poseidon-service-bizbasedata-provider\src\main\java\com\dongjun\iot\service\bizbasedata\common\service\equipgrant\EquipGrantQuantityServiceImpl.java
+    REQUEST /mic/bizbasedata/common/equipgrant   (line 34)
+    POST   /processInitInsertForMCHOpen   (line 40)
+    GET    /findByMCHIdAndCd   (line 108)
+  EquipEmptyIccidSyncDetailServiceImpl  base=/mic/bizbasedata/common/equip/empty/iccid/sync/detail  usr-demeter-all\poseidon-service\poseidon-service-bizbasedata\poseidon-service-bizbasedata-provider\src\main\java\com\dongjun\iot\service\bizbasedata\common\service\equipsim\EquipEmptyIccidSyncDetailServiceImpl.java
+    REQUEST /mic/bizbasedata/common/equip/empty/iccid/sync/detail   (line 26)
+    GET    /selectWaitSyncCount   (line 32)
+    POST   /batchInitSyncImeiList   (line 44)
+  EquipImeiSimIccidComServiceImpl  base=/mic/bizbasedata/common/equipsim/com  usr-demeter-all\poseidon-service\poseidon-service-bizbasedata\poseidon-service-bizbasedata-provider\src\main\java\com\dongjun\iot\service\bizbasedata\common\service\equipsim\EquipImeiSimIccidComServiceImpl.java
+    REQUEST /mic/bizbasedata/common/equipsim/com   (line 29)
+    POST   /saveOrUpdateForUpload   (line 41)
+  EquipImeiSimIccidServiceImpl  base=/mic/bizbasedata/common/equipsim  usr-demeter-all\poseidon-service\poseidon-service-bizbasedata\poseidon-service-bizbasedata-provider\src\main\java\com\dongjun\iot\service\bizbasedata\common\service\equipsim\EquipImeiSimIccidServiceImpl.java
+    REQUEST /mic/bizbasedata/common/equipsim   (line 37)
+    POST   /saveUpload   (line 44)
+    POST   /saveUploadAsync   (line 57)
+  MCHEquipTypeCacheServiceImpl  base=/mic/bizbasedata/common/equiptype/cache  usr-demeter-all\poseidon-service\poseidon-service-bizbasedata\poseidon-service-bizbasedata-provider\src\main\java\com\dongjun\iot\service\bizbasedata\common\service\equiptype\MCHEquipTypeCacheServiceImpl.java
+    REQUEST /mic/bizbasedata/common/equiptype/cache   (line 35)
+    GET    /findById   (line 45)
+    GET    /findNameById   (line 55)
+  MCHEquipTypeComServiceImpl  base=/mic/bizbasedata/common/equiptype/com  usr-demeter-all\poseidon-service\poseidon-service-bizbasedata\poseidon-service-bizbasedata-provider\src\main\java\com\dongjun\iot\service\bizbasedata\common\service\equiptype\MCHEquipTypeComServiceImpl.java
+    REQUEST /mic/bizbasedata/common/equiptype/com   (line 46)
+    POST   /findEquipTypeVOWithConfigNameById   (line 59)
+    POST   /findPageByMerchant   (line 97)
+  MCHEquipTypeServiceImpl  base=/mic/bizbasedata/common/equiptype  usr-demeter-all\poseidon-service\poseidon-service-bizbasedata\poseidon-service-bizbasedata-provider\src\main\java\com\dongjun\iot\service\bizbasedata\common\service\equiptype\MCHEquipTypeServiceImpl.java
+    REQUEST /mic/bizbasedata/common/equiptype   (line 46)
+    GET    /findById   (line 54)
+    GET    /findNameById   (line 67)
+  EquipTypeConfigCacheServiceImpl  base=/mic/bizbasedata/common/equiptype/config/cache  usr-demeter-all\poseidon-service\poseidon-service-bizbasedata\poseidon-service-bizbasedata-provider\src\main\java\com\dongjun\iot\service\bizbasedata\common\service\equiptype\config\EquipTypeConfigCacheServiceImpl.java
+    REQUEST /mic/bizbasedata/common/equiptype/config/cache   (line 29)
+    GET    /findByEquipTypeId   (line 37)
+    GET    /findUseTemplateByEquipTypeId   (line 48)
+
+============================================================
+2. 定时任务 (@Scheduled)
+============================================================
+  CronTask                            cron=0 5 1 * * ?                    line=42
+  SfCronTask                          cron=0 5 1 * * ?                    line=41
+  FarmJob                             cron=0/30 * * * * ?                 line=35
+  FarmJob                             cron=0 3 0 */1 * ?                  line=36
+  RenKeJob                            cron=0 */5 * * * ?                  line=54
+  RenKeJob                            cron=0 0 8 * * ?                    line=83
+  RenKeLiquanJob                      cron=0 */2 * * * ?                  line=55
+  RenKeLiquanJob                      cron=0 */30 * * * ?                 line=118
+  EquipOnlineDailyReportJob           cron=0/3 * * * * *                  line=28
+  EquipOnlineDailyReportJob           cron=fixedDelay=3000ms              line=29
+  EquipOnlineDailyReportJob           cron=fixedRate=3000ms               line=30
+  EquipOnlineDailyReportJob           cron=0 1 0 * * ?                    line=50
+  OfflineDailyReportJob               cron=0 0 2 * * ?                    line=37
+  VersionOfflineDailyReportJob        cron=0 0 2 * * ?                    line=22
+
+活跃 @Scheduled 总数: 14
+
+============================================================
+3. MQ 相关
+============================================================
+MQ 消费者类: 0
+
+MQ 生产者调用点: 119
+  Top 生产者类: {'TestMQProducer': 20, 'MQProducer': 15, '?': 14, 'ProducerTest': 6, 'ProducerTestOrderly': 6, 'FertilizerRecordServiceImpl': 6, 'ProducerTestBatch': 3, 'ProducerTestDelay': 3, 'SmsSendServiceImpl': 2, 'FertigationEquipOperationRecordServiceImpl': 2}
+
+============================================================
+4. 事件监听
+============================================================
+事件监听点: 240
+  TestSpringEventListener             @EventListener                      line=25
+  TestSpringEventListener             @EventListener                      line=30
+  JM01SubscribeMessageHandler         @EventListener                      line=27
+  JM02SubscribeMessageHandler         @EventListener                      line=27
+  JM03SubscribeMessageHandler         @EventListener                      line=26
+  JM04SubscribeMessageHandler         @EventListener                      line=27
+  JM05SubscribeMessageHandler         @EventListener                      line=27
+  JM06SubscribeMessageHandler         @EventListener                      line=27
+  JM07SubscribeMessageHandler         @EventListener                      line=27
+  JM08SubscribeMessageHandler         @EventListener                      line=27
+  JM09SubscribeMessageHandler         @EventListener                      line=25
+  JM0BSubscribeMessageHandler         @EventListener                      line=27
+  DCFSubscribeMessageHandler          @EventListener                      line=27
+  HRBSubscribeMessageHandler          @EventListener                      line=27
+  REGSubscribeMessageHandler          @EventListener                      line=27
+  MqttClientConnectListener           @EventListener                      line=45
+  MqttClientConnectListener           @EventListener                      line=50
+  BrandCacheSyncEventHandler          @EventListener                      line=35
+  EquipImeiSimIccidResetRefreshEventHandler @EventListener                      line=41
+  EquipTypeConfigCacheSyncEventHandler @EventListener                      line=41
+  MCHEquipTypeUpdateSyncEventHandler  @EventListener                      line=50
+  MerchantParamCacheBatchSyncEventHandler @EventListener                      line=39
+  MerchantParamCacheSyncEventHandler  @EventListener                      line=36
+  AccountRechargeComboCacheSyncEventHandler @EventListener                      line=39
+  AccountRechargeComboDeleteSyncEventHandler @EventListener                      line=41
+  MerchantSmsTemplateCacheBatchSyncEventHandler @EventListener                      line=37
+  MerchantSmsTemplateCacheSyncEventHandler @EventListener                      line=35
+  SmsConfigCacheSyncEventHandler      @EventListener                      line=35
+  SmsTemplateCacheSyncEventHandler    @EventListener                      line=34
+  AlipayOpenAPITransCacheEventHandler @EventListener                      line=33
+  AlipayConfigCacheRefreshEventHandler @EventListener                      line=30
+  AlipayZMXYConfigCacheEventHandler   @EventListener                      line=30
+  MCHAlipayConfigCacheRefreshEventHandler @EventListener                      line=33
+  AlipayFundAuthFreezeBizEventHandler @EventListener                      line=43
+  AlipayFundAuthFreezeEventHandler    @EventListener                      line=41
+  AlipayPaySuccessBizEventHandler     @EventListener                      line=46
+  TransFlowPersistEventHandler        @EventListener                      line=35
+  TransFlowPersistEventHandler        @EventListener                      line=47
+  UserInfoEventHandler                @EventListener                      line=28
+  UserInfoEventHandler                @EventListener                      line=35
+  DingtalkCacheRefreshEventHandler    @EventListener                      line=30
+  MCHDingtalkConfigCacheRefreshEventHandler @EventListener                      line=33
+  DTLoginOauthUserInfoEventHandler    @EventListener                      line=33
+  HFAPITransCacheEventHandler         @EventListener                      line=32
+  HFConfirmBillCacheEventHandler      @EventListener                      line=32
+  HFPayBillCacheEventHandler          @EventListener                      line=32
+  HFMCHConfigAssignCacheRefreshEventHandler @EventListener                      line=32
+  HFMCHConfigCacheRefreshEventHandler @EventListener                      line=30
+  HFCorpMemberCreateFailEventHandler  @EventListener                      line=35
+  HFCorpMemberCreateSuccessEventHandler @EventListener                      line=35
+  HFPaymentRefundFailEventHandler     @EventListener                      line=31
+  HFPaymentRefundSuccessEventHandler  @EventListener                      line=31
+  HFPaymentRevokeFailEventHandler     @EventListener                      line=31
+  HFPaymentRevokeSuccessEventHandler  @EventListener                      line=31
+  HFPaymentSuccessEventHandler        @EventListener                      line=34
+  HFUserEntryFailEventHandler         @EventListener                      line=32
+  HFUserEntrySuccessEventHandler      @EventListener                      line=32
+  UNIFIEDTransFlowAddEventHandler     @EventListener                      line=34
+  UNIFIEDTransFlowAddEventHandler     @EventListener                      line=51
+  UNIFIEDTransFlowCacheEventHandler   @EventListener                      line=31
+  UNIFIEDTransFlowPreCacheAddEventHandler @EventListener                      line=26
+  WXMPMCHConfigCacheRefreshEventHandler @EventListener                      line=35
+  WXMPMCHPSConfigCacheEventHandler    @EventListener                      line=30
+  WXMCHConfigCacheRefreshEventHandler @EventListener                      line=34
+  WXMCHAPITransCacheEventHandler      @EventListener                      line=32
+  WXMCHPSCreditAuthedBizEventHandler  @EventListener                      line=42
+  WXMCHPSPaySuccessBizEventHandler    @EventListener                      line=48
+  WXMCHPSUserConfirmEventHandler      @EventListener                      line=33
+  WXMCHPSUserPaidEventHandler         @EventListener                      line=34
+  WXMCHSubApplyFinishEventHandler     @EventListener                      line=35
+  WXMPConfigCacheRefreshEventHandler  @EventListener                      line=30
+  WXMINICodeTemplateSyncEventHandler  @EventListener                      line=32
+  WXMPOauthUserInfoEventHandler       @EventListener                      line=33
+  WXQYOauthExtContactEventHandler     @EventListener                      line=37
+  WXQYOauthUserEventHandler           @EventListener                      line=36
+  MongoDBReadyListener                implements ApplicationListener      line=19
+  ChargePowerToKwhEventListener       @EventListener                      line=34
+  SaveOnlineDetailEventListener       @EventListener                      line=34
+  OTAEquipFirmwareEventListener       @EventListener                      line=32
+  OTALoggerEventListener              @EventListener                      line=37
+  OTAM25FirmwareEventListener         @EventListener                      line=68
+  ImeiInfoEventListener               @EventListener                      line=32
+  MerchantCacheManager                @EventListener                      line=55
+  MerchantEventForAgentAssigHandler   @EventListener                      line=40
+  MerchantEventForCacheHandler        @EventListener                      line=38
+  TestSpringEventListener             @EventListener                      line=28
+  TestSpringEventListener             @EventListener                      line=33
+  TestSpringEventListener             @EventListener                      line=28
+  TestSpringEventListener             @EventListener                      line=33
+  FarmV3InterruptEventListener        @EventListener                      line=43
+  FarmV3MasterBillEndEventListener    @EventListener                      line=74
+  FarmV3MasterUploadFlowDataEventListener @EventListener                      line=56
+  FarmV3SingleBillEndEventListener    @EventListener                      line=74
+  FarmV3SingleSwipeEventListener      @EventListener                      line=31
+  FarmV3SingleUploadFlowDataEventListener @EventListener                      line=56
+  FarmV3SlaveStatusQueryEventListener @EventListener                      line=56
+  FarmV3SlaveSwipeEventListener       @EventListener                      line=31
+  FarmSoftFaultEventListener          @EventListener                      line=65
+  FertilizerSwitchHighFrequencyValveEventListener @EventListener                      line=62
+  WxMsgEventListener                  @EventListener                      line=48
+  NinglingErrorEventListener          @EventListener                      line=30
+  NinglingOnlineEventListener         @EventListener                      line=29
+  VersionEventListener                @EventListener                      line=35
+  GPSEventListener                    @EventListener                      line=58
+  OpenCloseOrShakeEventListener       @EventListener                      line=53
+  UploadA00001Handler                 @EventListener                      line=38
+  UploadA00002Handler                 @EventListener                      line=28
+  UploadA00003Handler                 @EventListener                      line=29
+  UploadA00004Handler                 @EventListener                      line=24
+  UploadA00005Handler                 @EventListener                      line=45
+  UploadA00022Handler                 @EventListener                      line=61
+  IccidHandler                        @EventListener                      line=54
+  OfflineHandler                      @EventListener                      line=62
+  OnlineHandler                       @EventListener                      line=61
+  PingHandler                         @EventListener                      line=39
+  UploadA17001Handler                 @EventListener                      line=32
+  UploadA12001Handler                 @EventListener                      line=72
+  UploadA12002Handler                 @EventListener                      line=38
+  UploadA12003Handler                 @EventListener                      line=51
+  UploadA12004Handler                 @EventListener                      line=71
+  UploadA12005Handler                 @EventListener                      line=34
+  UploadA12006Handler                 @EventListener                      line=42
+  UploadA12007Handler                 @EventListener                      line=36
+  UploadA12008Handler                 @EventListener                      line=37
+  UploadA12010Handler                 @EventListener                      line=80
+  UploadA12011Handler                 @EventListener                      line=76
+  UploadA12012Handler                 @EventListener                      line=34
+  UploadA12013Handler                 @EventListener                      line=86
+  UploadA12014Handler                 @EventListener                      line=59
+  UploadA12015Handler                 @EventListener                      line=71
+  UploadA12016Handler                 @EventListener                      line=68
+  UploadA12017Handler                 @EventListener                      line=100
+  UploadA13201Handler                 @EventListener                      line=37
+  UploadA13202Handler                 @EventListener                      line=40
+  UploadA13203Handler                 @EventListener                      line=31
+  UploadA14101Handler                 @EventListener                      line=47
+  UploadA14102Handler                 @EventListener                      line=37
+  UploadA14103Handler                 @EventListener                      line=42
+  UploadA13101Handler                 @EventListener                      line=54
+  UploadA13102Handler                 @EventListener                      line=58
+  UploadA13103Handler                 @EventListener                      line=56
+  UploadA21001Handler                 @EventListener                      line=65
+  UploadA21002Handler                 @EventListener                      line=31
+  UploadA21003Handler                 @EventListener                      line=32
+  UploadA21004Handler                 @EventListener                      line=41
+  UploadA21005Handler                 @EventListener                      line=31
+  UploadA21007Handler                 @EventListener                      line=43
+  UploadA21008Handler                 @EventListener                      line=25
+  UploadA21009Handler                 @EventListener                      line=25
+  UploadA21010Handler                 @EventListener                      line=25
+  UploadA21011Handler                 @EventListener                      line=41
+  UploadA21012Handler                 @EventListener                      line=26
+  UploadA21013Handler                 @EventListener                      line=31
+  UploadA21014Handler                 @EventListener                      line=57
+  UploadA21017Handler                 @EventListener                      line=47
+  UploadA21018Handler                 @EventListener                      line=93
+  UploadA21019Handler                 @EventListener                      line=47
+  UploadA31001Handler                 @EventListener                      line=48
+  UploadA31002Handler                 @EventListener                      line=45
+  UploadA31003Handler                 @EventListener                      line=47
+  UploadA31004Handler                 @EventListener                      line=64
+  UploadA31005Handler                 @EventListener                      line=89
+  UploadA31006Handler                 @EventListener                      line=62
+  UploadA80001Handler                 @EventListener                      line=87
+  UploadA80002Handler                 @EventListener                      line=36
+  UploadA80003Handler                 @EventListener                      line=40
+  UploadA90010Handler                 @EventListener                      line=41
+  UploadA90011Handler                 @EventListener                      line=65
+  UploadA90012Handler                 @EventListener                      line=41
+  UploadA90013Handler                 @EventListener                      line=32
+  UploadA90001Handler                 @EventListener                      line=45
+  UploadA90002Handler                 @EventListener                      line=42
+  UploadA90003Handler                 @EventListener                      line=37
+  UploadA90004Handler                 @EventListener                      line=37
+  UploadA15006Handler                 @EventListener                      line=62
+  UploadA21020Handler                 @EventListener                      line=38
+  UploadA21021Handler                 @EventListener                      line=48
+  TestNetAsyncEventHandler            @EventListener                      line=24
+  TestNetAsyncEventHandler            @EventListener                      line=29
+  TestNetAsyncEventHandler            @EventListener                      line=34
+  TestNetAsyncEventHandler            @EventListener                      line=39
+  TestNetAsyncEventHandler            @EventListener                      line=44
+  CreateSubMerchantHandler            @EventListener                      line=53
+  EquipTypeUpdateHandler              @EventListener                      line=38
+  FarmFinishInspectionHandler         @EventListener                      line=29
+  FarmStartInspectionHandler          @EventListener                      line=103
+  RptFertigationEquipAddHandler       @EventListener                      line=33
+  RptFertigationEquipUpdateHandler    @EventListener                      line=33
+  GPSUploadHandler                    @EventListener                      line=61
+  PlaceUpdateHandler                  @EventListener                      line=49
+  EquipStockOutHandler                @EventListener                      line=40
+  TransferGenerateHandler             @EventListener                      line=61
+  TransferGenerateNoBindHandler       @EventListener                      line=58
+  TestCreditAuthedBizEventHandler     @EventListener                      line=24
+  TestTradePayBizEventHandler         @EventListener                      line=24
+  FarmPersistEventHandler             @EventListener                      line=39
+  ChargeRefundPersistEventHandler     @EventListener                      line=36
+  WxMsgEventA60001Handler             @EventListener                      line=81
+  WxMsgEventA20001Handler             @EventListener                      line=55
+  AgentLoginEventHandler              @EventListener                      line=23
+  ChargeRefundSuccessEventHandler     @EventListener                      line=57
+  ChargeBillFinishedEventHandler      @EventListener                      line=58
+  FarmBillFinishedEventHandler        @EventListener                      line=100
+  FarmBillFinishedNotifyEventHandler  @EventListener                      line=55
+  ConsumerAccountFundEventHandler     @EventListener                      line=37
+  EquipExpireDateEventHandler         @EventListener                      line=45
+  EquipmentCacheEventHandler          @EventListener                      line=34
+  FertilizerControlRecordFinishedEventHandler @EventListener                      line=45
+  FertilizerControlRecordStartEventHandler @EventListener                      line=36
+  FertilizerControlRecordUpdateEventHandler @EventListener                      line=36
+  MerchantEventHandler                @EventListener                      line=49
+  BillStatisticsEventHandler          @EventListener                      line=44
+  SimCardEventHandler                 @EventListener                      line=62
+  ChargeSettleFinishedEventHandler    @EventListener                      line=42
+  TransferBillStatisticsTotalEventHandler @EventListener                      line=30
+  Consumer3RDUserBatchUnbindEventHandler @EventListener                      line=32
+  Consumer3RDUserBindEventHandler     @EventListener                      line=32
+  RenewPaySuccessEventHandler         @EventListener                      line=64
+  FarmBillPaySuccessEventHandler      @EventListener                      line=185
+  FarmBillPaySuccessEventHandler      @EventListener                      line=197
+  RechargePaySuccessEventHandler      @EventListener                      line=86
+  Test1PaySuccessEventHandler         @EventListener                      line=25
+  Test1PaySuccessEventHandler         @EventListener                      line=31
+  Test1PaySuccessEventHandler         @EventListener                      line=36
+  Test2PaySuccessEventHandler         @EventListener                      line=24
+  UNIFIEDPaySuccessEventHandler       @EventListener                      line=32
+  LogEventListener                    @EventListener                      line=34
+  LogEventListener                    @EventListener                      line=35
+  MerchantLoginEventListener          @EventListener                      line=37
+  PumpWorkConfigListener              @EventListener                      line=40
+  MainboardEquipStateUpdateEventListener @EventListener                      line=28
+  MainboardOTAEventListener           @EventListener                      line=51
+  MainboardVersionSyncBatchEventListener @EventListener                      line=43
+  MainboardVersionUpdateEventListener @EventListener                      line=29
+  WebSocketPushEventHandler           @EventListener                      line=28
+  MonitorLoginEventListener           @EventListener                      line=36
+  WebSocketPushEventHandler           @EventListener                      line=28
+  ChannelBatchSettingEventListener    @EventListener                      line=61
+  FertilizerSwitchHighFrequencyValveEventListener @EventListener                      line=62
+  LogEventListener                    @EventListener                      line=34
+
+============================================================
+5. AOP 切面
+============================================================
+@Aspect 类: 4
+  NetSyncAspect  (5 advice)
+      Around             "pointCutMethod(                                   line=59
+      Before             "@annotation(log                                   line=141
+      After              "@annotation(log                                   line=147
+      AfterReturning     "@annotation(log                                   line=153
+      AfterThrowing      pointcut = "@annotation(log                        line=159
+  LogAspect  (5 advice)
+      Around             "@annotation(log                                   line=40
+      Before             "@annotation(log                                   line=63
+      After              "@annotation(log                                   line=69
+      AfterReturning     "@annotation(log                                   line=75
+      AfterThrowing      pointcut = "@annotation(log                        line=81
+  LogAspect  (5 advice)
+      Around             "@annotation(log                                   line=40
+      Before             "@annotation(log                                   line=63
+      After              "@annotation(log                                   line=69
+      AfterReturning     "@annotation(log                                   line=75
+      AfterThrowing      pointcut = "@annotation(log                        line=81
+  LogAspect  (5 advice)
+      Around             "@annotation(log                                   line=40
+      Before             "@annotation(log                                   line=63
+      After              "@annotation(log                                   line=69
+      AfterReturning     "@annotation(log                                   line=75
+      AfterThrowing      pointcut = "@annotation(log                        line=81
+
+============================================================
+6. Filter / Interceptor
+============================================================
+Filter: 4
+  CorsFilter                          line=15
+  CorsFilter                          line=11
+  MiniProgramFilter                   line=19
+  ThreadLocalFilter                   line=24
+Interceptor: 3
+  WebSocketConfig                     addInterceptors(          line=48
+  WebSocketConfig                     addInterceptors(          line=47
+  RequestResponseBodyInterceptor      implements HandlerInterceptor line=23
+
+============================================================
+7. Mapper XML → 数据表
+============================================================
+Mapper XML 总数: 361
+
+从 XML 提取到的表名(粗提取,含 SQL 关键字噪声): 164
+过滤后表名: 161
+有写操作的表: 124
+
+有写操作的表(前 40):
+  qrtz_cron_triggers                            read=  1 write=  1
+  qrtz_job_details                              read=  1 write=  1
+  qrtz_triggers                                 read=  1 write=  1
+  t_agent_menu                                  read=  1 write=  1
+  t_agent_menu_auth                             read=  6 write=  4
+  t_agent_role                                  read=  2 write=  1
+  t_agent_role_menu                             read=  3 write=  3
+  t_agent_user_role                             read=  2 write=  1
+  t_api                                         read=  1 write=  1
+  t_iot_agent                                   read= 11 write=  9
+  t_iot_agent_equip_renew_order                 read=  1 write=  1
+  t_iot_agent_mobile_menu_auth                  read=  5 write=  2
+  t_iot_agent_notice                            read=  2 write=  2
+  t_iot_alipay_app_info                         read=  4 write=  4
+  t_iot_alipay_config                           read=  1 write=  1
+  t_iot_alipay_mini_code_current_ver            read=  1 write=  1
+  t_iot_alipay_mini_code_extjson                read=  1 write=  1
+  t_iot_b2b_rank_related                        read=  2 write=  1
+  t_iot_bill_farm                               read=  2 write=  1
+  t_iot_charge_bill                             read=  1 write=  1
+  t_iot_charge_bill_arc_                        read=  1 write=  1
+  t_iot_charge_bill_merch_row                   read=  1 write=  1
+  t_iot_charge_bill_merch_row_arc_              read=  2 write=  2
+  t_iot_charge_bill_profit_row                  read=  1 write=  1
+  t_iot_charge_bill_profit_row_arc_             read=  2 write=  2
+  t_iot_consumer                                read=  5 write=  4
+  t_iot_consumer_account_fund                   read=  3 write=  3
+  t_iot_consumer_feedback_message_pusher        read=  1 write=  1
+  t_iot_consumer_machine_recharge_his           read=  3 write=  2
+  t_iot_consumer_vip_card                       read=  3 write=  2
+  t_iot_cooperative_factory                     read=  1 write=  1
+  t_iot_equip_auth                              read=  3 write=  3
+  t_iot_equip_farm_param                        read=  4 write=  1
+  t_iot_equip_lora                              read=  1 write=  1
+  t_iot_equip_lora_check                        read=  1 write=  1
+  t_iot_equip_outdated                          read=  1 write=  1
+  t_iot_equip_stock_dtl                         read=  2 write=  2
+  t_iot_equip_stockin_bill                      read=  2 write=  2
+  t_iot_equipment_component                     read=  2 write=  2
+  t_iot_equipment_status                        read=  7 write=  5
+
+============================================================
+8. 实体类 (@TableName / @Entity)
+============================================================
+@TableName 实体: 253
+  FarmFaultReportDO                   table=t_iot_farm_fault_report
+  EquipFactoryBean                    table=t_iot_cooperative_factory
+  EquipHardwareVersionBean            table=t_iot_hardware_version
+  MonitorWaterDO                      table=t_equip_monitor_water
+  WormMonitorDO                       table=t_equip_monitor_worm
+  BrandDO                             table=t_iot_brand
+  MCHEquipDO                          table=t_iot_merchant_equipment
+  EquipAuthDO                         table=t_iot_equip_auth
+  EquipGrantQuantityDO                table=t_iot_merchant_buy_service
+  EquipGrantQuantityOrderDO           table=t_iot_service_order
+  EquipEmptyIccidSyncDetailDO         table=t_iot_equip_empty_iccid_sync_detail
+  EquipImeiSimIccidDO                 table=t_iot_equip_imei_sim_iccid
+  EquipTypeConfigDO                   table=t_iot_equip_type_config
+  MCHEquipTypeDO                      table=t_iot_merchant_equip_type
+  MerchantParamDO                     table=t_merchant_param
+  MerchantParamLibraryDO              table=t_merchant_param_library
+  PlaceDO                             table=t_iot_merchant_place
+  PlaceProfitDO                       table=t_iot_place_profit
+  PlaceUserDO                         table=t_iot_merchant_user_place
+  PlaceRechargeComboDO                table=t_iot_merchant_place_combo
+  RechargeBillPO                      table=t_iot_consumer_recharge_bill
+  AccountRechargeComboDO              table=t_iot_consumer_account_charge_combo
+  SimCardProviderDO                   table=t_iot_sim_card_provider
+  SimCardRenewBillDO                  table=t_iot_sim_card_renew_bill
+  SimCardRenewBillHistoryDO           table=t_iot_sim_card_renew_bill_history
+  SimCardRenewInitTmpDO               table=t_iot_sim_card_renew_init_tmp
+  SimCardStockDetailDO                table=t_iot_sim_card_stock_detail
+  SimCardStockInDO                    table=t_iot_sim_card_stock_in
+  SimCardStockOutDO                   table=t_iot_sim_card_stock_out
+  IndustrySmsTemplateDO               table=t_iot_industry_message_params
+
+============================================================
+9. 配置文件
+============================================================
+配置文件: 260
+${...} 占位符总数: 3
+
+============================================================
+10. 前端
+============================================================
+Vue 文件: 1465, JS 文件: 1362
+api 目录文件: 34
+  usr-front\01_mobile_vue_web\02-particle\liujiacun\src\api\config.js
+  usr-front\01_mobile_vue_web\02-particle\liujiacun\src\api\index.js
+  usr-front\01_mobile_vue_web\02-particle\liujiacun\src\api\login.js
+  usr-front\01_mobile_vue_web\02-particle\liujiacun\src\api\request.js
+  usr-front\03_big_screen\01-bs-main\src\services\api\authorize.js
+  usr-front\03_big_screen\01-bs-main\src\services\api\common.js
+  usr-front\03_big_screen\01-bs-main\src\services\api\index.js
+  usr-front\03_big_screen\01-bs-main\src\services\api\otherDevice.js
+  usr-front\03_big_screen\01-bs-main\src\services\api\waterFertilizer.js
+  usr-front\03_big_screen\02-bs-fertigation\src\services\api\common.js
+  usr-front\03_big_screen\02-bs-fertigation\src\services\api\index.js
+  usr-front\03_big_screen\02-bs-fertigation\src\services\api\otherDevice.js
+  usr-front\03_big_screen\02-bs-fertigation\src\services\api\waterFertilizer.js
+  usr-front\03_big_screen\03-bs-demo\src\services\api\common.js
+  usr-front\03_big_screen\03-bs-demo\src\services\api\index.js
+
+router 文件: 24
+  usr-front\01_mobile_vue_web\01_farmer\src\router\index.js
+  usr-front\01_mobile_vue_web\01_farmer\src\router\router.config.js
+  usr-front\01_mobile_vue_web\02-particle\liujiacun\src\router\index.js
+  usr-front\02_uniapp\01_farmer\src\config\whiteRouterList.js
+  usr-front\03_big_screen\01-bs-main\src\router\index.js
+  usr-front\03_big_screen\01-bs-main\src\router\guard\index.js
+  usr-front\03_big_screen\01-bs-main\src\router\guard\whiteList.js
+  usr-front\03_big_screen\01-bs-main\src\router\routes\index.js
+  usr-front\03_big_screen\02-bs-fertigation\src\router\index.js
+  usr-front\03_big_screen\03-bs-demo\src\router\index.js
+  usr-front\03_big_screen\04-bs-denghekou\demo-denghekou-演示版本\src\router\index.js
+  usr-front\03_big_screen\04-bs-denghekou\denghekou-last\src\router\index.js
+  usr-front\03_big_screen\05-bs-liujiacun\src\router\index.js
+  usr-front\03_big_screen\06-bs-huaian\src\router\index.js
+  usr-front\05-particle\agriculture-admin-liujiacun\main\public\menuList\devRouter.js
+  usr-front\05-particle\agriculture-admin-liujiacun\main\src\router\baseRouter.js
+  usr-front\05-particle\agriculture-admin-liujiacun\main\src\router\index.js
+  usr-front\05-particle\agriculture-admin-liujiacun\main\src\router\routerTool.js
+  usr-front\05-particle\agriculture-admin-liujiacun\main\src\router\whiteList.js
+  usr-front\demeter-web-manages\main\public\menuList\devRouter.js
+  usr-front\demeter-web-manages\main\src\router\baseRouter.js
+  usr-front\demeter-web-manages\main\src\router\index.js
+  usr-front\demeter-web-manages\main\src\router\routerTool.js
+  usr-front\demeter-web-manages\main\src\router\whiteList.js
+
+前端 API 调用点(axios/request): 0
+
+============================================================
+DONE
+============================================================

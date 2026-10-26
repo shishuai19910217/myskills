@@ -68,6 +68,7 @@ function resolveRuntime(cfg) {
         extraRounds: r.extraRounds ?? 2,
         convergenceWindowN: r.convergenceWindowN ?? r.convergenceN ?? 2,
         convergenceThreshold: r.convergenceThreshold ?? 0.34,
+        seatConcurrency: r.seatConcurrency ?? 5,
     };
 }
 /** 勘探席配置（启动快照，供 experiment 等离线脚本使用） */

@@ -38,6 +38,7 @@
     "convergenceN": 2,
     "convergenceThreshold": 0.34,
     "temperature": 0.4,
-    "maxTokens": 2048
+    "maxTokens": 2048,
+    "seatConcurrency": 5
   }
 }

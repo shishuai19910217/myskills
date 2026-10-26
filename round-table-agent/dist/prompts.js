@@ -58,6 +58,29 @@ ${params.pool}
 - 问题正文不超过 80 个汉字，直接提问，禁止复述边界池内容或铺垫"当前已涵盖……"。
 只输出严格 JSON：{"question":"问题正文"}`;
 }
+/** 批量出题：统筹者一次为全部 5 席各产出 1 个盘问问题 */
+export function coordinatorBatchQuestionUser(params) {
+    const seatList = params.seats
+        .map((s, i) => `${i + 1}. seat="${s.id}"（${s.name}，角色：${s.role}，维度：${s.type}）`)
+        .join("\n");
+    return `议题：${params.topic}
+产出目标类型：${GOAL_LABEL[params.goalType]}
+勘探范围：${params.scope}
+当前边界池：
+${params.pool}
+
+当前第 ${params.round} 轮。请为以下全部 ${params.seats.length} 个席位各提出 1 个精准的盘问问题：
+${seatList}
+
+要求：
+- 每个问题具体、指向可枚举的方面；开放、不暗示答案；
+- 明确指向边界池中尚未出现的新角度，不要重复已覆盖维度；
+- 问题本身包含足够语境，不要使用"请从你的职责出发"这类空泛措辞；
+- 问题正文不超过 80 个汉字，直接提问，禁止复述边界池内容或铺垫"当前已涵盖……"；
+- 5 个问题之间角度互不重叠，各席各挖各的维度。
+只输出严格 JSON：
+{"questions":[{"seat":"forward","question":"问题正文"},{"seat":"reverse","question":"问题正文"},...]}`;
+}
 // ============ 席位作答 ============
 const CONFIDENCE_ANCHOR = `confidence 按客观锚点取值，不要默认报高：
 - high：描述具体，能直接举例或在真实文本/事实中验证；

@@ -1,10 +1,46 @@
 import { getRuntime, getSeatConfigs } from "./config.js";
 import { chat, chatStream } from "./llm.js";
-import { coordinatorSystemPrompt, coordinatorOpeningUser, coordinatorQuestionUser, coordinatorConvergeUser, coordinatorAdjudicateUser, coordinatorSupplementUser, coordinatorFinalTemplateUser, SEGMENT_SECTIONS_MARKER, coordinatorClassifyUserTurnUser, seatSystemPrompt, } from "./prompts.js";
+import { coordinatorSystemPrompt, coordinatorOpeningUser, coordinatorQuestionUser, coordinatorBatchQuestionUser, coordinatorConvergeUser, coordinatorAdjudicateUser, coordinatorSupplementUser, coordinatorFinalTemplateUser, SEGMENT_SECTIONS_MARKER, coordinatorClassifyUserTurnUser, seatSystemPrompt, } from "./prompts.js";
 import { persistSnapshot, persistReport, meetingsDir } from "./snapshot.js";
 import { getSpecialty, renderSeedDimensions } from "./specialties.js";
 import { readFileSync, readdirSync, statSync, rmSync } from "node:fs";
 import { join } from "node:path";
+/**
+ * 通用并发控制器：worker 池模型。
+ * concurrency=1 串行；concurrency>=items.length 全并行。
+ * signal.aborted 时未启动的 worker 退出，已完成的结果保留。
+ */
+async function parallelMap(items, fn, concurrency, signal) {
+    if (concurrency <= 1) {
+        const results = [];
+        for (let i = 0; i < items.length; i++) {
+            if (signal?.aborted) {
+                results.push(undefined);
+                continue;
+            }
+            results.push(await fn(items[i], i));
+        }
+        return results;
+    }
+    const results = new Array(items.length).fill(undefined);
+    let next = 0;
+    async function worker() {
+        while (next < items.length) {
+            if (signal?.aborted)
+                return;
+            const i = next++;
+            try {
+                results[i] = await fn(items[i], i);
+            }
+            catch {
+                results[i] = undefined;
+            }
+        }
+    }
+    const n = Math.min(concurrency, items.length);
+    await Promise.all(Array.from({ length: n }, () => worker()));
+    return results;
+}
 /** 括号平衡的 JSON 提取：从首个 { 或 [ 开始扫描，处理字符串与转义，返回首个平衡片段 */
 export function extractJson(raw) {
     const startObj = raw.indexOf("{");
@@ -972,23 +1008,37 @@ export class Orchestrator {
         }
         return lines.join("\n");
     }
-    /** 单轮：统筹者对每席生成问题 → 席位回答 → 入池。用户停止时立即中断。 */
+    /**
+     * 单轮（三阶段）：批量出题 → 并行作答 → 串行入池。
+     * seatConcurrency=1 时退化为串行（等同改前行为）。
+     * 用户停止时 abort 全部在飞请求，已完成的入池，未完成的跳过。
+     */
     async runRound(meeting, round, emit) {
         let newCount = 0;
-        for (const seat of meeting.seats) {
-            if (this.stopRequested)
-                break;
+        const concurrency = meeting.config.seatConcurrency ?? 5;
+        const signal = this.runController?.signal;
+        // ── 阶段 A：统筹者批量出题 ──
+        if (this.stopRequested)
+            return { newCount };
+        const questions = await this.askCoordinatorBatch(meeting, round, emit);
+        if (this.stopRequested)
+            return { newCount };
+        // 下发 5 个 question 事件
+        for (const { seat, question } of questions) {
+            await emit({ type: "question", round, seat: seat.id, question });
+        }
+        // ── 阶段 B：并行/串行作答 ──
+        const results = await parallelMap(questions, async ({ seat, question }, _i) => {
+            if (this.stopRequested || signal?.aborted)
+                return undefined;
             try {
-                const question = await this.askCoordinator(meeting, seat, round, emit);
-                await emit({ type: "question", round, seat: seat.id, question });
                 let reply = await this.askSeat(meeting, seat, round, question, emit);
                 let parsedReply = parseSeatReply(reply);
-                // 首次解析失败：区分「空返回」（思考预算耗尽/上游异常）与「格式不合规」
+                // 首次解析失败：区分空返回与格式不合规
                 let retried = false;
                 if (!parsedReply && !this.stopRequested) {
                     retried = true;
                     const emptyFirst = !reply.trim();
-                    // 首次失败即留证 raw：重答成功的病例（首败次成）此前完全无据可查
                     console.warn(`[seatReply:first] seat=${seat.id} round=${round} empty=${emptyFirst} raw=`, reply.slice(0, 300));
                     await emit({
                         type: "notice",
@@ -1001,54 +1051,59 @@ export class Orchestrator {
                     reply = await this.askSeat(meeting, seat, round, question, emit, true);
                     parsedReply = parseSeatReply(reply);
                 }
-                // 重答后仍非标准 JSON（含仅靠原文挽救）：留证 raw，便于定位思考链/截断/纯文本
                 if (retried && (!parsedReply || parsedReply.salvaged) && !this.stopRequested) {
                     console.warn(`[seatReply:retry] seat=${seat.id} round=${round} empty=${!reply.trim()} salvaged=${!!parsedReply} raw=`, reply.slice(0, 500));
                 }
-                if (parsedReply) {
-                    if (parsedReply.salvaged) {
-                        await emit({
-                            type: "notice",
-                            level: parsedReply.repaired ? "info" : "warn",
-                            seat: seat.id,
-                            message: parsedReply.repaired
-                                ? `「${seat.name}」第 ${round} 轮发言的 JSON 正文内含未转义引号，已自动修复并完整收录（保留原可信度）。`
-                                : `「${seat.name}」第 ${round} 轮发言仍非标准 JSON，已按原文挽救收录（可信度降为「中」）。`,
-                        });
-                    }
-                    // 用最终可解析的原文校正发言块（重试时前端无流式块，直接展示）
-                    await emit({ type: "reply", round, seat: seat.id, content: reply });
-                    const added = this.addBoundary(meeting, {
-                        type: seat.type, // 类型以席位绑定为准，忽略模型自报
-                        description: parsedReply.description,
-                        confidence: parsedReply.confidence,
-                        source: seat.id,
-                        sourceModel: seat.model,
-                        round,
-                    });
-                    if (added) {
-                        newCount++;
-                        await emit({ type: "boundary", round, item: added });
-                    }
-                }
-                else {
-                    // 两次均无有效内容：显式告知，避免发言静默丢失
-                    await emit({ type: "reply", round, seat: seat.id, content: "" });
+                // 即时下发 reply（交错到达，前端按 seat 标签渲染）
+                if (parsedReply?.salvaged) {
                     await emit({
                         type: "notice",
-                        level: "warn",
+                        level: parsedReply.repaired ? "info" : "warn",
                         seat: seat.id,
-                        message: `「${seat.name}」第 ${round} 轮两次发言均无法解析且无可用内容，本轮该席无新增边界。`,
+                        message: parsedReply.repaired
+                            ? `「${seat.name}」第 ${round} 轮发言的 JSON 正文内含未转义引号，已自动修复并完整收录（保留原可信度）。`
+                            : `「${seat.name}」第 ${round} 轮发言仍非标准 JSON，已按原文挽救收录（可信度降为「中」）。`,
                     });
                 }
+                await emit({ type: "reply", round, seat: seat.id, content: reply });
+                return { seat, parsedReply, reply };
             }
             catch (err) {
                 if (this.stopRequested)
-                    break;
+                    return undefined;
                 await emit({
                     type: "error",
                     message: `席位 ${seat.name} 本轮失败：${err.message}`,
                     seat: seat.id,
+                });
+                return undefined;
+            }
+        }, concurrency, signal);
+        // ── 阶段 C：串行入池（消除并发竞态） ──
+        for (const result of results) {
+            if (!result)
+                continue;
+            const { seat, parsedReply } = result;
+            if (parsedReply) {
+                const added = this.addBoundary(meeting, {
+                    type: seat.type,
+                    description: parsedReply.description,
+                    confidence: parsedReply.confidence,
+                    source: seat.id,
+                    sourceModel: seat.model,
+                    round,
+                });
+                if (added) {
+                    newCount++;
+                    await emit({ type: "boundary", round, item: added });
+                }
+            }
+            else {
+                await emit({
+                    type: "notice",
+                    level: "warn",
+                    seat: seat.id,
+                    message: `「${seat.name}」第 ${round} 轮两次发言均无法解析且无可用内容，本轮该席无新增边界。`,
                 });
             }
         }
@@ -1133,6 +1188,70 @@ export class Orchestrator {
         }
         meeting.coordHistory.push(`R${round} 致${seat.name}：${q}`);
         return q;
+    }
+    /**
+     * 批量出题：统筹者一次为全部 5 席各产出 1 个盘问问题。
+     * 挽救链：解析失败→重试→逐字段挽救→缺失席位通用兜底。
+     * 返回与 meeting.seats 顺序一致的 { seat, question } 数组。
+     */
+    async askCoordinatorBatch(meeting, round, emit) {
+        const seats = meeting.seats;
+        const fallbackQ = (seat) => `（第${round}轮）请补充一条当前尚未提及的、与「${seat.type}」有关的具体方面或边界。`;
+        const user = coordinatorBatchQuestionUser({
+            round,
+            seats: seats.map((s) => ({ id: s.id, name: s.name, role: s.role, type: s.type })),
+            topic: meeting.topic ?? "",
+            scope: meeting.scope ?? "",
+            goalType: meeting.goalType,
+            pool: this.poolDescription(meeting),
+            coordHistory: meeting.coordHistory,
+        }) + (meeting.activeSegment
+            ? `\n\n本次只诊断以下文本段（范围：${meeting.activeSegment.range}），提问必须针对该段原文中的具体问题，不要问段外内容：\n-----\n${meeting.activeSegment.text}\n-----`
+            : this.sourceTextBlock(meeting));
+        let raw = await this.coordChat(meeting, [
+            { role: "system", content: coordinatorSystemPrompt() },
+            { role: "user", content: user },
+        ], { temperature: 0.2, maxTokens: 20480, timeoutMs: 300_000 });
+        let parsed = extractJson(raw);
+        if (!parsed?.questions?.length) {
+            // 重试一次
+            raw = await this.coordChat(meeting, [
+                { role: "system", content: coordinatorSystemPrompt() },
+                { role: "user", content: user + "\n\n上一次输出无法解析为 JSON。请严格只输出 {\"questions\":[{\"seat\":\"...\",\"question\":\"...\"},...]}。" },
+            ], { temperature: 0.2, maxTokens: 20480, timeoutMs: 300_000 });
+            parsed = extractJson(raw);
+        }
+        // 逐字段挽救：从截断 JSON 中提取已生成的 question 字段
+        if (!parsed?.questions?.length) {
+            console.warn(`[askCoordinatorBatch] 两次解析失败 round=${round} raw=`, raw.slice(0, 600));
+        }
+        // 构建结果：按 seats 顺序匹配，缺失的用通用兜底
+        const questionMap = new Map();
+        if (parsed?.questions) {
+            for (const q of parsed.questions) {
+                if (q.seat && q.question?.trim()) {
+                    questionMap.set(q.seat, q.question.trim());
+                }
+            }
+        }
+        const results = seats.map((seat) => ({
+            seat,
+            question: questionMap.get(seat.id) || fallbackQ(seat),
+        }));
+        // 通知挽救情况
+        const salvagedCount = seats.length - questionMap.size;
+        if (salvagedCount > 0) {
+            await emit({
+                type: "notice",
+                level: "warn",
+                message: `统筹者第 ${round} 轮批量出题中 ${salvagedCount} 个席位的问题未能解析，已使用通用兜底问题。`,
+            });
+        }
+        // 记录 coordHistory
+        for (const { seat, question } of results) {
+            meeting.coordHistory.push(`R${round} 致${seat.name}：${question}`);
+        }
+        return results;
     }
     /** 勘探席作答；流式时通过 reply_chunk 实时推送增量。remind=true 为解析失败后的非流式重试 */
     async askSeat(meeting, seat, round, question, emit, remind = false) {

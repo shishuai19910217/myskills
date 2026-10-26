@@ -1,0 +1,25 @@
+interface:
+  display_name: "遗留系统接手指南"
+  short_description: "基于源码建立可追溯、可核验、可增量的系统认知"
+  default_prompt: "用 $legacy-system-onboarding 分析这个代码库：先判定全量还是专项模式，再按模板产出文档，关键结论标注证据等级与代码位置。"
+
+compatibility:
+  canonical_format: "agent-skills"
+  adapter_targets:
+    - "openai"
+    - "claude"
+    - "generic"
+  activation:
+    mode: "auto"
+    paths: []
+  execution:
+    context: "inline"
+    shell: "bash"
+  trust:
+    source_tier: "local"
+    remote_inline_execution: "forbid"
+    remote_metadata_policy: "allow-metadata-only"
+  degradation:
+    openai: "metadata-adapter"
+    claude: "neutral-source-plus-adapter"
+    generic: "neutral-source"
